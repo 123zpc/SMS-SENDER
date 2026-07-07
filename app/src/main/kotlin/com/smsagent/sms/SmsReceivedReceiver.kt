@@ -15,10 +15,14 @@ class SmsReceivedReceiver : BroadcastReceiver() {
 
         val pendingResult = goAsync()
         try {
-            Telephony.Sms.Intents.getMessagesFromIntent(intent)
+            val receivedAtMillis = System.currentTimeMillis()
+            val incomingSms = IncomingSms.fromMessages(
+                messages = Telephony.Sms.Intents.getMessagesFromIntent(intent),
+                receivedAtMillis = receivedAtMillis,
+            )
             SmsReceivedHandler.handle(
                 appContext = context.applicationContext,
-                receivedAtMillis = System.currentTimeMillis(),
+                incomingSms = incomingSms,
                 pendingResult = pendingResult,
             )
         } catch (throwable: Throwable) {

@@ -2,7 +2,7 @@ package com.smsagent.sms
 
 import com.smsagent.util.TimeFormatter
 
-data class SmsTriggerMetadata(
+data class SmsForwardMetadata(
     val receivedAtMillis: Long,
     val pid: Int,
     val processName: String,

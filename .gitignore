@@ -10,3 +10,4 @@ captures/
 *.aab
 *.ap_
 *.hprof
+release-artifacts/

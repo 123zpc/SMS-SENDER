@@ -3,6 +3,9 @@
     <style name="Theme.SmsAgent" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/seed</item>
         <item name="colorSecondary">@color/seed</item>
+        <item name="colorSurface">@color/brand_surface</item>
+        <item name="colorSurfaceContainer">@color/brand_surface_container</item>
+        <item name="colorOutlineVariant">@color/brand_outline</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:navigationBarColor">?attr/colorSurface</item>
         <item name="android:statusBarColor">?attr/colorSurface</item>

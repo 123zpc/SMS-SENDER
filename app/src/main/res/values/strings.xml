@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">SMS Agent</string>
-    <string name="permission_label">Permission:</string>
-    <string name="permission_granted">Granted</string>
-    <string name="permission_denied">Denied</string>
-    <string name="last_trigger_label">Last SMS_RECEIVED:</string>
-    <string name="last_trigger_empty">Not triggered</string>
+    <string name="app_subtitle">短信接收触发与 Bark 转发</string>
+    <string name="permission_label">短信接收权限</string>
+    <string name="permission_granted">已授权</string>
+    <string name="permission_denied">未授权</string>
+    <string name="bark_api_label">Bark API 地址</string>
+    <string name="bark_api_hint">https://api.day.app/你的Key</string>
+    <string name="bark_api_error">请输入有效的 HTTP 或 HTTPS 地址</string>
+    <string name="bark_api_saved">Bark API 已保存</string>
+    <string name="save_bark_api">保存 Bark API</string>
+    <string name="last_trigger_label">最近一次 SMS_RECEIVED</string>
+    <string name="last_trigger_empty">尚未触发</string>
+    <string name="last_forward_label">最近一次转发结果</string>
+    <string name="last_forward_empty">尚未转发</string>
 </resources>
