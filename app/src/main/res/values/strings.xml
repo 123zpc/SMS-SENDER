@@ -5,6 +5,10 @@
     <string name="permission_label">短信接收权限</string>
     <string name="permission_granted">已授权</string>
     <string name="permission_denied">未授权</string>
+    <string name="notification_inspector_service_name">Notification Inspector</string>
+    <string name="notification_listener_label">Notification Listener</string>
+    <string name="notification_listener_granted">已授权</string>
+    <string name="notification_listener_denied">未授权</string>
     <string name="remote_api_label">远程 API 模板</string>
     <string name="remote_api_hint">https://api.day.app/你的Key/{title}/{body}</string>
     <string name="remote_api_helper">可用常量：{title}、{sender}、{time}、{body}、{code}</string>
@@ -13,6 +17,7 @@
     <string name="remote_api_saved_log">远程 API 模板已保存</string>
     <string name="save_remote_api">保存模板</string>
     <string name="open_app_settings">打开应用后台设置</string>
+    <string name="open_notification_listener_settings">打开通知使用权限</string>
     <string name="open_console">打开调试控制台</string>
     <string name="last_trigger_label">最近一次 SMS_RECEIVED</string>
     <string name="last_trigger_empty">尚未触发</string>

@@ -9,6 +9,7 @@ SMS Agent 是一个轻量 Android 短信代理应用。
 - 将短信发件人、接收时间、短信内容和验证码提取结果转发到用户手动填写的远程 API 模板。
 - 在本地持久化远程 API 模板、最近一次触发时间、最近一次转发结果和本地日志。
 - 提供控制台式调试页面，用于查看、复制、清空日志，也可以手动写入测试步骤。
+- 提供 Notification Inspector 调试模块，用于观察不同 Android ROM 的通知结构。
 
 本项目不是默认短信应用，不是自动化工具，也不包含保活、队列、数据库或通知能力。
 
@@ -37,6 +38,14 @@ android.permission.INTERNET
 ```
 
 应用不会申请读取联系人、读取通话记录、发送短信、通知、无障碍、前台服务等权限。
+
+Notification Inspector 需要用户在系统“通知使用权限”中手动授权：
+
+```text
+Notification Listener
+```
+
+它只把通知结构写入本地调试控制台，不会把通知转发到 Bark，也不会解析验证码、过滤、去重或分发。
 
 ## 使用方式
 
@@ -136,6 +145,7 @@ https://api.day.app/你的Key
 - 是否识别到验证码
 - 转发结果
 - HTTP 状态或异常类型
+- Notification Inspector 输出的通知结构
 
 控制台支持：
 
@@ -151,6 +161,77 @@ https://api.day.app/你的Key
 ```
 
 然后发送测试短信，再复制完整控制台日志。
+
+## Notification Inspector
+
+Notification Inspector 是一个研究模块，用于观察 HyperOS、MIUI、ColorOS、OriginOS、Pixel 等系统的通知结构差异。
+
+它实现了：
+
+```text
+NotificationListenerService
+```
+
+服务名称：
+
+```text
+NotificationInspectorService
+```
+
+授权后，它监听所有通知，不做过滤。任何 App 的通知都会写入调试控制台。
+
+每条通知会输出：
+
+- 收到时间
+- Package Name
+- Application Label
+- Notification ID
+- Post Time
+- Category
+- Channel ID
+- Visibility
+- Priority
+- Flags
+- Ticker Text
+- `EXTRA_TITLE`
+- `EXTRA_TEXT`
+- `EXTRA_BIG_TEXT`
+- `EXTRA_SUB_TEXT`
+- `EXTRA_SUMMARY_TEXT`
+- `EXTRA_INFO_TEXT`
+- Extras 中全部 Key
+- Extras 中每个 Value
+
+字段为空时输出：
+
+```text
+NULL
+```
+
+控制台示例：
+
+```text
+[Notification]
+Package=com.android.mms
+Title=【百度】
+Text=验证码：958948
+BigText=【百度】验证码：958948（有效30分钟）
+Category=msg
+Visibility=PRIVATE
+Extras={
+  android.title=【百度】
+  android.text=验证码：958948
+}
+```
+
+明确不做：
+
+- 不向 Bark 推送通知
+- 不解析验证码
+- 不做过滤
+- 不实现 Dispatcher
+- 不去重
+- 不修改短信转发逻辑
 
 ## 关闭应用后的转发说明
 
@@ -248,3 +329,4 @@ app/build/outputs/apk/debug/app-debug.apk
 - `0.1.0`：支持配置 Bark API，持久化配置，并转发短信内容。
 - `0.2.0`：支持远程 API 模板常量、本地日志、验证码提取和更清晰的后台设置入口。
 - `0.3.0`：新增控制台式日志页面，支持复制、清空、刷新和手动写入调试记录。
+- `0.4.0`：新增 Notification Inspector 调试模块，用于观察不同 Android ROM 的通知结构。

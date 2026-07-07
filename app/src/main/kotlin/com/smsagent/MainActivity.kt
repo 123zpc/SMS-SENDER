@@ -12,6 +12,7 @@ import android.widget.Toast
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.smsagent.notification.NotificationInspectorPermission
 import com.smsagent.state.AgentStateStore
 import com.smsagent.state.EventLogStore
 import com.smsagent.util.TimeFormatter
@@ -19,10 +20,12 @@ import com.smsagent.util.TimeFormatter
 class MainActivity : Activity() {
 
     private lateinit var permissionValue: TextView
+    private lateinit var notificationListenerValue: TextView
     private lateinit var barkApiInputLayout: TextInputLayout
     private lateinit var barkApiInput: TextInputEditText
     private lateinit var saveBarkApiButton: MaterialButton
     private lateinit var openAppSettingsButton: MaterialButton
+    private lateinit var openNotificationListenerSettingsButton: MaterialButton
     private lateinit var openConsoleButton: MaterialButton
     private lateinit var clearLogButton: MaterialButton
     private lateinit var lastTriggerValue: TextView
@@ -34,10 +37,12 @@ class MainActivity : Activity() {
         setContentView(R.layout.activity_main)
 
         permissionValue = findViewById(R.id.permissionValue)
+        notificationListenerValue = findViewById(R.id.notificationListenerValue)
         barkApiInputLayout = findViewById(R.id.barkApiInputLayout)
         barkApiInput = findViewById(R.id.barkApiInput)
         saveBarkApiButton = findViewById(R.id.saveBarkApiButton)
         openAppSettingsButton = findViewById(R.id.openAppSettingsButton)
+        openNotificationListenerSettingsButton = findViewById(R.id.openNotificationListenerSettingsButton)
         openConsoleButton = findViewById(R.id.openConsoleButton)
         clearLogButton = findViewById(R.id.clearLogButton)
         lastTriggerValue = findViewById(R.id.lastTriggerValue)
@@ -47,6 +52,7 @@ class MainActivity : Activity() {
         barkApiInput.setText(AgentStateStore.getRemoteApiTemplate(this))
         saveBarkApiButton.setOnClickListener { saveBarkApiUrl() }
         openAppSettingsButton.setOnClickListener { openAppSettings() }
+        openNotificationListenerSettingsButton.setOnClickListener { openNotificationListenerSettings() }
         openConsoleButton.setOnClickListener { openConsole() }
         clearLogButton.setOnClickListener { clearEventLog() }
         requestReceiveSmsPermissionIfNeeded()
@@ -80,6 +86,12 @@ class MainActivity : Activity() {
             getString(R.string.permission_granted)
         } else {
             getString(R.string.permission_denied)
+        }
+
+        notificationListenerValue.text = if (NotificationInspectorPermission.isEnabled(this)) {
+            getString(R.string.notification_listener_granted)
+        } else {
+            getString(R.string.notification_listener_denied)
         }
 
         val lastTriggerTime = AgentStateStore.getLastTriggerTime(this)
@@ -119,6 +131,10 @@ class MainActivity : Activity() {
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
             .setData(Uri.parse("package:$packageName"))
         startActivity(intent)
+    }
+
+    private fun openNotificationListenerSettings() {
+        startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
     }
 
     private fun openConsole() {

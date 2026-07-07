@@ -7,7 +7,7 @@ object EventLogStore {
 
     private const val PREFS_NAME = "sms_agent_event_log"
     private const val KEY_EVENTS = "events"
-    private const val MAX_EVENTS = 80
+    private const val MAX_EVENTS = 300
     private const val SEPARATOR = "\n\n"
 
     fun append(context: Context, level: String, message: String) {
