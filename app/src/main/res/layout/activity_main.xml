@@ -10,14 +10,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clipToPadding="false"
         android:orientation="vertical"
         android:padding="24dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/header_panel_background"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="18dp">
 
             <ImageView
                 android:id="@+id/logoImage"
@@ -37,7 +40,7 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/titleText"
-                    style="@style/TextAppearance.Material3.HeadlineSmall"
+                    style="@style/TextAppearance.Material3.TitleLarge"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/app_name"
@@ -57,7 +60,7 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="20dp"
             app:cardBackgroundColor="?attr/colorSurfaceContainer"
             app:cardCornerRadius="8dp"
             app:cardElevation="0dp"
@@ -71,7 +74,7 @@
                 android:padding="18dp">
 
                 <com.google.android.material.textview.MaterialTextView
-                    style="@style/TextAppearance.Material3.TitleMedium"
+                    style="@style/TextAppearance.Material3.LabelLarge"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/permission_label"
@@ -94,14 +97,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="@string/bark_api_label"
+            android:hint="@string/remote_api_label"
+            app:helperText="@string/remote_api_helper"
             app:startIconDrawable="@drawable/ic_link_24">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/barkApiInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/bark_api_hint"
+                android:hint="@string/remote_api_hint"
                 android:inputType="textUri|textNoSuggestions"
                 android:maxLines="3" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -112,8 +116,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="@string/save_bark_api"
+            android:text="@string/save_remote_api"
             app:icon="@drawable/ic_save_24"
+            app:iconGravity="textStart" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/openAppSettingsButton"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/open_app_settings"
+            app:icon="@drawable/ic_settings_24"
             app:iconGravity="textStart" />
 
         <com.google.android.material.card.MaterialCardView
@@ -133,7 +147,7 @@
                 android:padding="18dp">
 
                 <com.google.android.material.textview.MaterialTextView
-                    style="@style/TextAppearance.Material3.TitleMedium"
+                    style="@style/TextAppearance.Material3.LabelLarge"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/last_trigger_label"
@@ -154,7 +168,7 @@
                     android:layout_marginVertical="16dp" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    style="@style/TextAppearance.Material3.TitleMedium"
+                    style="@style/TextAppearance.Material3.LabelLarge"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/last_forward_label"
@@ -168,6 +182,59 @@
                     android:layout_marginTop="6dp"
                     android:textColor="?attr/colorOnSurface"
                     app:lineHeight="24dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:cardBackgroundColor="?attr/colorSurfaceContainer"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
+            app:strokeColor="?attr/colorOutlineVariant"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/TextAppearance.Material3.LabelLarge"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/event_log_label"
+                        android:textColor="?attr/colorOnSurfaceVariant" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/clearLogButton"
+                        style="@style/Widget.Material3.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:minWidth="40dp"
+                        android:text="@string/clear_log"
+                        app:icon="@drawable/ic_delete_24"
+                        app:iconGravity="textStart" />
+                </LinearLayout>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/eventLogValue"
+                    style="@style/TextAppearance.Material3.BodySmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="monospace"
+                    android:textColor="?attr/colorOnSurface"
+                    app:lineHeight="18dp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

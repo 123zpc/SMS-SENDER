@@ -2,15 +2,18 @@ package com.smsagent
 
 import android.Manifest
 import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.smsagent.state.AgentStateStore
+import com.smsagent.state.EventLogStore
 import com.smsagent.util.TimeFormatter
 
 class MainActivity : Activity() {
@@ -19,8 +22,11 @@ class MainActivity : Activity() {
     private lateinit var barkApiInputLayout: TextInputLayout
     private lateinit var barkApiInput: TextInputEditText
     private lateinit var saveBarkApiButton: MaterialButton
+    private lateinit var openAppSettingsButton: MaterialButton
+    private lateinit var clearLogButton: MaterialButton
     private lateinit var lastTriggerValue: TextView
     private lateinit var lastForwardResultValue: TextView
+    private lateinit var eventLogValue: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,11 +36,16 @@ class MainActivity : Activity() {
         barkApiInputLayout = findViewById(R.id.barkApiInputLayout)
         barkApiInput = findViewById(R.id.barkApiInput)
         saveBarkApiButton = findViewById(R.id.saveBarkApiButton)
+        openAppSettingsButton = findViewById(R.id.openAppSettingsButton)
+        clearLogButton = findViewById(R.id.clearLogButton)
         lastTriggerValue = findViewById(R.id.lastTriggerValue)
         lastForwardResultValue = findViewById(R.id.lastForwardResultValue)
+        eventLogValue = findViewById(R.id.eventLogValue)
 
-        barkApiInput.setText(AgentStateStore.getBarkApiUrl(this))
+        barkApiInput.setText(AgentStateStore.getRemoteApiTemplate(this))
         saveBarkApiButton.setOnClickListener { saveBarkApiUrl() }
+        openAppSettingsButton.setOnClickListener { openAppSettings() }
+        clearLogButton.setOnClickListener { clearEventLog() }
         requestReceiveSmsPermissionIfNeeded()
         renderState()
     }
@@ -77,6 +88,9 @@ class MainActivity : Activity() {
 
         lastForwardResultValue.text = AgentStateStore.getLastForwardResult(this)
             .ifBlank { getString(R.string.last_forward_empty) }
+
+        eventLogValue.text = EventLogStore.getEventText(this)
+            .ifBlank { getString(R.string.event_log_empty) }
     }
 
     private fun saveBarkApiUrl() {
@@ -87,8 +101,21 @@ class MainActivity : Activity() {
         }
 
         barkApiInputLayout.error = null
-        AgentStateStore.saveBarkApiUrl(this, value)
-        Toast.makeText(this, R.string.bark_api_saved, Toast.LENGTH_SHORT).show()
+        AgentStateStore.saveRemoteApiTemplate(this, value)
+        EventLogStore.append(this, "??", getString(R.string.remote_api_saved_log))
+        Toast.makeText(this, R.string.remote_api_saved, Toast.LENGTH_SHORT).show()
+        renderState()
+    }
+
+    private fun clearEventLog() {
+        EventLogStore.clear(this)
+        renderState()
+    }
+
+    private fun openAppSettings() {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+            .setData(Uri.parse("package:$packageName"))
+        startActivity(intent)
     }
 
     private fun hasReceiveSmsPermission(): Boolean {

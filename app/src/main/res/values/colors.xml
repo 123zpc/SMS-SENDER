@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="seed">#2F6F5E</color>
+    <color name="accent_indigo">#4D5BD1</color>
     <color name="brand_surface">#F8FAF9</color>
     <color name="brand_surface_container">#EEF4F1</color>
+    <color name="header_panel">#EAF0FF</color>
     <color name="brand_outline">#CDD8D3</color>
 </resources>

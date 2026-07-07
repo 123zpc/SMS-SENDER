@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">SMS Agent</string>
-    <string name="app_subtitle">短信接收触发与 Bark 转发</string>
-    <string name="permission_label">短信接收权限</string>
-    <string name="permission_granted">已授权</string>
-    <string name="permission_denied">未授权</string>
-    <string name="bark_api_label">Bark API 地址</string>
-    <string name="bark_api_hint">https://api.day.app/你的Key</string>
-    <string name="bark_api_error">请输入有效的 HTTP 或 HTTPS 地址</string>
-    <string name="bark_api_saved">Bark API 已保存</string>
-    <string name="save_bark_api">保存 Bark API</string>
-    <string name="last_trigger_label">最近一次 SMS_RECEIVED</string>
-    <string name="last_trigger_empty">尚未触发</string>
-    <string name="last_forward_label">最近一次转发结果</string>
-    <string name="last_forward_empty">尚未转发</string>
+    <string name="app_subtitle">???? ? ???? ? ????</string>
+    <string name="permission_label">??????</string>
+    <string name="permission_granted">???</string>
+    <string name="permission_denied">???</string>
+    <string name="remote_api_label">?? API ??</string>
+    <string name="remote_api_hint">https://api.day.app/??Key/{title}/{body}</string>
+    <string name="remote_api_helper">?????{title}?{sender}?{time}?{body}?{code}</string>
+    <string name="bark_api_error">?????? HTTP ? HTTPS ??</string>
+    <string name="remote_api_saved">?? API ?????</string>
+    <string name="remote_api_saved_log">?? API ?????</string>
+    <string name="save_remote_api">????</string>
+    <string name="open_app_settings">????????</string>
+    <string name="last_trigger_label">???? SMS_RECEIVED</string>
+    <string name="last_trigger_empty">????</string>
+    <string name="last_forward_label">????????</string>
+    <string name="last_forward_empty">????</string>
+    <string name="event_log_label">????</string>
+    <string name="event_log_empty">????</string>
+    <string name="clear_log">??</string>
 </resources>
