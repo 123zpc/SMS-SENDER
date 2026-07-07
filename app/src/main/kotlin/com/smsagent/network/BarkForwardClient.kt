@@ -5,16 +5,20 @@ import android.util.Log
 import com.smsagent.sms.IncomingSms
 import com.smsagent.sms.SmsForwardMetadata
 import java.io.IOException
+import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
-import okhttp3.Call
-import okhttp3.Callback
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.Response
 
 object BarkForwardClient {
 
     private const val TAG = "BarkForwardClient"
+    private val executor = Executors.newSingleThreadExecutor { runnable ->
+        Thread(runnable, "sms-forward-http").apply {
+            isDaemon = false
+        }
+    }
+
     private val client: OkHttpClient = OkHttpClient.Builder()
         .connectTimeout(4, TimeUnit.SECONDS)
         .readTimeout(6, TimeUnit.SECONDS)
@@ -43,29 +47,19 @@ object BarkForwardClient {
             .url(requestUrl)
             .get()
             .build()
-        val startedAtNanos = SystemClock.elapsedRealtimeNanos()
 
+        val submittedAtNanos = SystemClock.elapsedRealtimeNanos()
         try {
-            client.newCall(request).enqueue(object : Callback {
-                override fun onFailure(call: Call, e: IOException) {
-                    val result = BarkForwardResult(
-                        successful = false,
-                        message = "异常：${e.javaClass.name}",
-                        durationMillis = elapsedMillis(startedAtNanos),
-                    )
-                    Log.e(TAG, metadata.logLine(result.message, result.durationMillis), e)
-                    onResult(result)
-                }
-
-                override fun onResponse(call: Call, response: Response) {
-                    response.use {
+            executor.execute {
+                try {
+                    client.newCall(request).execute().use { response ->
                         val result = BarkForwardResult(
-                            successful = it.isSuccessful,
-                            message = "HTTP ${it.code} ${it.message}",
-                            durationMillis = elapsedMillis(startedAtNanos),
+                            successful = response.isSuccessful,
+                            message = "HTTP ${response.code} ${response.message}",
+                            durationMillis = elapsedMillis(submittedAtNanos),
                         )
 
-                        if (it.isSuccessful) {
+                        if (response.isSuccessful) {
                             Log.i(TAG, "SMS Forward Success")
                             Log.i(TAG, metadata.logLine(result.message, result.durationMillis))
                         } else {
@@ -74,13 +68,29 @@ object BarkForwardClient {
 
                         onResult(result)
                     }
+                } catch (exception: IOException) {
+                    val result = BarkForwardResult(
+                        successful = false,
+                        message = "异常：${exception.javaClass.name}",
+                        durationMillis = elapsedMillis(submittedAtNanos),
+                    )
+                    Log.e(TAG, metadata.logLine(result.message, result.durationMillis), exception)
+                    onResult(result)
+                } catch (throwable: Throwable) {
+                    val result = BarkForwardResult(
+                        successful = false,
+                        message = "异常：${throwable.javaClass.name}",
+                        durationMillis = elapsedMillis(submittedAtNanos),
+                    )
+                    Log.e(TAG, metadata.logLine(result.message, result.durationMillis), throwable)
+                    onResult(result)
                 }
-            })
+            }
         } catch (throwable: Throwable) {
             val result = BarkForwardResult(
                 successful = false,
                 message = "异常：${throwable.javaClass.name}",
-                durationMillis = elapsedMillis(startedAtNanos),
+                durationMillis = elapsedMillis(submittedAtNanos),
             )
             Log.e(TAG, metadata.logLine(result.message, result.durationMillis), throwable)
             onResult(result)
