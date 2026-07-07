@@ -4,13 +4,10 @@ import android.os.SystemClock
 import android.util.Log
 import com.smsagent.sms.IncomingSms
 import com.smsagent.sms.SmsForwardMetadata
-import com.smsagent.util.TimeFormatter
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 import okhttp3.Call
 import okhttp3.Callback
-import okhttp3.HttpUrl
-import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
@@ -18,8 +15,6 @@ import okhttp3.Response
 object BarkForwardClient {
 
     private const val TAG = "BarkForwardClient"
-    private const val TITLE = "SMS Agent"
-
     private val client: OkHttpClient = OkHttpClient.Builder()
         .connectTimeout(4, TimeUnit.SECONDS)
         .readTimeout(6, TimeUnit.SECONDS)
@@ -27,16 +22,16 @@ object BarkForwardClient {
         .build()
 
     fun forwardSms(
-        barkApiUrl: String,
+        remoteApiTemplate: String,
         sms: IncomingSms,
         metadata: SmsForwardMetadata,
         onResult: (BarkForwardResult) -> Unit,
     ) {
-        val requestUrl = buildRequestUrl(barkApiUrl, sms)
+        val requestUrl = RemoteApiTemplateRenderer.render(remoteApiTemplate, sms)
         if (requestUrl == null) {
             val result = BarkForwardResult(
                 successful = false,
-                message = "Bark API 地址无效",
+                message = "?? API ????",
                 durationMillis = 0L,
             )
             Log.w(TAG, metadata.logLine(result.message, result.durationMillis))
@@ -55,7 +50,7 @@ object BarkForwardClient {
                 override fun onFailure(call: Call, e: IOException) {
                     val result = BarkForwardResult(
                         successful = false,
-                        message = "异常：${e.javaClass.name}",
+                        message = "???${e.javaClass.name}",
                         durationMillis = elapsedMillis(startedAtNanos),
                     )
                     Log.e(TAG, metadata.logLine(result.message, result.durationMillis), e)
@@ -84,29 +79,12 @@ object BarkForwardClient {
         } catch (throwable: Throwable) {
             val result = BarkForwardResult(
                 successful = false,
-                message = "异常：${throwable.javaClass.name}",
+                message = "???${throwable.javaClass.name}",
                 durationMillis = elapsedMillis(startedAtNanos),
             )
             Log.e(TAG, metadata.logLine(result.message, result.durationMillis), throwable)
             onResult(result)
         }
-    }
-
-    private fun buildRequestUrl(barkApiUrl: String, sms: IncomingSms): HttpUrl? {
-        val baseUrl = barkApiUrl.trim().trimEnd('/').toHttpUrlOrNull() ?: return null
-        val body = buildString {
-            append("发件人：")
-            appendLine(sms.sender)
-            append("时间：")
-            appendLine(TimeFormatter.format(sms.receivedAtMillis))
-            append("内容：")
-            append(sms.body)
-        }
-
-        return baseUrl.newBuilder()
-            .addPathSegment(TITLE)
-            .addPathSegment(body)
-            .build()
     }
 
     private fun elapsedMillis(startedAtNanos: Long): Long {
