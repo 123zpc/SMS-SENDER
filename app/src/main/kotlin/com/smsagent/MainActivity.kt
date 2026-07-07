@@ -23,6 +23,7 @@ class MainActivity : Activity() {
     private lateinit var barkApiInput: TextInputEditText
     private lateinit var saveBarkApiButton: MaterialButton
     private lateinit var openAppSettingsButton: MaterialButton
+    private lateinit var openConsoleButton: MaterialButton
     private lateinit var clearLogButton: MaterialButton
     private lateinit var lastTriggerValue: TextView
     private lateinit var lastForwardResultValue: TextView
@@ -37,6 +38,7 @@ class MainActivity : Activity() {
         barkApiInput = findViewById(R.id.barkApiInput)
         saveBarkApiButton = findViewById(R.id.saveBarkApiButton)
         openAppSettingsButton = findViewById(R.id.openAppSettingsButton)
+        openConsoleButton = findViewById(R.id.openConsoleButton)
         clearLogButton = findViewById(R.id.clearLogButton)
         lastTriggerValue = findViewById(R.id.lastTriggerValue)
         lastForwardResultValue = findViewById(R.id.lastForwardResultValue)
@@ -45,6 +47,7 @@ class MainActivity : Activity() {
         barkApiInput.setText(AgentStateStore.getRemoteApiTemplate(this))
         saveBarkApiButton.setOnClickListener { saveBarkApiUrl() }
         openAppSettingsButton.setOnClickListener { openAppSettings() }
+        openConsoleButton.setOnClickListener { openConsole() }
         clearLogButton.setOnClickListener { clearEventLog() }
         requestReceiveSmsPermissionIfNeeded()
         renderState()
@@ -116,6 +119,10 @@ class MainActivity : Activity() {
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
             .setData(Uri.parse("package:$packageName"))
         startActivity(intent)
+    }
+
+    private fun openConsole() {
+        startActivity(Intent(this, ConsoleActivity::class.java))
     }
 
     private fun hasReceiveSmsPermission(): Boolean {

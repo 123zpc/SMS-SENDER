@@ -13,6 +13,7 @@
     <string name="remote_api_saved_log">远程 API 模板已保存</string>
     <string name="save_remote_api">保存模板</string>
     <string name="open_app_settings">打开应用后台设置</string>
+    <string name="open_console">打开调试控制台</string>
     <string name="last_trigger_label">最近一次 SMS_RECEIVED</string>
     <string name="last_trigger_empty">尚未触发</string>
     <string name="last_forward_label">最近一次转发结果</string>
@@ -20,4 +21,11 @@
     <string name="event_log_label">本地日志</string>
     <string name="event_log_empty">暂无日志</string>
     <string name="clear_log">清空</string>
+    <string name="console_title">调试控制台</string>
+    <string name="console_empty">暂无控制台日志</string>
+    <string name="console_refresh">刷新</string>
+    <string name="console_copy">复制</string>
+    <string name="console_copied">日志已复制</string>
+    <string name="console_input_hint">记录测试步骤、设备状态或现象</string>
+    <string name="console_append">写入</string>
 </resources>

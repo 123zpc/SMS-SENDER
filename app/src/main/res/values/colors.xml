@@ -6,4 +6,10 @@
     <color name="brand_surface_container">#EEF4F1</color>
     <color name="header_panel">#EAF0FF</color>
     <color name="brand_outline">#CDD8D3</color>
+    <color name="console_background">#111318</color>
+    <color name="console_toolbar">#1B1E26</color>
+    <color name="console_text">#E5E7EB</color>
+    <color name="console_muted">#8E95A3</color>
+    <color name="console_accent">#7DD3FC</color>
+    <color name="console_warning">#FCA5A5</color>
 </resources>

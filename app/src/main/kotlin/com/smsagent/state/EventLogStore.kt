@@ -25,6 +25,10 @@ object EventLogStore {
         return getEvents(context).joinToString(SEPARATOR)
     }
 
+    fun getConsoleText(context: Context): String {
+        return getEvents(context).asReversed().joinToString("\n")
+    }
+
     fun clear(context: Context) {
         prefs(context).edit().remove(KEY_EVENTS).commit()
     }

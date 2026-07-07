@@ -130,6 +130,16 @@
             app:icon="@drawable/ic_settings_24"
             app:iconGravity="textStart" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/openConsoleButton"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/open_console"
+            app:icon="@drawable/ic_terminal_24"
+            app:iconGravity="textStart" />
+
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
