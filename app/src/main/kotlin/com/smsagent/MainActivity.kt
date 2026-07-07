@@ -102,7 +102,7 @@ class MainActivity : Activity() {
 
         barkApiInputLayout.error = null
         AgentStateStore.saveRemoteApiTemplate(this, value)
-        EventLogStore.append(this, "??", getString(R.string.remote_api_saved_log))
+        EventLogStore.append(this, "配置", getString(R.string.remote_api_saved_log))
         Toast.makeText(this, R.string.remote_api_saved, Toast.LENGTH_SHORT).show()
         renderState()
     }

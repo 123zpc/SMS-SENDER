@@ -31,7 +31,7 @@ object BarkForwardClient {
         if (requestUrl == null) {
             val result = BarkForwardResult(
                 successful = false,
-                message = "?? API ????",
+                message = "远程 API 模板无效",
                 durationMillis = 0L,
             )
             Log.w(TAG, metadata.logLine(result.message, result.durationMillis))
@@ -50,7 +50,7 @@ object BarkForwardClient {
                 override fun onFailure(call: Call, e: IOException) {
                     val result = BarkForwardResult(
                         successful = false,
-                        message = "???${e.javaClass.name}",
+                        message = "异常：${e.javaClass.name}",
                         durationMillis = elapsedMillis(startedAtNanos),
                     )
                     Log.e(TAG, metadata.logLine(result.message, result.durationMillis), e)
@@ -79,7 +79,7 @@ object BarkForwardClient {
         } catch (throwable: Throwable) {
             val result = BarkForwardResult(
                 successful = false,
-                message = "???${throwable.javaClass.name}",
+                message = "异常：${throwable.javaClass.name}",
                 durationMillis = elapsedMillis(startedAtNanos),
             )
             Log.e(TAG, metadata.logLine(result.message, result.durationMillis), throwable)

@@ -19,8 +19,8 @@ object SmsReceivedHandler {
         AgentStateStore.saveLastTriggerTime(appContext, incomingSms.receivedAtMillis)
         EventLogStore.append(
             appContext,
-            "??",
-            "SMS_RECEIVED????=${incomingSms.sender}???=${incomingSms.body.length}????=${incomingSms.verificationCode.ifBlank { "?" }}",
+            "收到",
+            "SMS_RECEIVED，发件人=${incomingSms.sender}，长度=${incomingSms.body.length}，验证码=${incomingSms.verificationCode.ifBlank { "无" }}",
         )
 
         val metadata = SmsForwardMetadata(
@@ -32,12 +32,12 @@ object SmsReceivedHandler {
         if (remoteApiTemplate.isBlank()) {
             AgentStateStore.saveLastForwardResult(
                 appContext,
-                "???????? API?${TimeFormatter.format(System.currentTimeMillis())}",
+                "失败：未配置远程 API，${TimeFormatter.format(System.currentTimeMillis())}",
             )
             EventLogStore.append(
                 appContext,
-                "??",
-                "????? API ???????",
+                "失败",
+                "未配置远程 API 模板，跳过转发",
             )
             pendingResult.finish()
             return
@@ -61,7 +61,7 @@ object SmsReceivedHandler {
             AgentStateStore.saveLastForwardResult(appContext, result.displayText())
             EventLogStore.append(
                 appContext,
-                if (result.successful) "??" else "??",
+                if (result.successful) "成功" else "失败",
                 result.displayText(),
             )
         } finally {
