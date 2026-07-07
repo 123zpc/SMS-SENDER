@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SMS Agent</string>
+    <string name="permission_label">Permission:</string>
+    <string name="permission_granted">Granted</string>
+    <string name="permission_denied">Denied</string>
+    <string name="last_trigger_label">Last SMS_RECEIVED:</string>
+    <string name="last_trigger_empty">Not triggered</string>
+</resources>
