@@ -9,6 +9,7 @@ object AgentStateStore {
     private const val KEY_BARK_API_URL = "bark_api_url"
     private const val KEY_LAST_TRIGGER_TIME = "last_sms_received_at"
     private const val KEY_LAST_FORWARD_RESULT = "last_forward_result"
+    private const val KEY_LAST_OBSERVED_SMS_ID = "last_observed_sms_id"
 
     fun saveRemoteApiTemplate(context: Context, template: String): Boolean {
         return prefs(context)
@@ -53,6 +54,17 @@ object AgentStateStore {
 
     fun getLastForwardResult(context: Context): String {
         return prefs(context).getString(KEY_LAST_FORWARD_RESULT, "").orEmpty()
+    }
+
+    fun saveLastObservedSmsId(context: Context, smsId: Long): Boolean {
+        return prefs(context)
+            .edit()
+            .putLong(KEY_LAST_OBSERVED_SMS_ID, smsId)
+            .commit()
+    }
+
+    fun getLastObservedSmsId(context: Context): Long {
+        return prefs(context).getLong(KEY_LAST_OBSERVED_SMS_ID, 0L)
     }
 
     private fun prefs(context: Context) =

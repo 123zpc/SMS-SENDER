@@ -21,16 +21,26 @@ data class IncomingSms(
             val firstMessage = messages.firstOrNull()
             val sender = firstMessage?.displayOriginatingAddress
                 ?: firstMessage?.originatingAddress
-                ?: "未知号码"
+                ?: UNKNOWN_SENDER
             val body = messages.joinToString(separator = "") { message ->
                 message.displayMessageBody ?: message.messageBody.orEmpty()
             }
 
             return IncomingSms(
-                sender = sender,
+                sender = sender.ifBlank { UNKNOWN_SENDER },
                 body = body,
                 receivedAtMillis = receivedAtMillis,
             )
         }
+
+        fun fromRaw(sender: String?, body: String?, receivedAtMillis: Long): IncomingSms {
+            return IncomingSms(
+                sender = sender?.takeIf { it.isNotBlank() } ?: UNKNOWN_SENDER,
+                body = body.orEmpty(),
+                receivedAtMillis = receivedAtMillis,
+            )
+        }
+
+        private const val UNKNOWN_SENDER = "未知号码"
     }
 }

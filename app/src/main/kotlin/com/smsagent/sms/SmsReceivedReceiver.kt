@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.provider.Telephony
 import android.util.Log
+import com.smsagent.dispatcher.SmsDispatcher
+import com.smsagent.dispatcher.SmsSource
 
 class SmsReceivedReceiver : BroadcastReceiver() {
 
@@ -20,10 +22,11 @@ class SmsReceivedReceiver : BroadcastReceiver() {
                 messages = Telephony.Sms.Intents.getMessagesFromIntent(intent),
                 receivedAtMillis = receivedAtMillis,
             )
-            SmsReceivedHandler.handle(
-                appContext = context.applicationContext,
-                incomingSms = incomingSms,
-                pendingResult = pendingResult,
+            SmsDispatcher.dispatch(
+                context = context.applicationContext,
+                sms = incomingSms,
+                source = SmsSource.BROADCAST,
+                onComplete = { pendingResult.finish() },
             )
         } catch (throwable: Throwable) {
             Log.e(TAG, "SMS_RECEIVED handling failed", throwable)

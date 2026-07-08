@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.widget.TextView
@@ -12,6 +13,7 @@ import android.widget.Toast
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.smsagent.keepalive.KeepAliveService
 import com.smsagent.notification.NotificationInspectorPermission
 import com.smsagent.state.AgentStateStore
 import com.smsagent.state.EventLogStore
@@ -55,7 +57,9 @@ class MainActivity : Activity() {
         openNotificationListenerSettingsButton.setOnClickListener { openNotificationListenerSettings() }
         openConsoleButton.setOnClickListener { openConsole() }
         clearLogButton.setOnClickListener { clearEventLog() }
-        requestReceiveSmsPermissionIfNeeded()
+
+        requestRequiredPermissionsIfNeeded()
+        KeepAliveService.start(this)
         renderState()
     }
 
@@ -70,22 +74,41 @@ class MainActivity : Activity() {
         grantResults: IntArray,
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == RECEIVE_SMS_REQUEST_CODE) {
+        if (requestCode == RUNTIME_PERMISSIONS_REQUEST_CODE) {
+            KeepAliveService.start(this)
             renderState()
         }
     }
 
-    private fun requestReceiveSmsPermissionIfNeeded() {
-        if (!hasReceiveSmsPermission()) {
-            requestPermissions(arrayOf(Manifest.permission.RECEIVE_SMS), RECEIVE_SMS_REQUEST_CODE)
+    private fun requestRequiredPermissionsIfNeeded() {
+        val requiredPermissions = buildList {
+            add(Manifest.permission.RECEIVE_SMS)
+            add(Manifest.permission.READ_SMS)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                add(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+        val missingPermissions = requiredPermissions.filter { permission ->
+            checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED
+        }
+
+        if (missingPermissions.isNotEmpty()) {
+            requestPermissions(missingPermissions.toTypedArray(), RUNTIME_PERMISSIONS_REQUEST_CODE)
         }
     }
 
     private fun renderState() {
-        permissionValue.text = if (hasReceiveSmsPermission()) {
-            getString(R.string.permission_granted)
-        } else {
-            getString(R.string.permission_denied)
+        permissionValue.text = buildString {
+            append("RECEIVE_SMS：")
+            append(permissionText(hasReceiveSmsPermission()))
+            append('\n')
+            append("READ_SMS：")
+            append(permissionText(hasReadSmsPermission()))
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                append('\n')
+                append("POST_NOTIFICATIONS：")
+                append(permissionText(hasPostNotificationsPermission()))
+            }
         }
 
         notificationListenerValue.text = if (NotificationInspectorPermission.isEnabled(this)) {
@@ -145,12 +168,29 @@ class MainActivity : Activity() {
         return checkSelfPermission(Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED
     }
 
+    private fun hasReadSmsPermission(): Boolean {
+        return checkSelfPermission(Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun hasPostNotificationsPermission(): Boolean {
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
+            checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun permissionText(granted: Boolean): String {
+        return if (granted) {
+            getString(R.string.permission_granted)
+        } else {
+            getString(R.string.permission_denied)
+        }
+    }
+
     private fun isHttpUrl(value: String): Boolean {
         val uri = Uri.parse(value)
         return (uri.scheme == "http" || uri.scheme == "https") && !uri.host.isNullOrBlank()
     }
 
     private companion object {
-        private const val RECEIVE_SMS_REQUEST_CODE = 1001
+        private const val RUNTIME_PERMISSIONS_REQUEST_CODE = 1001
     }
 }
