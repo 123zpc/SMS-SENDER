@@ -2,7 +2,6 @@ package com.smsagent.sms
 
 import android.content.BroadcastReceiver
 import android.content.Context
-import android.os.PowerManager
 import com.smsagent.network.BarkForwardClient
 import com.smsagent.network.BarkForwardResult
 import com.smsagent.state.AgentStateStore
@@ -44,25 +43,18 @@ object SmsReceivedHandler {
             return
         }
 
-        val wakeLock = acquireWakeLock(appContext)
-        EventLogStore.append(
-            appContext,
-            "后台",
-            "已提交短信 HTTP 转发任务，WakeLock=${wakeLock != null}",
-        )
         BarkForwardClient.forwardSms(
             remoteApiTemplate = remoteApiTemplate,
             sms = incomingSms,
             metadata = metadata,
         ) { result ->
-            finish(appContext, result, wakeLock, pendingResult)
+            finish(appContext, result, pendingResult)
         }
     }
 
     private fun finish(
         appContext: Context,
         result: BarkForwardResult,
-        wakeLock: PowerManager.WakeLock?,
         pendingResult: BroadcastReceiver.PendingResult,
     ) {
         try {
@@ -73,25 +65,7 @@ object SmsReceivedHandler {
                 result.displayText(),
             )
         } finally {
-            if (wakeLock?.isHeld == true) {
-                wakeLock.release()
-            }
             pendingResult.finish()
         }
     }
-
-    private fun acquireWakeLock(appContext: Context): PowerManager.WakeLock? {
-        return runCatching {
-            val powerManager = appContext.getSystemService(PowerManager::class.java)
-            powerManager.newWakeLock(
-                PowerManager.PARTIAL_WAKE_LOCK,
-                "${appContext.packageName}:SmsForward",
-            ).apply {
-                setReferenceCounted(false)
-                acquire(WAKE_LOCK_TIMEOUT_MILLIS)
-            }
-        }.getOrNull()
-    }
-
-    private const val WAKE_LOCK_TIMEOUT_MILLIS = 15_000L
 }
