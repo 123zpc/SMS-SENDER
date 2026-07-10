@@ -1,13 +1,14 @@
 package com.smsagent.notification
 
-import android.app.Notification
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.util.Log
 import com.smsagent.dispatcher.SmsDispatcher
 import com.smsagent.dispatcher.SmsSource
 import com.smsagent.sms.IncomingSms
+import com.smsagent.state.AgentStateStore
 import com.smsagent.state.EventLogStore
+import com.smsagent.state.NotificationDispatchState
 
 class NotificationInspectorService : NotificationListenerService() {
 
@@ -23,6 +24,20 @@ class NotificationInspectorService : NotificationListenerService() {
         dispatchSmsNotificationIfPossible(sbn, receivedAtMillis)
     }
 
+    override fun onNotificationRemoved(sbn: StatusBarNotification) {
+        if (sbn.packageName !in SMS_PACKAGES) {
+            return
+        }
+
+        val slotKey = NotificationSmsNormalizer.buildSlotKey(sbn)
+        AgentStateStore.clearNotificationDispatchState(this, slotKey)
+        EventLogStore.append(
+            this,
+            "Notification",
+            "短信通知轨道移除：package=${sbn.packageName}，slot=$slotKey",
+        )
+    }
+
     private fun dispatchSmsNotificationIfPossible(
         sbn: StatusBarNotification,
         receivedAtMillis: Long,
@@ -31,13 +46,8 @@ class NotificationInspectorService : NotificationListenerService() {
             return
         }
 
-        val extras = sbn.notification.extras
-        val sender = extras.getCharSequence(Notification.EXTRA_TITLE)
-            ?.toString()
-            ?.takeIf { it.isNotBlank() }
-            ?: sbn.packageName
-        val body = extractBody(extras)
-        if (body.isBlank()) {
+        val normalizedSms = NotificationSmsNormalizer.normalize(sbn)
+        if (normalizedSms == null) {
             EventLogStore.append(
                 this,
                 "Notification",
@@ -46,27 +56,68 @@ class NotificationInspectorService : NotificationListenerService() {
             return
         }
 
+        val previousState = AgentStateStore.getNotificationDispatchState(this, normalizedSms.slotKey)
+        val skipReason = skipReason(normalizedSms, previousState)
+        if (skipReason != null) {
+            AgentStateStore.saveNotificationDispatchState(
+                context = this,
+                slotKey = normalizedSms.slotKey,
+                state = NotificationDispatchState(
+                    messageCount = normalizedSms.messageCount,
+                    messageSignature = normalizedSms.messageSignature,
+                    updatedAtMillis = receivedAtMillis,
+                ),
+            )
+            EventLogStore.append(
+                this,
+                "Notification",
+                "短信通知轨道去重：package=${sbn.packageName}，sender=${normalizedSms.sender}，count=${normalizedSms.messageCount}，slot=${normalizedSms.slotKey}，reason=$skipReason",
+            )
+            return
+        }
+
         EventLogStore.append(
             this,
             "Notification",
-            "短信通知轨道提取：package=${sbn.packageName}，sender=$sender，length=${body.length}",
+            "短信通知轨道提取：package=${sbn.packageName}，sender=${normalizedSms.sender}，count=${normalizedSms.messageCount}，length=${normalizedSms.normalizedBody.length}",
         )
         SmsDispatcher.dispatch(
             context = this,
-            sms = IncomingSms.fromRaw(sender, body, receivedAtMillis),
+            sms = IncomingSms.fromRaw(
+                normalizedSms.sender,
+                normalizedSms.normalizedBody,
+                receivedAtMillis,
+            ),
             source = SmsSource.NOTIFICATION,
+        )
+        AgentStateStore.saveNotificationDispatchState(
+            context = this,
+            slotKey = normalizedSms.slotKey,
+            state = NotificationDispatchState(
+                messageCount = normalizedSms.messageCount,
+                messageSignature = normalizedSms.messageSignature,
+                updatedAtMillis = receivedAtMillis,
+            ),
         )
     }
 
-    private fun extractBody(extras: android.os.Bundle): String {
-        val bigText = extras.getCharSequence(Notification.EXTRA_BIG_TEXT)?.toString()
-        val text = extras.getCharSequence(Notification.EXTRA_TEXT)?.toString()
-        val textLines = extras.getCharSequenceArray(Notification.EXTRA_TEXT_LINES)
-            ?.joinToString(separator = "\n") { it.toString() }
-
-        return listOf(bigText, textLines, text)
-            .firstOrNull { !it.isNullOrBlank() }
-            .orEmpty()
+    private fun skipReason(
+        normalizedSms: NormalizedNotificationSms,
+        previousState: NotificationDispatchState?,
+    ): String? {
+        if (previousState == null) {
+            return null
+        }
+        if (normalizedSms.messageCount > previousState.messageCount) {
+            return null
+        }
+        if (normalizedSms.messageCount < previousState.messageCount) {
+            return null
+        }
+        if (normalizedSms.messageSignature != previousState.messageSignature) {
+            return null
+        }
+        return "same_slot_state"
     }
 
     private companion object {
