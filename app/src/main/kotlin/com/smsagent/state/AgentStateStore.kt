@@ -16,6 +16,7 @@ object AgentStateStore {
     private const val KEY_LAST_TRIGGER_TIME = "last_sms_received_at"
     private const val KEY_LAST_FORWARD_RESULT = "last_forward_result"
     private const val KEY_LAST_OBSERVED_SMS_ID = "last_observed_sms_id"
+    private const val KEY_DISPATCH_TRACE_COUNTER = "dispatch_trace_counter"
     private const val KEY_NOTIFICATION_STATE_PREFIX = "notification_dispatch_state:"
     private const val NOTIFICATION_STATE_TTL_MILLIS = 6 * 60 * 60 * 1000L
 
@@ -73,6 +74,15 @@ object AgentStateStore {
 
     fun getLastObservedSmsId(context: Context): Long {
         return prefs(context).getLong(KEY_LAST_OBSERVED_SMS_ID, 0L)
+    }
+
+    fun nextDispatchTraceId(context: Context): Long {
+        val prefs = prefs(context)
+        val nextValue = prefs.getLong(KEY_DISPATCH_TRACE_COUNTER, 0L) + 1L
+        prefs.edit()
+            .putLong(KEY_DISPATCH_TRACE_COUNTER, nextValue)
+            .commit()
+        return nextValue
     }
 
     fun saveNotificationDispatchState(

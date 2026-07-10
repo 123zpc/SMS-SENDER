@@ -43,6 +43,15 @@
             android:textColor="@color/console_accent" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/exportButton"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:minWidth="40dp"
+            android:text="@string/console_export"
+            android:textColor="@color/console_accent" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/clearConsoleButton"
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"

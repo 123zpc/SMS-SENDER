@@ -16,6 +16,7 @@ import com.smsagent.state.EventLogStore
 import com.smsagent.util.ProcessNameProvider
 import com.smsagent.worker.SmsRetryWorker
 import java.util.concurrent.Executors
+import java.util.Locale
 
 object SmsDispatcher {
 
@@ -36,14 +37,15 @@ object SmsDispatcher {
     ) {
         val appContext = context.applicationContext
         executor.execute {
+            val traceId = AgentStateStore.nextDispatchTraceId(appContext)
             try {
-                dispatchSync(appContext, sms, source)
+                dispatchSync(appContext, sms, source, traceId)
             } catch (throwable: Throwable) {
-                Log.e(TAG, "短信调度失败：source=$source", throwable)
+                Log.e(TAG, "短信调度失败：${formatTraceLabel(traceId)} source=$source", throwable)
                 EventLogStore.append(
                     appContext,
                     "SmsDispatcher",
-                    "短信调度异常：source=$source，error=${throwable.javaClass.name}",
+                    "${formatTraceLabel(traceId)} 调度异常：source=$source，error=${throwable.javaClass.name}",
                 )
             } finally {
                 onComplete?.invoke()
@@ -62,7 +64,19 @@ object SmsDispatcher {
         var successCount = 0
         var failureCount = 0
         messages.forEach { entity ->
-            val result = forwardStoredMessage(appContext, dao, entity, SmsSource.RETRY_WORKER)
+            val traceId = AgentStateStore.nextDispatchTraceId(appContext)
+            EventLogStore.append(
+                appContext,
+                "RetryWorker",
+                "${formatTraceLabel(traceId)} 开始补发：dbId=${entity.id}，sender=${entity.sender}，attempt=${entity.attemptCount + 1}",
+            )
+            val result = forwardStoredMessage(
+                context = appContext,
+                dao = dao,
+                entity = entity,
+                source = SmsSource.RETRY_WORKER,
+                traceId = traceId,
+            )
             if (result.successful) {
                 successCount += 1
             } else {
@@ -78,22 +92,30 @@ object SmsDispatcher {
         return messages.size
     }
 
-    private fun dispatchSync(context: Context, sms: IncomingSms, source: String) {
+    private fun dispatchSync(context: Context, sms: IncomingSms, source: String, traceId: Long) {
         val dao = SmsAgentDatabase.get(context).smsMessageDao()
         val currentTimeMillis = System.currentTimeMillis()
         val messageHash = (sms.sender + sms.body).hashCode()
         val sinceMillis = currentTimeMillis - DEDUP_WINDOW_MILLIS
 
         AgentStateStore.saveLastTriggerTime(context, sms.receivedAtMillis)
+        EventLogStore.append(
+            context,
+            "SmsDispatcher",
+            "${formatTraceLabel(traceId)} 开始调度：source=$source，sender=${sms.sender}，code=${sms.verificationCode.ifBlank { "-" }}，length=${sms.body.length}",
+        )
 
         val duplicateCount = dao.countRecentByHash(messageHash, sinceMillis)
         if (duplicateCount > 0) {
             EventLogStore.append(
                 context,
                 "SmsDispatcher",
-                "30秒去重命中：source=$source，sender=${sms.sender}，hash=$messageHash",
+                "${formatTraceLabel(traceId)} 30秒去重命中：source=$source，sender=${sms.sender}，hash=$messageHash，recent=$duplicateCount",
             )
-            Log.i(TAG, "Dedup ignored: source=$source sender=${sms.sender} hash=$messageHash")
+            Log.i(
+                TAG,
+                "Dedup ignored: ${formatTraceLabel(traceId)} source=$source sender=${sms.sender} hash=$messageHash",
+            )
             return
         }
 
@@ -113,10 +135,16 @@ object SmsDispatcher {
         EventLogStore.append(
             context,
             "SmsDispatcher",
-            "已入库：source=$source，sender=${sms.sender}，length=${sms.body.length}，hash=$messageHash",
+            "${formatTraceLabel(traceId)} 已入库：dbId=$id，source=$source，sender=${sms.sender}，length=${sms.body.length}，hash=$messageHash",
         )
 
-        forwardStoredMessage(context, dao, storedMessage, source)
+        forwardStoredMessage(
+            context = context,
+            dao = dao,
+            entity = storedMessage,
+            source = source,
+            traceId = traceId,
+        )
     }
 
     private fun forwardStoredMessage(
@@ -124,6 +152,7 @@ object SmsDispatcher {
         dao: SmsMessageDao,
         entity: SmsMessageEntity,
         source: String,
+        traceId: Long,
     ): BarkForwardResult {
         val sms = IncomingSms.fromRaw(
             sender = entity.sender,
@@ -132,9 +161,15 @@ object SmsDispatcher {
         )
         val remoteApiTemplate = AgentStateStore.getRemoteApiTemplate(context)
         val metadata = SmsForwardMetadata(
+            traceId = traceId,
             receivedAtMillis = sms.receivedAtMillis,
             pid = android.os.Process.myPid(),
             processName = ProcessNameProvider.getProcessName(context),
+        )
+        EventLogStore.append(
+            context,
+            "SmsDispatcher",
+            "${formatTraceLabel(traceId)} 开始发送：dbId=${entity.id}，source=$source，title=${sms.title}",
         )
 
         val result = if (remoteApiTemplate.isBlank()) {
@@ -160,7 +195,7 @@ object SmsDispatcher {
         EventLogStore.append(
             context,
             if (result.successful) "成功" else "失败",
-            "source=$source，id=${entity.id}，${result.displayText()}",
+            "${formatTraceLabel(traceId)} 发送完成：source=$source，dbId=${entity.id}，sender=${entity.sender}，${result.displayText()}",
         )
 
         if (!result.successful && remoteApiTemplate.isNotBlank()) {
@@ -194,5 +229,9 @@ object SmsDispatcher {
                 wakeLock.release()
             }
         }
+    }
+
+    private fun formatTraceLabel(traceId: Long): String {
+        return String.format(Locale.US, "转发#%05d", traceId)
     }
 }
