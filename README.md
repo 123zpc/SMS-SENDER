@@ -10,14 +10,13 @@
 
 ## ⚡ 核心架构与工程设计
 
-### 1. 🌐 多轨冗余容灾接收网络 (Multi-Track Redundant System)
-为应对国产 Android 手机对后台进程、广播分发以及系统通知的严格限制与裁剪，SMS SENDER 独创了**三轨并发冗余监听架构**，从根本上杜绝漏发：
-*   **轨道 1（静态广播）**：基于 `Telephony.SMS_RECEIVED` 静态广播，在系统分发层面秒级拉起，无需 App 常驻前台即可瞬时捕获短信流。
-*   **轨道 2（通知分析）**：通过授权 `NotificationListenerService`，主动监视系统自带短信应用的弹出通知，对系统拦截或分发受阻的短信进行深度内容提取与补充。
-*   **轨道 3（数据库轮询监视）**：依托 `ContentObserver` 实时监视 `content://sms/inbox` 系统收件箱变动。确保即使广播丢失且通知被静音，也能直接在数据库写入层捞取短信。
+### 1. 🌐 双轨并发冗余监听架构 (Dual-Track Redundant System)
+为应对国产 Android 手机对后台进程、广播分发以及系统休眠的限制，SMS SENDER 采用**双轨并发冗余监听架构**，从根本上杜绝漏发：
+*   **第一轨（系统广播捕获）**：基于 `Telephony.SMS_RECEIVED` 静态广播，在系统分发层面秒级拉起，无需 App 常驻前台即可瞬时捕获短信流。
+*   **第二轨（收件箱数据库监视）**：依托 `ContentObserver` 实时监视 `content://sms/inbox` 系统收件箱变动。确保即使在系统广播丢失或被系统策略拦截时，也能直接在数据库写入层捞取短信。
 
 ### 2. 🛡️ Room 级毫秒防抖与高并发去重 (Room-based Deduplication)
-多轨并发势必带来重复数据的处理挑战。SMS SENDER 在本地集成 **Room 数据库**，设计了毫秒级去重引擎：
+双轨并发势必带来重复数据的处理挑战。SMS SENDER 在本地集成 **Room 数据库**，设计了毫秒级去重引擎：
 *   利用 `(发件人 + 内容).hashCode()` 生成消息的唯一哈希指纹。
 *   每次接收到新消息时，在毫秒级内检索近 30 秒的指纹记录，重复指纹消息一律予以物理忽略，确保下游推送不被短信刷屏。
 
@@ -35,7 +34,7 @@
 
 SMS SENDER 基于 **深空科技蓝 (#2563EB)** 与 **落日珊瑚橙 (#F97316)** 的冷暖双色美学设计，并融合了 iOS **液态玻璃** 的动态视觉质感：
 *   **配置 (Config)**：将 API 配置及后台授权置于第一屏，采用大圆角 `TextInputLayout`，提供即开即用体验。
-*   **历史 (History)**：支持一键多选历史短信，批量触发**手动补发**。支持发信人/时间垂直双行排布，清爽干练。
+*   **历史 (History)**：支持一键多选历史短信，批量触发**手动补发**。支持发信人/时间还原为垂直双行排布，去除了冗余的通知栏小图标，清爽干练。
 *   **信息 (Info)**：集成了关于软件（开发者 ZPC，GitHub 极简跳转，当前版本）以及系统权限的实时状态监控，对小米“通知类短信”进行一键跳转支持。
 *   **日志 (Console)**：内置全功能白底黑字控制台，带有 **`16dp` 圆角包围**。右侧以**一体化组件形式内嵌发送按钮**，不仅杜绝了高度错落，更支持一键复制与日志导出。
 
@@ -65,7 +64,7 @@ https://api.day.app/您的Key/{title}/{body}
 
 ### 声明权限
 项目在配置文件中声明了以下权限，完全符合 Android 安全规范：
-*   **运行时申请**：`RECEIVE_SMS`、`READ_SMS`、`POST_NOTIFICATIONS` (Android 13+)
+*   **运行时申请**：`RECEIVE_SMS`、`READ_SMS`、`POST_NOTIFICATIONS` (Android 13+，用于展示保活通知)
 *   **系统功能支持**：`INTERNET`、`WAKE_LOCK`、`FOREGROUND_SERVICE`、`FOREGROUND_SERVICE_DATA_SYNC`
 
 ### 💡 小米 (HyperOS / MIUI) 专属适配说明
@@ -88,7 +87,7 @@ https://api.day.app/您的Key/{title}/{body}
 chmod +x ./gradlew
 ./gradlew assembleDebug
 ```
-构建出的 Debug 包输出在：`app/build/outputs/apk/debug/app-debug.apk`。
+构建出的 Debug 包输出在：`app/build/outputs/apk/debug/app-debug.apk` office/debug 目录。
 
 ### GitHub Actions
 项目配置了自动构建 CI 工作流 (`.github/workflows/android-build.yml`)：
