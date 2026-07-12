@@ -99,24 +99,35 @@ object MiuiPermissionHelper {
      * 用户点击"去开启"后，跳转到 MIUI 权限管理页并标记已引导。
      * 用户点击"取消"后，仅标记已引导，不再重复打扰。
      */
+    private var activeDialog: AlertDialog? = null
+
     fun showNotificationSmsGuideIfNeeded(activity: Activity) {
         if (!isMiuiDevice()) return
         if (hasNotificationSmsPermission(activity) == true) return // 已获得权限，不再引导
         if (hasGuided(activity)) return
 
-        AlertDialog.Builder(activity)
+        if (activeDialog?.isShowing == true) return
+
+        val dialog = AlertDialog.Builder(activity)
             .setTitle(activity.getString(R.string.miui_notification_sms_dialog_title))
             .setMessage(activity.getString(R.string.miui_notification_sms_dialog_message))
             .setCancelable(false)
-            .setPositiveButton(activity.getString(R.string.miui_notification_sms_dialog_positive)) { dialog, _ ->
+            .setPositiveButton(activity.getString(R.string.miui_notification_sms_dialog_positive)) { dialogInterface, _ ->
                 openMiuiPermissionEditor(activity)
-                dialog.dismiss()
+                dialogInterface.dismiss()
             }
-            .setNegativeButton(activity.getString(R.string.miui_notification_sms_dialog_negative)) { dialog, _ ->
+            .setNegativeButton(activity.getString(R.string.miui_notification_sms_dialog_negative)) { dialogInterface, _ ->
                 markGuided(activity)
-                dialog.dismiss()
+                dialogInterface.dismiss()
             }
-            .show()
+            .create()
+
+        dialog.setOnDismissListener {
+            activeDialog = null
+        }
+
+        activeDialog = dialog
+        dialog.show()
     }
 
     /**
