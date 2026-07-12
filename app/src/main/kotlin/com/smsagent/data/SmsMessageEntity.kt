@@ -14,6 +14,7 @@ import androidx.room.PrimaryKey
 data class SmsMessageEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0L,
+    val systemSmsId: Long? = null,
     val sender: String,
     val body: String,
     val receivedAtMillis: Long,

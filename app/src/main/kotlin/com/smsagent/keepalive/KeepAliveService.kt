@@ -94,7 +94,7 @@ class KeepAliveService : Service() {
         }
 
         return builder
-            .setSmallIcon(R.drawable.ic_notifications_24)
+            .setSmallIcon(R.drawable.ic_stat_sms)
             .setContentTitle(getString(R.string.keep_alive_notification_title))
             .setContentText(getString(R.string.keep_alive_notification_text))
             .setContentIntent(pendingIntent)

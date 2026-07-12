@@ -93,33 +93,78 @@ object SmsDispatcher {
     }
 
     private fun dispatchSync(context: Context, sms: IncomingSms, source: String, traceId: Long) {
-        val dao = SmsAgentDatabase.get(context).smsMessageDao()
+        val db = SmsAgentDatabase.get(context)
+        val dao = db.smsMessageDao()
         val currentTimeMillis = System.currentTimeMillis()
-        val messageHash = (sms.sender + sms.body).hashCode()
-        val sinceMillis = currentTimeMillis - DEDUP_WINDOW_MILLIS
-
+        
         AgentStateStore.saveLastTriggerTime(context, sms.receivedAtMillis)
-        EventLogStore.append(
-            context,
-            "SmsDispatcher",
-            "${formatTraceLabel(traceId)} 开始调度：source=$source，sender=${sms.sender}，code=${sms.verificationCode.ifBlank { "-" }}，length=${sms.body.length}",
-        )
 
-        val duplicateCount = dao.countRecentByHash(messageHash, sinceMillis)
-        if (duplicateCount > 0) {
-            EventLogStore.append(
-                context,
-                "SmsDispatcher",
-                "${formatTraceLabel(traceId)} 30秒去重命中：source=$source，sender=${sms.sender}，hash=$messageHash，recent=$duplicateCount",
-            )
-            Log.i(
-                TAG,
-                "Dedup ignored: ${formatTraceLabel(traceId)} source=$source sender=${sms.sender} hash=$messageHash",
-            )
+        // 1. 如果是来自内容观测者 ContentObserver (带有 systemSmsId)
+        if (sms.systemSmsId != null) {
+            val existingBySystemId = dao.getBySystemSmsId(sms.systemSmsId)
+            if (existingBySystemId != null) {
+                if (existingBySystemId.status == SmsForwardStatus.SENT) {
+                    EventLogStore.append(context, "SmsDispatcher", "${formatTraceLabel(traceId)} Observer跳过：系统短信ID ${sms.systemSmsId} 已经推送成功")
+                    return
+                } else {
+                    EventLogStore.append(context, "SmsDispatcher", "${formatTraceLabel(traceId)} Observer补发：系统短信ID ${sms.systemSmsId} 未发送成功，当前状态为 ${existingBySystemId.status}")
+                    forwardStoredMessage(context, dao, existingBySystemId, source, traceId)
+                    return
+                }
+            }
+
+            // 查最近 1 分钟内的记录做智能匹配，看 Broadcast 是否已经处理过并入库了
+            val recentMessages = dao.getRecentMessages(currentTimeMillis - 60_000L)
+            val matchedEntity = findMatchedMessage(sms, recentMessages)
+            if (matchedEntity != null) {
+                // 将当时没有绑定系统 ID 的记录进行绑定
+                dao.updateSystemSmsId(matchedEntity.id, sms.systemSmsId, currentTimeMillis)
+                EventLogStore.append(context, "SmsDispatcher", "${formatTraceLabel(traceId)} Observer关联：匹配到最近的广播记录 dbId=${matchedEntity.id}，更新系统ID为 ${sms.systemSmsId}")
+                
+                if (matchedEntity.status == SmsForwardStatus.SENT) {
+                    EventLogStore.append(context, "SmsDispatcher", "${formatTraceLabel(traceId)} Observer跳过：关联的记录已推送成功")
+                    return
+                } else {
+                    EventLogStore.append(context, "SmsDispatcher", "${formatTraceLabel(traceId)} Observer补发：关联的记录未推送，当前状态为 ${matchedEntity.status}")
+                    val updatedEntity = matchedEntity.copy(systemSmsId = sms.systemSmsId, updatedAtMillis = currentTimeMillis)
+                    forwardStoredMessage(context, dao, updatedEntity, source, traceId)
+                    return
+                }
+            }
+
+            // 数据库没有任何匹配记录，说明是全新短信，入库并推送
+            insertAndForward(context, dao, sms, source, traceId, currentTimeMillis)
             return
         }
 
+
+
+        // 3. 如果是广播 (BROADCAST) 或手动发送 (MANUAL)
+        val recentMessages = dao.getRecentMessages(currentTimeMillis - DEDUP_WINDOW_MILLIS)
+        val matchedEntity = findMatchedMessage(sms, recentMessages)
+        if (matchedEntity != null) {
+            EventLogStore.append(context, "SmsDispatcher", "${formatTraceLabel(traceId)} 广播去重：最近已有匹配记录 dbId=${matchedEntity.id}，当前状态为 ${matchedEntity.status}")
+            if (matchedEntity.status != SmsForwardStatus.SENT) {
+                forwardStoredMessage(context, dao, matchedEntity, source, traceId)
+            }
+            return
+        }
+
+        // 全新短信入库并推送
+        insertAndForward(context, dao, sms, source, traceId, currentTimeMillis)
+    }
+
+    private fun insertAndForward(
+        context: Context,
+        dao: SmsMessageDao,
+        sms: IncomingSms,
+        source: String,
+        traceId: Long,
+        currentTimeMillis: Long
+    ) {
+        val messageHash = (sms.sender + sms.body).hashCode()
         val entity = SmsMessageEntity(
+            systemSmsId = sms.systemSmsId,
             sender = sms.sender,
             body = sms.body,
             receivedAtMillis = sms.receivedAtMillis,
@@ -135,7 +180,7 @@ object SmsDispatcher {
         EventLogStore.append(
             context,
             "SmsDispatcher",
-            "${formatTraceLabel(traceId)} 已入库：dbId=$id，source=$source，sender=${sms.sender}，length=${sms.body.length}，hash=$messageHash",
+            "${formatTraceLabel(traceId)} 已入库：dbId=$id，source=$source，sender=${sms.sender}，systemSmsId=${sms.systemSmsId ?: "NULL"}"
         )
 
         forwardStoredMessage(
@@ -146,6 +191,48 @@ object SmsDispatcher {
             traceId = traceId,
         )
     }
+
+    private fun findMatchedMessage(sms: IncomingSms, recentMessages: List<SmsMessageEntity>): SmsMessageEntity? {
+        if (recentMessages.isEmpty()) return null
+        val smsCode = sms.verificationCode
+        
+        return recentMessages.firstOrNull { msg ->
+            // 1. 如果都有验证码且相同，则是同一条短信
+            val msgCode = com.smsagent.sms.VerificationCodeExtractor.extract(msg.body)
+            if (smsCode.isNotBlank() && msgCode.isNotBlank() && smsCode == msgCode) {
+                return@firstOrNull true
+            }
+            
+            // 2. 如果正文忽略空格后完全相同，或是包含关系
+            val cleanSmsBody = sms.body.replace("\\s".toRegex(), "").lowercase()
+            val cleanMsgBody = msg.body.replace("\\s".toRegex(), "").lowercase()
+            if (cleanSmsBody.contains(cleanMsgBody) || cleanMsgBody.contains(cleanSmsBody)) {
+                return@firstOrNull true
+            }
+            
+            // 3. 如果发件人相似，且内容高度一致
+            if (isSameSender(sms.sender, msg.sender)) {
+                if (Math.abs(cleanSmsBody.length - cleanMsgBody.length) < 20) {
+                    val commonPrefixLen = cleanSmsBody.commonPrefixWith(cleanMsgBody).length
+                    if (commonPrefixLen > 10 && commonPrefixLen > cleanSmsBody.length * 0.7) {
+                        return@firstOrNull true
+                    }
+                }
+            }
+            
+            false
+        }
+    }
+
+    private fun isSameSender(sender1: String, sender2: String): Boolean {
+        if (sender1 == sender2) return true
+        val clean1 = sender1.removePrefix("+86").replace("\\D".toRegex(), "")
+        val clean2 = sender2.removePrefix("+86").replace("\\D".toRegex(), "")
+        if (clean1.isNotBlank() && clean2.isNotBlank() && clean1 == clean2) return true
+        return false
+    }
+
+
 
     private fun forwardStoredMessage(
         context: Context,

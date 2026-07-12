@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="seed">#2F6F5E</color>
-    <color name="accent_indigo">#4D5BD1</color>
-    <color name="brand_surface">#F8FAF9</color>
-    <color name="brand_surface_container">#EEF4F1</color>
-    <color name="header_panel">#EAF0FF</color>
-    <color name="brand_outline">#CDD8D3</color>
-    <color name="console_background">#111318</color>
-    <color name="console_toolbar">#1B1E26</color>
-    <color name="console_text">#E5E7EB</color>
-    <color name="console_muted">#8E95A3</color>
-    <color name="console_accent">#7DD3FC</color>
-    <color name="console_warning">#FCA5A5</color>
+    <!-- 主色：深空科技蓝 -->
+    <color name="seed">#2563EB</color>
+    
+    <!-- 辅助色：落日温橙 (未读点、小提示等高光点缀) -->
+    <color name="accent_orange">#F97316</color>
+    
+    <!-- 面板与卡片层级颜色 -->
+    <color name="brand_surface">#F8FAFC</color> <!-- Slate 50 悬浮背景 -->
+    <color name="brand_surface_container">#FFFFFF</color> <!-- 纯白悬浮卡片 -->
+    <color name="brand_outline">#E2E8F0</color> <!-- Slate 200 柔和描边 -->
+    
+    <!-- 渐变起始颜色 -->
+    <color name="header_panel_start">#EFF6FF</color> <!-- 浅天空蓝 (Blue 50) -->
+    <color name="header_panel_end">#FFF7ED</color> <!-- 晚霞粉橙 (Orange 50) -->
+    
+    <!-- 调试控制台 - Slate 900 深蓝灰极客风格 -->
+    <color name="console_background">#0F172A</color>
+    <color name="console_toolbar">#1E293B</color>
+    <color name="console_text">#F1F5F9</color>
+    <color name="console_muted">#64748B</color>
+    <color name="console_accent">#38BDF8</color>
+    <color name="console_warning">#F87171</color>
 </resources>

@@ -6,6 +6,7 @@ data class IncomingSms(
     val sender: String,
     val body: String,
     val receivedAtMillis: Long,
+    val systemSmsId: Long? = null,
 ) {
     val verificationCode: String = VerificationCodeExtractor.extract(body)
 
@@ -33,11 +34,12 @@ data class IncomingSms(
             )
         }
 
-        fun fromRaw(sender: String?, body: String?, receivedAtMillis: Long): IncomingSms {
+        fun fromRaw(sender: String?, body: String?, receivedAtMillis: Long, systemSmsId: Long? = null): IncomingSms {
             return IncomingSms(
                 sender = sender?.takeIf { it.isNotBlank() } ?: UNKNOWN_SENDER,
                 body = body.orEmpty(),
                 receivedAtMillis = receivedAtMillis,
+                systemSmsId = systemSmsId,
             )
         }
 

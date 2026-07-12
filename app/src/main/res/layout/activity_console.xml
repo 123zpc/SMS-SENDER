@@ -7,6 +7,7 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
+    <!-- 顶栏 - 渐变暗夜极客质感 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,50 +23,65 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/console_title"
-            android:textColor="@color/console_text" />
+            android:textColor="@color/console_text"
+            android:textStyle="bold" />
 
+        <!-- 刷新 (带圆润胶囊形态) -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/refreshButton"
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:minWidth="40dp"
+            android:layout_height="36dp"
+            android:minWidth="48dp"
+            android:paddingHorizontal="8dp"
             android:text="@string/console_refresh"
-            android:textColor="@color/console_accent" />
+            android:textColor="@color/console_accent"
+            app:cornerRadius="18dp" />
 
+        <!-- 复制 -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/copyButton"
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:minWidth="40dp"
+            android:layout_height="36dp"
+            android:minWidth="48dp"
+            android:paddingHorizontal="8dp"
             android:text="@string/console_copy"
-            android:textColor="@color/console_accent" />
+            android:textColor="@color/console_accent"
+            app:cornerRadius="18dp" />
 
+        <!-- 导出 -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/exportButton"
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:minWidth="40dp"
+            android:layout_height="36dp"
+            android:minWidth="48dp"
+            android:paddingHorizontal="8dp"
             android:text="@string/console_export"
-            android:textColor="@color/console_accent" />
+            android:textColor="@color/console_accent"
+            app:cornerRadius="18dp" />
 
+        <!-- 清空 -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/clearConsoleButton"
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:minWidth="40dp"
+            android:layout_height="36dp"
+            android:minWidth="48dp"
+            android:paddingHorizontal="8dp"
             android:text="@string/clear_log"
-            android:textColor="@color/console_warning" />
+            android:textColor="@color/console_warning"
+            app:cornerRadius="18dp" />
     </LinearLayout>
 
+    <!-- 主日志区 -->
     <ScrollView
         android:id="@+id/consoleScroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:background="#0A0F1D"
         android:fillViewport="true">
 
         <com.google.android.material.textview.MaterialTextView
@@ -74,17 +90,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
-            android:padding="16dp"
+            android:padding="20dp"
             android:textColor="@color/console_text"
             android:textIsSelectable="true"
             app:lineHeight="18dp" />
     </ScrollView>
 
+    <!-- 底部追加操作区 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/console_toolbar"
-        android:gravity="bottom"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="12dp">
 
@@ -94,6 +111,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="@string/console_input_hint"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
             app:boxStrokeColor="@color/console_accent"
             app:hintTextColor="@color/console_accent">
 
@@ -112,8 +133,11 @@
             android:id="@+id/appendInputButton"
             style="@style/Widget.Material3.Button"
             android:layout_width="wrap_content"
-            android:layout_height="56dp"
+            android:layout_height="52dp"
             android:layout_marginStart="10dp"
-            android:text="@string/console_append" />
+            android:text="@string/console_append"
+            app:cornerRadius="12dp"
+            app:icon="@drawable/ic_send_24"
+            app:iconGravity="textStart" />
     </LinearLayout>
 </LinearLayout>

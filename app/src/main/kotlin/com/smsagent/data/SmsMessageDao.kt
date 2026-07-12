@@ -48,4 +48,13 @@ interface SmsMessageDao {
         attemptIncrement: Int,
         updatedAtMillis: Long,
     )
+
+    @Query("SELECT * FROM sms_messages WHERE systemSmsId = :systemSmsId LIMIT 1")
+    fun getBySystemSmsId(systemSmsId: Long): SmsMessageEntity?
+
+    @Query("SELECT * FROM sms_messages WHERE receivedAtMillis >= :sinceMillis ORDER BY receivedAtMillis DESC")
+    fun getRecentMessages(sinceMillis: Long): List<SmsMessageEntity>
+
+    @Query("UPDATE sms_messages SET systemSmsId = :systemSmsId, updatedAtMillis = :updatedAtMillis WHERE id = :id")
+    fun updateSystemSmsId(id: Long, systemSmsId: Long, updatedAtMillis: Long)
 }

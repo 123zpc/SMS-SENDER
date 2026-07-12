@@ -41,4 +41,17 @@
     <string name="keep_alive_channel_name">SMS Agent 保活</string>
     <string name="keep_alive_notification_title">SMS Agent 正在监听短信</string>
     <string name="keep_alive_notification_text">低功耗前台服务已启动</string>
+    <string name="miui_notification_sms_dialog_title">开启"通知类短信"权限</string>
+    <string name="miui_notification_sms_dialog_message">检测到您的设备为小米手机。为了能接收验证码、服务通知等短信，需要您在权限管理中手动开启"通知类短信"权限。\n\n点击"去开启"将跳转至权限设置页面，找到"短信"权限并将"通知类短信"设置为允许。</string>
+    <string name="miui_notification_sms_dialog_positive">去开启</string>
+    <string name="miui_notification_sms_dialog_negative">暂不开启</string>
+    <string name="miui_notification_sms_label">通知类短信（小米专属）</string>
+    <string name="open_miui_notification_sms_settings">开启通知类短信权限</string>
+    <string name="sms_history_title">历史短信</string>
+    <string name="sms_history_empty">未找到本机短信，请确认是否已授权短信读取权限</string>
+    <string name="sms_history_select_all">全选</string>
+    <string name="sms_history_forward_selected">手动转发已选 (%1$d)</string>
+    <string name="sms_history_forward_none">手动转发已选 (0)</string>
+    <string name="sms_history_forward_trigger_toast">已触发 %1$d 条短信的手动转发，发送结果请在本地日志或调试控制台中查看</string>
+    <string name="open_sms_history">手动转发历史短信</string>
 </resources>

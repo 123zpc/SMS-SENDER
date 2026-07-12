@@ -5,4 +5,5 @@ object SmsSource {
     const val NOTIFICATION = "Notification"
     const val CONTENT_OBSERVER = "ContentObserver"
     const val RETRY_WORKER = "RetryWorker"
+    const val MANUAL = "Manual"
 }

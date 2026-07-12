@@ -79,6 +79,7 @@ class SmsObserver private constructor(
                 sender = providerMessage.sender,
                 body = providerMessage.body,
                 receivedAtMillis = providerMessage.dateMillis,
+                systemSmsId = providerMessage.id,
             )
             SmsDispatcher.dispatch(
                 context = appContext,
@@ -158,7 +159,7 @@ class SmsObserver private constructor(
             )
             observer.seedLatestMessageId()
             appContext.contentResolver.registerContentObserver(
-                Telephony.Sms.Inbox.CONTENT_URI,
+                Uri.parse("content://sms"),
                 true,
                 observer,
             )

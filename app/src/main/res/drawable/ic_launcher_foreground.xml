@@ -1,16 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  桌面自适应图标 - 前景层
+  深空蓝背景 (#1A2B4A) + 纯白纸飞机 (简洁有力，无AI感)
+-->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
+    <!-- 主体纸飞机 - 粗线白色，有力量感 -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:pathData="M82,26 L26,54 L50,64 L60,82 L82,26 Z"
+        android:strokeColor="#FFFFFF"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeWidth="4.5" />
+    <!-- 纸飞机折痕线 -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:pathData="M82,26 L50,64"
+        android:strokeColor="#FFFFFF"
+        android:strokeLineCap="round"
+        android:strokeWidth="4.5" />
+    <!-- 右下角三个小信号点 - 科技感但不AI -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M24,34C24,28.48 28.48,24 34,24H74C79.52,24 84,28.48 84,34V58C84,63.52 79.52,68 74,68H55L40,82V68H34C28.48,68 24,63.52 24,58V34Z" />
+        android:pathData="M70,78 A2.5,2.5 0 1 1 70.01,78 Z" />
     <path
-        android:fillColor="#2F6F5E"
-        android:pathData="M38,39H70V44H38V39ZM38,51H59V56H38V51Z" />
+        android:fillColor="#FFFFFF"
+        android:pathData="M78,72 A2.5,2.5 0 1 1 78.01,72 Z" />
     <path
-        android:fillColor="#5B5FC7"
-        android:pathData="M71,30C75.42,30 79,33.58 79,38H74C74,36.34 72.66,35 71,35V30ZM71,20C80.94,20 89,28.06 89,38H84C84,30.82 78.18,25 71,25V20Z" />
+        android:fillColor="#FFFFFF"
+        android:pathData="M78,82 A2.5,2.5 0 1 1 78.01,82 Z" />
 </vector>
