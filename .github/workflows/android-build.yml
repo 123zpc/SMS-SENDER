@@ -2,6 +2,14 @@ name: Android Build
 
 on:
   push:
+    branches:
+      - main
+      - develop
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
 
 jobs:
   assemble-debug:
@@ -28,8 +36,19 @@ jobs:
           chmod +x ./gradlew
           ./gradlew assembleDebug
 
-      - name: Upload debug APK
+      - name: Upload debug APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: app-debug.apk
           path: app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: app/build/outputs/apk/debug/app-debug.apk
+          name: Release ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
