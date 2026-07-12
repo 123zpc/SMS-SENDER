@@ -330,9 +330,35 @@ class MainActivity : Activity() {
 
         barkApiInputLayout.error = null
         AgentStateStore.saveRemoteApiTemplate(this, value)
+        
+        // 核心修复逻辑：在成功配置 Bark API 的瞬间，同步记录当前短信库的最新 ID 作为已读基准。
+        // 这可以防止在 Bark 配置成功前收到的旧历史短信在后续新短信到来被唤醒时进行批量补发。
+        seedLastObservedSmsIdOnConfigSaved()
+
         EventLogStore.append(this, "配置", getString(R.string.remote_api_saved_log))
         Toast.makeText(this, R.string.remote_api_saved, Toast.LENGTH_SHORT).show()
         refreshCurrentTab()
+    }
+
+    private fun seedLastObservedSmsIdOnConfigSaved() {
+        if (checkSelfPermission(Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED) {
+            thread {
+                try {
+                    val uri = Uri.parse("content://sms/inbox")
+                    val projection = arrayOf("_id")
+                    contentResolver.query(uri, projection, null, null, "date DESC")?.use { cursor ->
+                        if (cursor.moveToFirst()) {
+                            val idCol = cursor.getColumnIndexOrThrow("_id")
+                            val latestId = cursor.getLong(idCol)
+                            AgentStateStore.saveLastObservedSmsId(this, latestId)
+                            EventLogStore.append(this, "配置", "已对齐配置保存时的短信指针：id=$latestId")
+                        }
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
     }
 
     private fun openAppSettings() {
