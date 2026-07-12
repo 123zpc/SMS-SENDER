@@ -35,18 +35,19 @@ jobs:
         run: |
           chmod +x ./gradlew
           ./gradlew assembleDebug
+          mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/SMS-SENDER.apk
 
       - name: Upload debug APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug.apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: SMS-SENDER.apk
+          path: app/build/outputs/apk/debug/SMS-SENDER.apk
 
       - name: Create GitHub Release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
-          files: app/build/outputs/apk/debug/app-debug.apk
+          files: app/build/outputs/apk/debug/SMS-SENDER.apk
           name: Release ${{ github.ref_name }}
           draft: false
           prerelease: false

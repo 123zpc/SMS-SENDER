@@ -319,11 +319,12 @@
                                 android:clickable="true" />
 
                             <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/appVersionText"
                                 style="@style/TextAppearance.Material3.BodyMedium"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="6dp"
-                                android:text="当前版本：v1.2.0"
+                                android:text="当前版本：v1.2.4"
                                 android:textColor="?attr/colorOnSurface" />
                         </LinearLayout>
                     </LinearLayout>

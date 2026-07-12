@@ -97,6 +97,15 @@ class MainActivity : Activity() {
         lastTriggerValue = findViewById(R.id.lastTriggerValue)
         lastForwardResultValue = findViewById(R.id.lastForwardResultValue)
 
+        // 绑定版本文本并动态读取包体版本
+        val appVersionText = findViewById<TextView>(R.id.appVersionText)
+        val versionName = try {
+            packageManager.getPackageInfo(packageName, 0).versionName
+        } catch (e: Exception) {
+            "1.2.4"
+        }
+        appVersionText.text = "当前版本：v$versionName"
+
         // 3. 绑定 TAB 1 (配置页) 组件
         barkApiInputLayout = findViewById(R.id.barkApiInputLayout)
         barkApiInput = findViewById(R.id.barkApiInput)
