@@ -52,13 +52,27 @@ class SmsObserver private constructor(
             return
         }
 
-        val lastSeenId = AgentStateStore.getLastObservedSmsId(appContext)
+        var lastSeenId = AgentStateStore.getLastObservedSmsId(appContext)
         val messages = queryLatestMessages(limit = QUERY_LIMIT)
         if (messages.isEmpty()) {
             return
         }
 
         val latestId = messages.maxOf { it.id }
+
+        // 关键防御逻辑：如果 lastSeenId 为 0L（新安装、重装或授权延迟未被成功 seed），
+        // 我们将其初始位置校准为最新 ID 的前一位（latestId - 1）。
+        // 这将允许且仅允许转发本次触发变更的最新一条短信，并完美跳过其余所有的历史短信，防止历史短信被错误批量补发。
+        if (lastSeenId == 0L) {
+            lastSeenId = latestId - 1
+            AgentStateStore.saveLastObservedSmsId(appContext, latestId)
+            EventLogStore.append(
+                appContext,
+                "ContentObserver",
+                "短信观察指针未初始化，已自动校准：lastSeenId=$lastSeenId，latestId=$latestId"
+            )
+        }
+
         val newMessages = messages
             .filter { it.id > lastSeenId }
             .sortedBy { it.dateMillis }
