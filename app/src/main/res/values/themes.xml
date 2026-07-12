@@ -10,4 +10,11 @@
         <item name="android:navigationBarColor">?attr/colorSurface</item>
         <item name="android:statusBarColor">?attr/colorSurface</item>
     </style>
+
+    <!-- 自定义底部导航活动指示器样式 (模仿苹果液态玻璃选中高光) -->
+    <style name="CustomActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:width">64dp</item>
+        <item name="android:height">44dp</item>
+        <item name="android:color">?attr/colorSecondaryContainer</item>
+    </style>
 </resources>

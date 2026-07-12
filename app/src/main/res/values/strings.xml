@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">SMS Agent</string>
-    <string name="app_subtitle">三轨接收 · 30秒去重 · 低功耗保活</string>
+    <string name="app_name">SMS SENDER</string>
+    <string name="app_subtitle">双轨防漏 · 自动转发 · 低功耗保活</string>
     <string name="permission_label">运行权限</string>
     <string name="permission_granted">已授权</string>
     <string name="permission_denied">未授权</string>
@@ -35,14 +35,14 @@
     <string name="console_export_empty">暂无可导出的日志</string>
     <string name="console_export_success">日志已导出</string>
     <string name="console_export_failed">日志导出失败</string>
-    <string name="console_export_default_name">sms-agent-log-%1$s.txt</string>
+    <string name="console_export_default_name">sms-sender-log-%1$s.txt</string>
     <string name="console_input_hint">记录测试步骤、设备状态或现象</string>
     <string name="console_append">写入</string>
-    <string name="keep_alive_channel_name">SMS Agent 保活</string>
-    <string name="keep_alive_notification_title">SMS Agent 正在监听短信</string>
+    <string name="keep_alive_channel_name">SMS SENDER 保活</string>
+    <string name="keep_alive_notification_title">SMS SENDER 正在监听短信</string>
     <string name="keep_alive_notification_text">低功耗前台服务已启动</string>
     <string name="miui_notification_sms_dialog_title">开启"通知类短信"权限</string>
-    <string name="miui_notification_sms_dialog_message">检测到您的设备为小米手机。为了能接收验证码、服务通知等短信，需要您在权限管理中手动开启"通知类短信"权限。\n\n点击"去开启"将跳转至权限设置页面，找到"短信"权限并将"通知类短信"设置为允许。</string>
+    <string name="miui_notification_sms_dialog_message">检测到您的设备为小米手机。获取通知类短信权限是为了能够获取并自动转发验证码、服务通知等系统默认拦截的通知类短信。\n\n点击"去开启"将跳转至权限设置页面，请找到"短信"相关权限，并将"通知类短信"设置为允许以防拦截漏发。</string>
     <string name="miui_notification_sms_dialog_positive">去开启</string>
     <string name="miui_notification_sms_dialog_negative">暂不开启</string>
     <string name="miui_notification_sms_label">通知类短信（小米专属）</string>

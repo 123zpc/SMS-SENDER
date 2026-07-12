@@ -16,21 +16,12 @@
         android:background="@drawable/header_panel_background"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="16dp">
-
-        <ImageView
-            android:id="@+id/logoImage"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="@drawable/icon_badge_background"
-            android:contentDescription="@string/app_name"
-            android:padding="11dp"
-            android:src="@drawable/ic_sms_24" />
+        android:padding="16dp"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -44,7 +35,7 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <!-- 运行状态标签 - 纯色深蓝圆角背景 -->
+        <!-- 运行状态标签 - 纯色深蓝圆角背景 - 去除小圆点 -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,16 +46,10 @@
             android:paddingVertical="5dp"
             android:layout_marginEnd="4dp">
 
-            <View
-                android:layout_width="7dp"
-                android:layout_height="7dp"
-                android:background="@drawable/unread_dot" />
-
             <com.google.android.material.textview.MaterialTextView
                 style="@style/TextAppearance.Material3.LabelSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
                 android:text="运行中"
                 android:textColor="#FFFFFF"
                 android:letterSpacing="0.04"
@@ -95,6 +80,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingHorizontal="16dp"
+                android:paddingTop="16dp"
                 android:paddingBottom="24dp">
 
                 <!-- 基础权限卡片 -->
@@ -274,7 +260,7 @@
                     </com.google.android.material.card.MaterialCardView>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <!-- 快捷日志看板 -->
+                <!-- 软件信息卡片 -->
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -295,22 +281,51 @@
                             style="@style/TextAppearance.Material3.LabelLarge"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="最近运行日志"
+                            android:text="关于软件"
                             android:textColor="?attr/colorOnSurfaceVariant"
                             android:textStyle="bold" />
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/eventLogValueShort"
-                            style="@style/TextAppearance.Material3.BodySmall"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="120dp"
-                            android:layout_marginTop="8dp"
-                            android:background="#FAFDFD"
-                            android:fontFamily="monospace"
-                            android:padding="10dp"
-                            android:textColor="#475569"
-                            android:ellipsize="end"
-                            app:lineHeight="16dp" />
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginTop="12dp">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                style="@style/TextAppearance.Material3.BodyMedium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="软件名称：SMS SENDER"
+                                android:textColor="?attr/colorOnSurface" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                style="@style/TextAppearance.Material3.BodyMedium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="开发者：ZPC"
+                                android:textColor="?attr/colorOnSurface" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/githubText"
+                                style="@style/TextAppearance.Material3.BodyMedium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="GitHub：123zpc/SMS-SENDER (点击访问)"
+                                android:textColor="@color/seed"
+                                android:textStyle="bold"
+                                android:focusable="true"
+                                android:clickable="true" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                style="@style/TextAppearance.Material3.BodyMedium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="当前版本：v1.2.0"
+                                android:textColor="?attr/colorOnSurface" />
+                        </LinearLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -331,6 +346,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingHorizontal="16dp"
+                android:paddingTop="16dp"
                 android:paddingBottom="24dp">
 
                 <com.google.android.material.card.MaterialCardView
@@ -437,6 +453,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingHorizontal="16dp"
+            android:paddingTop="16dp"
             android:visibility="gone">
 
             <!-- 操作面板 -->
@@ -577,90 +594,109 @@
                     app:cornerRadius="18dp" />
             </LinearLayout>
 
-            <ScrollView
-                android:id="@+id/consoleScroll"
+            <!-- 带有圆角的日志边框卡片 -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/consoleScrollCard"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@id/consoleInputLayout"
                 android:layout_below="@id/consoleControlPanel"
                 android:layout_marginBottom="8dp"
-                android:background="#FFFFFF"
-                android:fillViewport="true"
-                android:padding="8dp">
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/brand_outline"
+                app:strokeWidth="1.2dp">
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/consoleOutput"
-                    style="@style/TextAppearance.Material3.BodySmall"
+                <ScrollView
+                    android:id="@+id/consoleScroll"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="monospace"
-                    android:padding="8dp"
-                    android:textColor="#1E293B"
-                    android:textIsSelectable="true"
-                    app:lineHeight="16dp" />
-            </ScrollView>
+                    android:layout_height="match_parent"
+                    android:fillViewport="true"
+                    android:padding="8dp">
 
-            <!-- 底部发送栏 - 输入框与按钮等高 -->
-            <LinearLayout
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/consoleOutput"
+                        style="@style/TextAppearance.Material3.BodySmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:padding="8dp"
+                        android:textColor="#1E293B"
+                        android:textIsSelectable="true"
+                        app:lineHeight="16dp" />
+                </ScrollView>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 底部发送栏 - 一体化组件设计 -->
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/consoleInputLayout"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
+                android:layout_height="52dp"
                 android:layout_alignParentBottom="true"
                 android:layout_marginVertical="8dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/brand_outline"
+                app:strokeWidth="1.2dp">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                    android:layout_width="0dp"
-                    android:layout_height="56dp"
-                    android:layout_weight="1"
-                    android:hint="@string/console_input_hint"
-                    app:boxCornerRadiusBottomEnd="12dp"
-                    app:boxCornerRadiusBottomStart="12dp"
-                    app:boxCornerRadiusTopEnd="12dp"
-                    app:boxCornerRadiusTopStart="12dp"
-                    app:boxStrokeColor="@color/seed"
-                    app:hintTextColor="@color/seed">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingEnd="4dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/consoleInput"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
                         android:fontFamily="monospace"
+                        android:hint="@string/console_input_hint"
                         android:inputType="textMultiLine|textNoSuggestions"
                         android:maxLines="1"
-                        android:textColor="#1E293B" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:paddingHorizontal="14dp"
+                        android:textColor="#1E293B"
+                        android:textSize="14sp" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/appendInputButton"
-                    style="@style/Widget.Material3.Button"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:layout_marginStart="8dp"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    app:cornerRadius="12dp"
-                    app:icon="@drawable/ic_send_24"
-                    app:iconGravity="textStart"
-                    app:iconSize="20dp" />
-            </LinearLayout>
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/appendInputButton"
+                        style="@style/Widget.Material3.Button"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:insetLeft="0dp"
+                        android:insetRight="0dp"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:padding="0dp"
+                        android:minWidth="0dp"
+                        android:minHeight="0dp"
+                        app:iconPadding="0dp"
+                        app:cornerRadius="10dp"
+                        app:icon="@drawable/ic_send_24"
+                        app:iconGravity="textStart"
+                        app:iconSize="18dp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
         </RelativeLayout>
 
     </FrameLayout>
 
-    <!-- 3. 全局底部高阶导航栏 -->
+    <!-- 3. 全局底部高阶导航栏 - 苹果液态玻璃质感 -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="72dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/brand_surface_container"
-        app:elevation="8dp"
+        android:background="@drawable/bottom_nav_background"
+        app:elevation="0dp"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/bottom_nav_menu"
-        app:itemIconTint="@color/seed"
-        app:itemTextColor="@color/seed" />
+        app:itemIconTint="@color/nav_item_color"
+        app:itemTextColor="@color/nav_item_color"
+        app:itemActiveIndicatorStyle="@style/CustomActiveIndicator" />
 
 </RelativeLayout>

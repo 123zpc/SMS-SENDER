@@ -34,6 +34,9 @@ import kotlin.concurrent.thread
 
 class MainActivity : Activity() {
 
+    // 全局顶部运行状态栏
+    private lateinit var globalHeader: View
+
     // Tab 容器
     private lateinit var tabStatusContainer: View
     private lateinit var tabConfigContainer: View
@@ -41,22 +44,21 @@ class MainActivity : Activity() {
     private lateinit var tabConsoleContainer: View
     private lateinit var bottomNavigation: BottomNavigationView
 
-    // === TAB 1: 状态页组件 ===
+    // === TAB 3 (原TAB 1): 状态/信息页组件 ===
     private lateinit var permissionValue: TextView
     private lateinit var miuiNotificationSmsLabel: TextView
     private lateinit var miuiNotificationSmsValue: TextView
     private lateinit var openMiuiNotificationSmsButton: MaterialButton
     private lateinit var lastTriggerValue: TextView
     private lateinit var lastForwardResultValue: TextView
-    private lateinit var eventLogValueShort: TextView
 
-    // === TAB 2: 配置页组件 ===
+    // === TAB 1 (原TAB 2): 配置页组件 ===
     private lateinit var barkApiInputLayout: TextInputLayout
     private lateinit var barkApiInput: TextInputEditText
     private lateinit var saveBarkApiButton: MaterialButton
     private lateinit var openAppSettingsButton: MaterialButton
 
-    // === TAB 3: 历史短信组件 ===
+    // === TAB 2 (原TAB 3): 历史短信组件 ===
     private lateinit var selectAllPanel: View
     private lateinit var selectAllCheckbox: CheckBox
     private lateinit var smsRecyclerView: RecyclerView
@@ -79,29 +81,29 @@ class MainActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 1. 初始化容器与导航栏
+        // 1. 初始化顶部状态栏与容器、导航栏
+        globalHeader = findViewById(R.id.globalHeader)
         tabStatusContainer = findViewById(R.id.tabStatusContainer)
         tabConfigContainer = findViewById(R.id.tabConfigContainer)
         tabHistoryContainer = findViewById(R.id.tabHistoryContainer)
         tabConsoleContainer = findViewById(R.id.tabConsoleContainer)
         bottomNavigation = findViewById(R.id.bottomNavigation)
 
-        // 2. 绑定 Tab 1 (状态页) 组件
+        // 2. 绑定 TAB 3 (状态/信息页) 组件
         permissionValue = findViewById(R.id.permissionValue)
         miuiNotificationSmsLabel = findViewById(R.id.miuiNotificationSmsLabel)
         miuiNotificationSmsValue = findViewById(R.id.miuiNotificationSmsValue)
         openMiuiNotificationSmsButton = findViewById(R.id.openMiuiNotificationSmsButton)
         lastTriggerValue = findViewById(R.id.lastTriggerValue)
         lastForwardResultValue = findViewById(R.id.lastForwardResultValue)
-        eventLogValueShort = findViewById(R.id.eventLogValueShort)
 
-        // 3. 绑定 Tab 2 (配置页) 组件
+        // 3. 绑定 TAB 1 (配置页) 组件
         barkApiInputLayout = findViewById(R.id.barkApiInputLayout)
         barkApiInput = findViewById(R.id.barkApiInput)
         saveBarkApiButton = findViewById(R.id.saveBarkApiButton)
         openAppSettingsButton = findViewById(R.id.openAppSettingsButton)
 
-        // 4. 绑定 Tab 3 (历史短信) 组件
+        // 4. 绑定 TAB 2 (历史短信) 组件
         selectAllPanel = findViewById(R.id.selectAllPanel)
         selectAllCheckbox = findViewById(R.id.selectAllCheckbox)
         smsRecyclerView = findViewById(R.id.smsRecyclerView)
@@ -109,7 +111,7 @@ class MainActivity : Activity() {
         loadingProgress = findViewById(R.id.loadingProgress)
         forwardSelectedButton = findViewById(R.id.forwardSelectedButton)
 
-        // 5. 绑定 Tab 4 (日志终端) 组件
+        // 5. 绑定 TAB 4 (日志终端) 组件
         consoleOutput = findViewById(R.id.consoleOutput)
         consoleInput = findViewById(R.id.consoleInput)
         appendInputButton = findViewById(R.id.appendInputButton)
@@ -122,6 +124,12 @@ class MainActivity : Activity() {
         if (MiuiPermissionHelper.isMiuiDevice()) {
             findViewById<android.view.View>(R.id.miuiSmsPermissionCard).visibility = android.view.View.VISIBLE
             openMiuiNotificationSmsButton.visibility = android.view.View.VISIBLE
+        }
+
+        // 绑定关于页面 GitHub 跳转事件
+        findViewById<TextView>(R.id.githubText).setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/123zpc/SMS-SENDER.git"))
+            startActivity(intent)
         }
 
         // 配置页事件
@@ -156,18 +164,18 @@ class MainActivity : Activity() {
         exportButton.setOnClickListener { exportConsole() }
         clearLogButtonConsole.setOnClickListener { clearConsole() }
 
-        // 底部导航栏切换事件
+        // 底部导航栏切换事件 (排列顺序：配置 -> 历史 -> 信息 -> 日志)
         bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.nav_status -> {
+                R.id.nav_config -> {
                     switchTab(0)
                     true
                 }
-                R.id.nav_config -> {
+                R.id.nav_history -> {
                     switchTab(1)
                     true
                 }
-                R.id.nav_history -> {
+                R.id.nav_status -> {
                     switchTab(2)
                     true
                 }
@@ -182,7 +190,8 @@ class MainActivity : Activity() {
         requestRequiredPermissionsIfNeeded()
         KeepAliveService.start(this)
         
-        // 初始装载状态 Tab
+        // 初始装载配置 Tab (Tab 1, 索引为 0)
+        bottomNavigation.selectedItemId = R.id.nav_config
         switchTab(0)
 
         if (!hasMissingStandardPermissions()) {
@@ -196,23 +205,26 @@ class MainActivity : Activity() {
     }
 
     private fun switchTab(index: Int) {
-        tabStatusContainer.visibility = if (index == 0) View.VISIBLE else View.GONE
-        tabConfigContainer.visibility = if (index == 1) View.VISIBLE else View.GONE
-        tabHistoryContainer.visibility = if (index == 2) View.VISIBLE else View.GONE
+        tabConfigContainer.visibility = if (index == 0) View.VISIBLE else View.GONE
+        tabHistoryContainer.visibility = if (index == 1) View.VISIBLE else View.GONE
+        tabStatusContainer.visibility = if (index == 2) View.VISIBLE else View.GONE
         tabConsoleContainer.visibility = if (index == 3) View.VISIBLE else View.GONE
 
+        // 控制顶部运行状态栏可见性：仅在日志终端 Tab (index == 3) 呈现
+        globalHeader.visibility = if (index == 3) View.VISIBLE else View.GONE
+
         when (index) {
-            0 -> renderState()
-            2 -> checkPermissionAndLoadSms()
+            1 -> checkPermissionAndLoadSms()
+            2 -> renderState()
             3 -> renderConsole()
         }
     }
 
     private fun refreshCurrentTab() {
-        if (tabStatusContainer.visibility == View.VISIBLE) {
-            renderState()
-        } else if (tabHistoryContainer.visibility == View.VISIBLE) {
+        if (tabHistoryContainer.visibility == View.VISIBLE) {
             checkPermissionAndLoadSms()
+        } else if (tabStatusContainer.visibility == View.VISIBLE) {
+            renderState()
         } else if (tabConsoleContainer.visibility == View.VISIBLE) {
             renderConsole()
         }
@@ -261,7 +273,7 @@ class MainActivity : Activity() {
         }
     }
 
-    // === TAB 1: 首页渲染 ===
+    // === TAB 3 (原TAB 1): 状态与信息页渲染 ===
     private fun renderState() {
         permissionValue.text = buildString {
             append("RECEIVE_SMS：")
@@ -279,9 +291,21 @@ class MainActivity : Activity() {
         if (MiuiPermissionHelper.isMiuiDevice()) {
             val granted = MiuiPermissionHelper.hasNotificationSmsPermission(this)
             miuiNotificationSmsValue.text = when (granted) {
-                true -> getString(R.string.permission_granted)
-                false -> getString(R.string.permission_denied)
-                null -> "未知（无法检测）"
+                true -> {
+                    openMiuiNotificationSmsButton.isEnabled = false
+                    openMiuiNotificationSmsButton.text = "通知类短信权限已开启"
+                    getString(R.string.permission_granted)
+                }
+                false -> {
+                    openMiuiNotificationSmsButton.isEnabled = true
+                    openMiuiNotificationSmsButton.text = getString(R.string.open_miui_notification_sms_settings)
+                    getString(R.string.permission_denied)
+                }
+                null -> {
+                    openMiuiNotificationSmsButton.isEnabled = true
+                    openMiuiNotificationSmsButton.text = getString(R.string.open_miui_notification_sms_settings)
+                    "未知（无法检测）"
+                }
             }
         }
 
@@ -294,22 +318,9 @@ class MainActivity : Activity() {
 
         lastForwardResultValue.text = AgentStateStore.getLastForwardResult(this)
             .ifBlank { getString(R.string.last_forward_empty) }
-
-        // 显示微型滚动运行日志 (显示最近的 8 行日志)
-        val logs = EventLogStore.getEventText(this).trim()
-        eventLogValueShort.text = if (logs.isBlank()) {
-            getString(R.string.event_log_empty)
-        } else {
-            val lines = logs.split('\n')
-            if (lines.size > 8) {
-                lines.takeLast(8).joinToString("\n")
-            } else {
-                logs
-            }
-        }
     }
 
-    // === TAB 2: 配置项保存与跳转 ===
+    // === TAB 1 (原TAB 2): 配置项保存与跳转 ===
     private fun saveBarkApiUrl() {
         val value = barkApiInput.text?.toString()?.trim().orEmpty()
         if (!isHttpUrl(value)) {
@@ -335,7 +346,7 @@ class MainActivity : Activity() {
         MiuiPermissionHelper.showNotificationSmsGuideIfNeeded(this)
     }
 
-    // === TAB 3: 历史短信功能内嵌 ===
+    // === TAB 2 (原TAB 3): 历史短信功能 ===
     private fun checkPermissionAndLoadSms() {
         if (checkSelfPermission(Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED) {
             loadSmsFromInbox()
@@ -423,7 +434,7 @@ class MainActivity : Activity() {
         historyAdapter.selectAll(false)
     }
 
-    // === TAB 4: 极客终端功能内嵌 ===
+    // === TAB 4: 日志终端功能 ===
     private fun renderConsole() {
         consoleOutput.text = EventLogStore.getConsoleText(this)
             .ifBlank { getString(R.string.console_empty) }

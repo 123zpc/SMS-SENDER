@@ -101,15 +101,16 @@ object MiuiPermissionHelper {
      */
     fun showNotificationSmsGuideIfNeeded(activity: Activity) {
         if (!isMiuiDevice()) return
+        if (hasNotificationSmsPermission(activity) == true) return // 已获得权限，不再引导
         if (hasGuided(activity)) return
 
         AlertDialog.Builder(activity)
             .setTitle(activity.getString(R.string.miui_notification_sms_dialog_title))
             .setMessage(activity.getString(R.string.miui_notification_sms_dialog_message))
             .setCancelable(false)
-            .setPositiveButton(activity.getString(R.string.miui_notification_sms_dialog_positive)) { _, _ ->
-                markGuided(activity)
+            .setPositiveButton(activity.getString(R.string.miui_notification_sms_dialog_positive)) { dialog, _ ->
                 openMiuiPermissionEditor(activity)
+                dialog.dismiss()
             }
             .setNegativeButton(activity.getString(R.string.miui_notification_sms_dialog_negative)) { dialog, _ ->
                 markGuided(activity)

@@ -28,6 +28,7 @@ class KeepAliveService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        startAsForeground()
         registerSmsObserverIfPossible()
         return START_STICKY
     }
