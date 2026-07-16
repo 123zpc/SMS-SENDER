@@ -16,25 +16,10 @@
         <item name="colorSurfaceContainer">@color/brand_surface_container</item>
         <item name="colorOutline">@color/brand_outline</item>
         <item name="android:fontFamily">sans</item>
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
         <item name="android:navigationBarColor">@color/brand_surface</item>
         <item name="android:statusBarColor">@color/brand_surface</item>
         <item name="android:windowActionModeOverlay">true</item>
-    </style>
-
-    <style name="CustomActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
-        <item name="android:width">64dp</item>
-        <item name="android:height">40dp</item>
-        <item name="android:color">@color/seed_container</item>
-    </style>
-
-    <style name="Theme.SmsAgent.Splash" parent="Theme.SmsAgent">
-        <item name="android:windowBackground">@drawable/splash_background</item>
-        <item name="android:windowLightStatusBar">false</item>
-        <item name="android:windowLightNavigationBar">false</item>
-        <item name="android:statusBarColor">@color/header_panel_start</item>
-        <item name="android:navigationBarColor">@color/header_panel_start</item>
-        <item name="android:windowNoTitle">true</item>
     </style>
 </resources>

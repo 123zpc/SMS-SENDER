@@ -4,62 +4,94 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/brand_surface"
+    android:clipToPadding="false"
     android:fitsSystemWindows="true">
 
-    <!-- 顶部 Toolbar -->
     <LinearLayout
         android:id="@+id/toolbarPanel"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/brand_surface_container"
+        android:layout_height="84dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/header_panel_background"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingHorizontal="16dp"
-        app:elevation="2dp">
+        android:padding="14dp">
 
         <ImageButton
             android:id="@+id/backButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="返回"
-            android:src="@drawable/ic_back_24" />
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@drawable/hero_logo_background"
+            android:contentDescription="@string/back"
+            android:padding="10dp"
+            android:src="@drawable/ic_back_24"
+            android:tint="@color/hero_text" />
 
-        <com.google.android.material.textview.MaterialTextView
-            style="@style/TextAppearance.Material3.TitleMedium"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="12dp"
             android:layout_weight="1"
-            android:text="@string/sms_history_title"
-            android:textColor="?attr/colorOnSurface"
-            android:textStyle="bold" />
+            android:orientation="vertical">
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.Material3.LabelSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:letterSpacing="0.1"
+                android:text="@string/header_product_line"
+                android:textColor="@color/hero_text_muted"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.Material3.TitleLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@string/sms_history_title"
+                android:textColor="@color/hero_text"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.Material3.BodySmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@string/history_panel_description"
+                android:textColor="@color/hero_text_muted" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/selectAllPanel"
             android:layout_width="wrap_content"
-            android:layout_height="38dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
+            android:layout_height="42dp"
+            android:background="@drawable/hero_logo_background"
             android:clickable="true"
             android:focusable="true"
-            android:background="?attr/selectableItemBackground"
-            android:paddingHorizontal="10dp">
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="5dp"
+            android:paddingEnd="8dp">
 
             <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/selectAllCheckbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minWidth="0dp"
-                android:minHeight="0dp" />
+                android:minHeight="0dp"
+                android:minWidth="0dp" />
 
             <com.google.android.material.textview.MaterialTextView
-                style="@style/TextAppearance.Material3.LabelLarge"
+                style="@style/TextAppearance.Material3.LabelMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
+                android:layout_marginStart="2dp"
                 android:text="@string/sms_history_select_all"
-                android:textColor="?attr/colorOnSurfaceVariant" />
+                android:textColor="@color/hero_text"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 
@@ -68,9 +100,9 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@id/toolbarPanel"
-        android:background="@color/brand_outline" />
+        android:layout_marginTop="10dp"
+        android:background="@android:color/transparent" />
 
-    <!-- 列表及其他组件容器 -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -81,43 +113,53 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingHorizontal="16dp"
-            android:paddingTop="12dp"
-            android:paddingBottom="96dp" />
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="100dp" />
 
-        <!-- 空状态提示 -->
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/emptyStateText"
             style="@style/TextAppearance.Material3.BodyMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/empty_state_background"
             android:gravity="center"
+            android:padding="24dp"
             android:text="@string/sms_history_empty"
-            android:textColor="?attr/colorOnSurfaceVariant"
-            android:visibility="gone" />
+            android:textColor="@color/brand_text_secondary"
+            android:visibility="gone"
+            app:lineHeight="21dp" />
 
-        <!-- 进度条 -->
         <ProgressBar
             android:id="@+id/loadingProgress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:indeterminateTint="@color/seed"
             android:visibility="gone" />
 
-        <!-- 底部手动转发按钮 (药丸大圆角 + 微阴影) -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/forwardSelectedButton"
             style="@style/Widget.Material3.Button"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_gravity="bottom|center_horizontal"
-            android:layout_margin="20dp"
-            android:text="@string/sms_history_forward_none"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
             android:enabled="false"
-            app:cornerRadius="28dp"
+            android:text="@string/sms_history_forward_none"
+            android:textAllCaps="false"
+            android:textColor="@color/brand_on_primary"
+            app:backgroundTint="@color/seed"
+            app:cornerRadius="18dp"
+            app:elevation="5dp"
             app:icon="@drawable/ic_send_24"
-            app:iconGravity="textStart" />
+            app:iconGravity="textStart"
+            app:iconTint="@color/brand_on_primary" />
     </FrameLayout>
 </RelativeLayout>

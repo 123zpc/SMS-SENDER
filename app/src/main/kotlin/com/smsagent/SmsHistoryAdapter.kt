@@ -50,7 +50,7 @@ class SmsHistoryAdapter(
         val seedColor = context.getColor(R.color.seed)
         val outlineColor = context.getColor(R.color.brand_outline)
         val containerColor = context.getColor(R.color.brand_surface_container)
-        val selectedCardBg = context.getColor(R.color.header_panel_start)
+        val selectedCardBg = context.getColor(R.color.seed_container)
 
         if (item.isSelected) {
             holder.cardView.strokeColor = seedColor

@@ -1,143 +1,287 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/console_background"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    android:background="@color/brand_surface"
+    android:clipToPadding="false"
+    android:fitsSystemWindows="true">
 
-    <!-- 顶栏 - 渐变暗夜极客质感 -->
     <LinearLayout
+        android:id="@+id/consoleHeader"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/console_toolbar"
+        android:layout_height="84dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/header_panel_background"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="12dp">
+        android:padding="18dp">
 
-        <com.google.android.material.textview.MaterialTextView
-            style="@style/TextAppearance.Material3.TitleMedium"
+        <FrameLayout
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/hero_logo_background">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/terminal_icon_description"
+                android:padding="12dp"
+                android:src="@drawable/ic_terminal_24"
+                android:tint="@color/hero_text" />
+        </FrameLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
             android:layout_weight="1"
-            android:text="@string/console_title"
-            android:textColor="@color/console_text"
-            android:textStyle="bold" />
+            android:orientation="vertical">
 
-        <!-- 刷新 (带圆润胶囊形态) -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/refreshButton"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:minWidth="48dp"
-            android:paddingHorizontal="8dp"
-            android:text="@string/console_refresh"
-            android:textColor="@color/console_accent"
-            app:cornerRadius="18dp" />
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.Material3.LabelSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:letterSpacing="0.1"
+                android:text="@string/header_product_line"
+                android:textColor="@color/hero_text_muted"
+                android:textStyle="bold" />
 
-        <!-- 复制 -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/copyButton"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:minWidth="48dp"
-            android:paddingHorizontal="8dp"
-            android:text="@string/console_copy"
-            android:textColor="@color/console_accent"
-            app:cornerRadius="18dp" />
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.Material3.TitleLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@string/console_title"
+                android:textColor="@color/hero_text"
+                android:textStyle="bold" />
 
-        <!-- 导出 -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/exportButton"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:minWidth="48dp"
-            android:paddingHorizontal="8dp"
-            android:text="@string/console_export"
-            android:textColor="@color/console_accent"
-            app:cornerRadius="18dp" />
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.Material3.BodySmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@string/header_console_subtitle"
+                android:textColor="@color/hero_text_muted" />
+        </LinearLayout>
 
-        <!-- 清空 -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/clearConsoleButton"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:minWidth="48dp"
-            android:paddingHorizontal="8dp"
-            android:text="@string/clear_log"
-            android:textColor="@color/console_warning"
-            app:cornerRadius="18dp" />
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:background="@drawable/hero_status_dot" />
     </LinearLayout>
 
-    <!-- 主日志区 -->
-    <ScrollView
-        android:id="@+id/consoleScroll"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#0A0F1D"
-        android:fillViewport="true">
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/consoleOutput"
-            style="@style/TextAppearance.Material3.BodySmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:padding="20dp"
-            android:textColor="@color/console_text"
-            android:textIsSelectable="true"
-            app:lineHeight="18dp" />
-    </ScrollView>
-
-    <!-- 底部追加操作区 -->
     <LinearLayout
+        android:id="@+id/consoleControlPanel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/console_toolbar"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="12dp">
+        android:layout_below="@id/consoleHeader"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/console_panel_background"
+        android:orientation="vertical"
+        android:padding="14dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/TextAppearance.Material3.LabelMedium"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="@string/console_input_hint"
-            app:boxCornerRadiusBottomEnd="12dp"
-            app:boxCornerRadiusBottomStart="12dp"
-            app:boxCornerRadiusTopEnd="12dp"
-            app:boxCornerRadiusTopStart="12dp"
-            app:boxStrokeColor="@color/console_accent"
-            app:hintTextColor="@color/console_accent">
+            android:letterSpacing="0.12"
+            android:text="@string/console_overline"
+            android:textColor="@color/console_accent"
+            android:textStyle="bold" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/consoleInput"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="12dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/refreshButton"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:insetBottom="0dp"
+                android:insetTop="0dp"
+                android:minWidth="0dp"
+                android:text="@string/console_refresh"
+                android:textAllCaps="false"
+                android:textColor="@color/console_text"
+                app:backgroundTint="@color/console_button"
+                app:cornerRadius="12dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/copyButton"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:insetBottom="0dp"
+                android:insetTop="0dp"
+                android:minWidth="0dp"
+                android:text="@string/console_copy"
+                android:textAllCaps="false"
+                android:textColor="@color/console_text"
+                app:backgroundTint="@color/console_button"
+                app:cornerRadius="12dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/exportButton"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:insetBottom="0dp"
+                android:insetTop="0dp"
+                android:minWidth="0dp"
+                android:text="@string/console_export"
+                android:textAllCaps="false"
+                android:textColor="@color/console_text"
+                app:backgroundTint="@color/console_button"
+                app:cornerRadius="12dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/clearConsoleButton"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:insetBottom="0dp"
+                android:insetTop="0dp"
+                android:minWidth="0dp"
+                android:text="@string/clear_log"
+                android:textAllCaps="false"
+                android:textColor="@color/console_warning"
+                app:backgroundTint="@color/console_button"
+                app:cornerRadius="12dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/consoleScrollCard"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/consoleControlPanel"
+        android:layout_above="@id/consoleInputPanel"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/console_log_background"
+        android:orientation="vertical"
+        android:paddingTop="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.Material3.TitleSmall"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/console_stream_title"
+                android:textColor="@color/console_text"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="7dp"
+                android:layout_height="7dp"
+                android:background="@drawable/hero_status_dot" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/console_border" />
+
+        <ScrollView
+            android:id="@+id/consoleScroll"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:fillViewport="true"
+            android:paddingStart="18dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="18dp"
+            android:paddingBottom="18dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/consoleOutput"
+                style="@style/TextAppearance.Material3.BodySmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
-                android:inputType="textMultiLine|textNoSuggestions"
-                android:maxLines="3"
                 android:textColor="@color/console_text"
-                android:textColorHint="@color/console_muted" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:textIsSelectable="true"
+                app:lineHeight="19dp" />
+        </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/consoleInputPanel"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/console_input_background"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="14dp"
+        android:paddingEnd="6dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/consoleInput"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:fontFamily="monospace"
+            android:hint="@string/console_input_hint"
+            android:inputType="textMultiLine|textNoSuggestions"
+            android:maxLines="1"
+            android:padding="0dp"
+            android:textColor="@color/console_text"
+            android:textColorHint="@color/console_muted"
+            android:textSize="14sp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/appendInputButton"
             style="@style/Widget.Material3.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="52dp"
-            android:layout_marginStart="10dp"
-            android:text="@string/console_append"
-            app:cornerRadius="12dp"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:contentDescription="@string/console_input_action_description"
+            android:insetBottom="0dp"
+            android:insetLeft="0dp"
+            android:insetRight="0dp"
+            android:insetTop="0dp"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:padding="0dp"
+            app:backgroundTint="@color/seed"
+            app:cornerRadius="14dp"
             app:icon="@drawable/ic_send_24"
-            app:iconGravity="textStart" />
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconSize="19dp"
+            app:iconTint="@color/brand_on_primary" />
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

@@ -36,6 +36,8 @@ class MainActivity : Activity() {
 
     // 全局顶部运行状态栏
     private lateinit var globalHeader: View
+    private lateinit var titleText: TextView
+    private lateinit var headerSubtitle: TextView
 
     // Tab 容器
     private lateinit var tabStatusContainer: View
@@ -83,6 +85,8 @@ class MainActivity : Activity() {
 
         // 1. 初始化顶部状态栏与容器、导航栏
         globalHeader = findViewById(R.id.globalHeader)
+        titleText = findViewById(R.id.titleText)
+        headerSubtitle = findViewById(R.id.headerSubtitle)
         tabStatusContainer = findViewById(R.id.tabStatusContainer)
         tabConfigContainer = findViewById(R.id.tabConfigContainer)
         tabHistoryContainer = findViewById(R.id.tabHistoryContainer)
@@ -104,7 +108,7 @@ class MainActivity : Activity() {
         } catch (e: Exception) {
             "1.2.4"
         }
-        appVersionText.text = "当前版本：v$versionName"
+        appVersionText.text = "${getString(R.string.about_version)} · v$versionName"
 
         // 3. 绑定 TAB 1 (配置页) 组件
         barkApiInputLayout = findViewById(R.id.barkApiInputLayout)
@@ -214,18 +218,64 @@ class MainActivity : Activity() {
     }
 
     private fun switchTab(index: Int) {
-        tabConfigContainer.visibility = if (index == 0) View.VISIBLE else View.GONE
-        tabHistoryContainer.visibility = if (index == 1) View.VISIBLE else View.GONE
-        tabStatusContainer.visibility = if (index == 2) View.VISIBLE else View.GONE
-        tabConsoleContainer.visibility = if (index == 3) View.VISIBLE else View.GONE
+        showSelectedTab(index)
 
-        // 控制顶部运行状态栏可见性：仅在日志终端 Tab (index == 3) 呈现
-        globalHeader.visibility = if (index == 3) View.VISIBLE else View.GONE
+        globalHeader.visibility = View.VISIBLE
+        when (index) {
+            0 -> {
+                titleText.setText(R.string.header_config_title)
+                headerSubtitle.setText(R.string.header_config_subtitle)
+            }
+            1 -> {
+                titleText.setText(R.string.header_history_title)
+                headerSubtitle.setText(R.string.header_history_subtitle)
+            }
+            2 -> {
+                titleText.setText(R.string.header_status_title)
+                headerSubtitle.setText(R.string.header_status_subtitle)
+            }
+            3 -> {
+                titleText.setText(R.string.header_console_title)
+                headerSubtitle.setText(R.string.header_console_subtitle)
+            }
+        }
 
         when (index) {
             1 -> checkPermissionAndLoadSms()
             2 -> renderState()
             3 -> renderConsole()
+        }
+    }
+
+    private fun showSelectedTab(index: Int) {
+        val selectedTab = when (index) {
+            0 -> tabConfigContainer
+            1 -> tabHistoryContainer
+            2 -> tabStatusContainer
+            else -> tabConsoleContainer
+        }
+
+        listOf(
+            tabConfigContainer,
+            tabHistoryContainer,
+            tabStatusContainer,
+            tabConsoleContainer,
+        ).filter { tab -> tab !== selectedTab }.forEach { tab ->
+            tab.animate().cancel()
+            tab.visibility = View.GONE
+            tab.alpha = 1f
+            tab.translationY = 0f
+        }
+
+        if (selectedTab.visibility != View.VISIBLE) {
+            selectedTab.alpha = 0f
+            selectedTab.translationY = 14f
+            selectedTab.visibility = View.VISIBLE
+            selectedTab.animate()
+                .alpha(1f)
+                .translationY(0f)
+                .setDuration(220L)
+                .start()
         }
     }
 
