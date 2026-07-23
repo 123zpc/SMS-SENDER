@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">SMS SENDER</string>
+    <string name="nav_connection">连接</string>
+    <string name="nav_history">归档</string>
+    <string name="nav_overview">概览</string>
+    <string name="nav_logs">日志</string>
     <string name="app_subtitle">双轨防漏 · 自动转发 · 低功耗保活</string>
     <string name="header_product_line">SMS SENDER</string>
     <string name="header_service_status">服务运行中</string>
@@ -57,6 +61,7 @@
     <string name="onboarding_skip">暂不设置</string>
     <string name="onboarding_next">继续</string>
     <string name="onboarding_finish">进入连接中心</string>
+    <string name="replay_onboarding">重温产品引导</string>
     <string name="onboarding_back">上一步</string>
     <string name="onboarding_step">步骤 %1$d / 3</string>
     <string name="onboarding_page_one_eyebrow">01 · 连接你的转发链路</string>

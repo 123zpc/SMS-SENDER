@@ -1,43 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="seed">#5B5CE2</color>
-    <color name="seed_dark">#3F3FB8</color>
-    <color name="seed_container">#EEEDFF</color>
-    <color name="seed_outline">#CAC9FF</color>
-    <color name="brand_on_primary">#FFFFFF</color>
+    <color name="seed">#65435E</color>
+    <color name="seed_dark">#4B2D49</color>
+    <color name="seed_container">#F3E4EA</color>
+    <color name="seed_outline">#D8B9C8</color>
+    <color name="brand_on_primary">#FFF9F0</color>
 
-    <color name="accent_orange">#F79009</color>
-    <color name="accent_orange_container">#FFF4DD</color>
-    <color name="brand_emerald">#12B76A</color>
-    <color name="brand_emerald_dark">#067647</color>
-    <color name="brand_emerald_container">#E9F9F0</color>
-    <color name="brand_cyan">#0BA5EC</color>
-    <color name="brand_cyan_container">#E5F6FF</color>
+    <color name="accent_orange">#D66E46</color>
+    <color name="accent_orange_container">#FBE7DC</color>
+    <color name="brand_emerald">#4B806F</color>
+    <color name="brand_emerald_dark">#285B4B</color>
+    <color name="brand_emerald_container">#E1F0E8</color>
+    <color name="brand_cyan">#3B7D8C</color>
+    <color name="brand_cyan_container">#E1F0F2</color>
 
-    <color name="brand_surface">#F4F6FB</color>
-    <color name="brand_surface_container">#FFFFFF</color>
-    <color name="brand_surface_container_high">#F8FAFD</color>
-    <color name="brand_outline">#DDE3EE</color>
-    <color name="brand_text_primary">#172033</color>
-    <color name="brand_text_secondary">#667085</color>
-    <color name="brand_text_tertiary">#98A2B3</color>
+    <color name="brand_surface">#FFF9F1</color>
+    <color name="brand_surface_container">#FFFCF8</color>
+    <color name="brand_surface_container_high">#F7EEE6</color>
+    <color name="brand_outline">#E6D8CD</color>
+    <color name="brand_text_primary">#302630</color>
+    <color name="brand_text_secondary">#766874</color>
+    <color name="brand_text_tertiary">#A0939A</color>
+    <color name="navigation_surface">#F4E7DE</color>
+    <color name="navigation_outline">#E3D0C4</color>
 
-    <color name="header_panel_start">#101C3C</color>
-    <color name="header_panel_end">#3C2B6D</color>
-    <color name="hero_text">#F8FAFF</color>
-    <color name="hero_text_muted">#C8D1FF</color>
+    <color name="header_panel_start">#2C1C36</color>
+    <color name="header_panel_end">#70465E</color>
+    <color name="hero_text">#FFF9F0</color>
+    <color name="hero_text_muted">#E8CBD8</color>
     <color name="hero_chip">#2EFFFFFF</color>
     <color name="hero_chip_outline">#40FFFFFF</color>
-    <color name="hero_badge">#63E6BE</color>
-    <color name="hero_badge_text">#063B2B</color>
+    <color name="hero_badge">#BAE0C9</color>
+    <color name="hero_badge_text">#234437</color>
 
-    <color name="console_background">#0B1220</color>
-    <color name="console_toolbar">#141E32</color>
-    <color name="console_surface">#101A2D</color>
-    <color name="console_border">#2A3A58</color>
-    <color name="console_text">#EAF1FF</color>
-    <color name="console_muted">#94A5C2</color>
-    <color name="console_accent">#75D6FF</color>
-    <color name="console_warning">#FF9B9B</color>
-    <color name="console_button">#203150</color>
+    <color name="console_background">#261C27</color>
+    <color name="console_toolbar">#332333</color>
+    <color name="console_surface">#2C202D</color>
+    <color name="console_border">#5A4058</color>
+    <color name="console_text">#FFF5ED</color>
+    <color name="console_muted">#CFB8C5</color>
+    <color name="console_accent">#EFA074</color>
+    <color name="console_warning">#FFB4A7</color>
+    <color name="console_button">#452E42</color>
 </resources>

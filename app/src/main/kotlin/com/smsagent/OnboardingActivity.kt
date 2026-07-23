@@ -27,6 +27,9 @@ class OnboardingActivity : Activity() {
     private lateinit var indicators: List<View>
 
     private var currentPageIndex = 0
+    private val isPreview: Boolean by lazy {
+        intent.getBooleanExtra(EXTRA_PREVIEW, false)
+    }
 
     private val pages = listOf(
         OnboardingPage(
@@ -64,7 +67,7 @@ class OnboardingActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (LaunchStateStore.hasCompletedOnboarding(this)) {
+        if (!isPreview && LaunchStateStore.hasCompletedOnboarding(this)) {
             openMainActivity()
             return
         }
@@ -81,7 +84,11 @@ class OnboardingActivity : Activity() {
         }
 
         if (currentPageIndex == 0) {
-            super.onBackPressed()
+            if (isPreview) {
+                finish()
+            } else {
+                super.onBackPressed()
+            }
         } else {
             currentPageIndex -= 1
             renderPage(animate = true)
@@ -238,11 +245,18 @@ class OnboardingActivity : Activity() {
     }
 
     private fun completeOnboarding() {
-        LaunchStateStore.markOnboardingCompleted(this)
+        if (!isPreview) {
+            LaunchStateStore.markOnboardingCompleted(this)
+        }
         openMainActivity()
     }
 
     private fun openMainActivity() {
+        if (isPreview) {
+            finish()
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+            return
+        }
         startActivity(Intent(this, MainActivity::class.java))
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         finish()
@@ -250,6 +264,10 @@ class OnboardingActivity : Activity() {
 
     private fun dpToPixels(value: Int): Int {
         return (value * resources.displayMetrics.density).toInt()
+    }
+
+    companion object {
+        const val EXTRA_PREVIEW = "onboarding_preview"
     }
 
     private data class OnboardingPage(

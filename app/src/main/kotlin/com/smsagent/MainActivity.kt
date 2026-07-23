@@ -7,11 +7,13 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Rect
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
+import android.view.ViewTreeObserver
 import android.widget.CheckBox
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -19,7 +21,6 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.smsagent.dispatcher.SmsDispatcher
@@ -34,17 +35,27 @@ import kotlin.concurrent.thread
 
 class MainActivity : Activity() {
 
-    // 全局顶部运行状态栏
-    private lateinit var globalHeader: View
-    private lateinit var titleText: TextView
-    private lateinit var headerSubtitle: TextView
-
     // Tab 容器
+    private lateinit var mainRoot: View
     private lateinit var tabStatusContainer: View
     private lateinit var tabConfigContainer: View
     private lateinit var tabHistoryContainer: View
     private lateinit var tabConsoleContainer: View
-    private lateinit var bottomNavigation: BottomNavigationView
+    private lateinit var bottomNavigationDock: View
+    private lateinit var navigationButtons: List<MaterialButton>
+    private var selectedTabIndex = 0
+    private var keyboardVisible = false
+
+    private val keyboardLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
+        val visibleFrame = Rect()
+        mainRoot.getWindowVisibleDisplayFrame(visibleFrame)
+        val keyboardHeight = mainRoot.rootView.height - visibleFrame.height()
+        val isKeyboardVisible = keyboardHeight > mainRoot.rootView.height * KEYBOARD_HEIGHT_THRESHOLD
+        if (keyboardVisible != isKeyboardVisible) {
+            keyboardVisible = isKeyboardVisible
+            updateNavigationVisibility()
+        }
+    }
 
     // === TAB 3 (原TAB 1): 状态/信息页组件 ===
     private lateinit var permissionValue: TextView
@@ -83,15 +94,20 @@ class MainActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 1. 初始化顶部状态栏与容器、导航栏
-        globalHeader = findViewById(R.id.globalHeader)
-        titleText = findViewById(R.id.titleText)
-        headerSubtitle = findViewById(R.id.headerSubtitle)
+        // 1. 初始化内容容器与导航坞
+        mainRoot = findViewById(R.id.mainRoot)
         tabStatusContainer = findViewById(R.id.tabStatusContainer)
         tabConfigContainer = findViewById(R.id.tabConfigContainer)
         tabHistoryContainer = findViewById(R.id.tabHistoryContainer)
         tabConsoleContainer = findViewById(R.id.tabConsoleContainer)
-        bottomNavigation = findViewById(R.id.bottomNavigation)
+        bottomNavigationDock = findViewById(R.id.bottomNavigationDock)
+        navigationButtons = listOf(
+            findViewById(R.id.navConfigButton),
+            findViewById(R.id.navHistoryButton),
+            findViewById(R.id.navStatusButton),
+            findViewById(R.id.navConsoleButton),
+        )
+        mainRoot.viewTreeObserver.addOnGlobalLayoutListener(keyboardLayoutListener)
 
         // 2. 绑定 TAB 3 (状态/信息页) 组件
         permissionValue = findViewById(R.id.permissionValue)
@@ -144,6 +160,12 @@ class MainActivity : Activity() {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/123zpc/SMS-SENDER.git"))
             startActivity(intent)
         }
+        findViewById<MaterialButton>(R.id.replayOnboardingFromConfigButton).setOnClickListener {
+            openOnboardingPreview()
+        }
+        findViewById<MaterialButton>(R.id.replayOnboardingFromStatusButton).setOnClickListener {
+            openOnboardingPreview()
+        }
 
         // 配置页事件
         barkApiInput.setText(AgentStateStore.getRemoteApiTemplate(this))
@@ -177,34 +199,15 @@ class MainActivity : Activity() {
         exportButton.setOnClickListener { exportConsole() }
         clearLogButtonConsole.setOnClickListener { clearConsole() }
 
-        // 底部导航栏切换事件 (排列顺序：配置 -> 历史 -> 信息 -> 日志)
-        bottomNavigation.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_config -> {
-                    switchTab(0)
-                    true
-                }
-                R.id.nav_history -> {
-                    switchTab(1)
-                    true
-                }
-                R.id.nav_status -> {
-                    switchTab(2)
-                    true
-                }
-                R.id.nav_console -> {
-                    switchTab(3)
-                    true
-                }
-                else -> false
-            }
+        // 导航坞始终以居中的图标和文字呈现，不再使用会横移的系统底部导航。
+        navigationButtons.forEachIndexed { index, button ->
+            button.setOnClickListener { switchTab(index) }
         }
 
         requestRequiredPermissionsIfNeeded()
         KeepAliveService.start(this)
         
         // 初始装载配置 Tab (Tab 1, 索引为 0)
-        bottomNavigation.selectedItemId = R.id.nav_config
         switchTab(0)
 
         if (!hasMissingStandardPermissions()) {
@@ -217,34 +220,46 @@ class MainActivity : Activity() {
         refreshCurrentTab()
     }
 
+    override fun onDestroy() {
+        if (::mainRoot.isInitialized && mainRoot.viewTreeObserver.isAlive) {
+            mainRoot.viewTreeObserver.removeOnGlobalLayoutListener(keyboardLayoutListener)
+        }
+        super.onDestroy()
+    }
+
     private fun switchTab(index: Int) {
         showSelectedTab(index)
-
-        globalHeader.visibility = View.VISIBLE
-        when (index) {
-            0 -> {
-                titleText.setText(R.string.header_config_title)
-                headerSubtitle.setText(R.string.header_config_subtitle)
-            }
-            1 -> {
-                titleText.setText(R.string.header_history_title)
-                headerSubtitle.setText(R.string.header_history_subtitle)
-            }
-            2 -> {
-                titleText.setText(R.string.header_status_title)
-                headerSubtitle.setText(R.string.header_status_subtitle)
-            }
-            3 -> {
-                titleText.setText(R.string.header_console_title)
-                headerSubtitle.setText(R.string.header_console_subtitle)
-            }
-        }
+        selectedTabIndex = index
+        updateNavigationSelection()
+        updateNavigationVisibility()
 
         when (index) {
             1 -> checkPermissionAndLoadSms()
             2 -> renderState()
             3 -> renderConsole()
         }
+    }
+
+    private fun updateNavigationSelection() {
+        navigationButtons.forEachIndexed { index, button ->
+            button.isActivated = index == selectedTabIndex
+        }
+    }
+
+    private fun updateNavigationVisibility() {
+        bottomNavigationDock.visibility = if (selectedTabIndex == CONSOLE_TAB && keyboardVisible) {
+            View.GONE
+        } else {
+            View.VISIBLE
+        }
+    }
+
+    private fun openOnboardingPreview() {
+        startActivity(
+            Intent(this, OnboardingActivity::class.java)
+                .putExtra(OnboardingActivity.EXTRA_PREVIEW, true),
+        )
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 
     private fun showSelectedTab(index: Int) {
@@ -634,5 +649,7 @@ class MainActivity : Activity() {
         private const val RUNTIME_PERMISSIONS_REQUEST_CODE = 1001
         private const val REQUEST_READ_SMS_PERMISSION_TAB = 2002
         private const val REQUEST_EXPORT_LOG_TAB = 2003
+        private const val CONSOLE_TAB = 3
+        private const val KEYBOARD_HEIGHT_THRESHOLD = 0.22
     }
 }

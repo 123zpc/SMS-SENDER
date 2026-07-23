@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="seed">#A9A8FF</color>
-    <color name="seed_dark">#DDD9FF</color>
-    <color name="seed_container">#29295B</color>
-    <color name="seed_outline">#5654A6</color>
-    <color name="brand_on_primary">#17173E</color>
+    <color name="seed">#EEBED6</color>
+    <color name="seed_dark">#F6D9E7</color>
+    <color name="seed_container">#4E2F45</color>
+    <color name="seed_outline">#8C5B78</color>
+    <color name="brand_on_primary">#351B2F</color>
 
-    <color name="accent_orange">#FDC66D</color>
-    <color name="accent_orange_container">#49351B</color>
-    <color name="brand_emerald">#57E0A3</color>
-    <color name="brand_emerald_dark">#9CF4C7</color>
-    <color name="brand_emerald_container">#103B31</color>
-    <color name="brand_cyan">#78D5FF</color>
-    <color name="brand_cyan_container">#12394E</color>
+    <color name="accent_orange">#FFB38C</color>
+    <color name="accent_orange_container">#563526</color>
+    <color name="brand_emerald">#9DD8C1</color>
+    <color name="brand_emerald_dark">#B7EBD6</color>
+    <color name="brand_emerald_container">#24453C</color>
+    <color name="brand_cyan">#A1D2D7</color>
+    <color name="brand_cyan_container">#25454A</color>
 
-    <color name="brand_surface">#09111F</color>
-    <color name="brand_surface_container">#111C2F</color>
-    <color name="brand_surface_container_high">#16233A</color>
-    <color name="brand_outline">#2A3A56</color>
-    <color name="brand_text_primary">#F4F7FE</color>
-    <color name="brand_text_secondary">#B6C1D4</color>
-    <color name="brand_text_tertiary">#8391AA</color>
+    <color name="brand_surface">#211923</color>
+    <color name="brand_surface_container">#2B202D</color>
+    <color name="brand_surface_container_high">#362838</color>
+    <color name="brand_outline">#533E55</color>
+    <color name="brand_text_primary">#FDF4F7</color>
+    <color name="brand_text_secondary">#D6C3CF</color>
+    <color name="brand_text_tertiary">#AC98A6</color>
+    <color name="navigation_surface">#302330</color>
+    <color name="navigation_outline">#5A425A</color>
 
-    <color name="header_panel_start">#101B39</color>
-    <color name="header_panel_end">#35255F</color>
-    <color name="hero_text">#F8FAFF</color>
-    <color name="hero_text_muted">#C8D1FF</color>
+    <color name="header_panel_start">#241528</color>
+    <color name="header_panel_end">#63384E</color>
+    <color name="hero_text">#FFF7F2</color>
+    <color name="hero_text_muted">#E6C8D6</color>
     <color name="hero_chip">#2EFFFFFF</color>
     <color name="hero_chip_outline">#40FFFFFF</color>
-    <color name="hero_badge">#63E6BE</color>
-    <color name="hero_badge_text">#063B2B</color>
+    <color name="hero_badge">#B7DFC7</color>
+    <color name="hero_badge_text">#234437</color>
 </resources>
