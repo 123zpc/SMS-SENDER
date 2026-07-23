@@ -18,16 +18,28 @@ class SplashActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        val logo = findViewById<View>(R.id.splashLogo)
+        val flightScene = findViewById<View>(R.id.splashFlightScene)
+        val plane = findViewById<View>(R.id.splashPlane)
+        val signalOrigin = findViewById<View>(R.id.splashSignalOrigin)
+        val messageCard = findViewById<View>(R.id.splashMessageCard)
         val wordmark = findViewById<View>(R.id.splashWordmark)
         val tagline = findViewById<View>(R.id.splashTagline)
         val progress = findViewById<View>(R.id.splashProgress)
 
-        logo.alpha = 0f
-        logo.scaleX = 0.84f
-        logo.scaleY = 0.84f
-        logo.translationY = 16f
-        logo.rotation = -8f
+        flightScene.alpha = 0f
+        plane.alpha = 0f
+        plane.scaleX = 0.84f
+        plane.scaleY = 0.84f
+        plane.translationX = -68f
+        plane.translationY = 20f
+        plane.rotation = -10f
+        signalOrigin.alpha = 0f
+        signalOrigin.scaleX = 0.55f
+        signalOrigin.scaleY = 0.55f
+        messageCard.alpha = 0f
+        messageCard.scaleX = 0.86f
+        messageCard.scaleY = 0.86f
+        messageCard.translationX = 12f
         wordmark.alpha = 0f
         wordmark.translationY = 12f
         tagline.alpha = 0f
@@ -37,15 +49,47 @@ class SplashActivity : Activity() {
         progress.scaleY = 0.35f
         progress.rotation = -90f
 
-        logo.animate()
+        flightScene.animate()
+            .alpha(1f)
+            .setDuration(SCENE_FADE_DURATION)
+            .start()
+        signalOrigin.animate()
             .alpha(1f)
             .scaleX(1f)
             .scaleY(1f)
-            .translationY(0f)
-            .rotation(0f)
-            .setDuration(LOGO_ANIMATION_DURATION)
+            .setDuration(SIGNAL_ANIMATION_DURATION)
             .setInterpolator(OvershootInterpolator(0.8f))
             .start()
+        plane.post {
+            val arrivalX = messageCard.x - plane.width * 0.42f
+            plane.animate()
+                .alpha(1f)
+                .scaleX(1f)
+                .scaleY(1f)
+                .translationX(arrivalX)
+                .translationY(-4f)
+                .rotation(0f)
+                .setStartDelay(FLIGHT_START_DELAY)
+                .setDuration(FLIGHT_DURATION)
+                .setInterpolator(OvershootInterpolator(0.72f))
+                .withEndAction {
+                    messageCard.animate()
+                        .alpha(1f)
+                        .scaleX(1f)
+                        .scaleY(1f)
+                        .translationX(0f)
+                        .setDuration(MESSAGE_ARRIVAL_DURATION)
+                        .setInterpolator(OvershootInterpolator(0.9f))
+                        .start()
+                    signalOrigin.animate()
+                        .alpha(0.5f)
+                        .scaleX(0.78f)
+                        .scaleY(0.78f)
+                        .setDuration(MESSAGE_ARRIVAL_DURATION)
+                        .start()
+                }
+                .start()
+        }
         wordmark.animate()
             .alpha(1f)
             .translationY(0f)
@@ -93,7 +137,11 @@ class SplashActivity : Activity() {
 
     private companion object {
         private const val SPLASH_DURATION = 950L
-        private const val LOGO_ANIMATION_DURATION = 420L
+        private const val SCENE_FADE_DURATION = 180L
+        private const val SIGNAL_ANIMATION_DURATION = 260L
+        private const val FLIGHT_START_DELAY = 40L
+        private const val FLIGHT_DURATION = 460L
+        private const val MESSAGE_ARRIVAL_DURATION = 200L
         private const val COPY_ANIMATION_DURATION = 360L
         private const val PROGRESS_ANIMATION_DURATION = 760L
     }

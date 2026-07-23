@@ -31,18 +31,68 @@
         android:paddingEnd="32dp">
 
         <FrameLayout
-            android:id="@+id/splashLogo"
-            android:layout_width="88dp"
-            android:layout_height="88dp"
-            android:background="@drawable/hero_logo_background">
+            android:id="@+id/splashFlightScene"
+            android:layout_width="match_parent"
+            android:layout_height="168dp">
 
-            <ImageView
+            <View
+                android:id="@+id/splashFlightTrail"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/app_name"
-                android:padding="21dp"
-                android:src="@drawable/ic_send_24"
-                android:tint="@color/hero_text" />
+                android:layout_height="2dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="18dp"
+                android:layout_marginEnd="26dp"
+                android:background="@drawable/splash_flight_trail" />
+
+            <View
+                android:id="@+id/splashSignalOrigin"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="start|center_vertical"
+                android:background="@drawable/splash_progress_bar" />
+
+            <LinearLayout
+                android:id="@+id/splashMessageCard"
+                android:layout_width="150dp"
+                android:layout_height="90dp"
+                android:layout_gravity="end|center_vertical"
+                android:background="@drawable/splash_message_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <View
+                    android:layout_width="36dp"
+                    android:layout_height="7dp"
+                    android:background="@drawable/splash_message_line_primary" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/splash_message_line_secondary" />
+
+                <View
+                    android:layout_width="82dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/splash_message_line_secondary" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/splashPlane"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="start|center_vertical"
+                android:background="@drawable/hero_logo_background">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/send_icon_description"
+                    android:padding="15dp"
+                    android:src="@drawable/ic_send_24"
+                    android:tint="@color/hero_text" />
+            </FrameLayout>
         </FrameLayout>
 
         <com.google.android.material.textview.MaterialTextView
