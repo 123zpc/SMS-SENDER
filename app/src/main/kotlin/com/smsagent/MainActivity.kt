@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import android.view.ViewTreeObserver
+import android.view.animation.DecelerateInterpolator
 import android.widget.CheckBox
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -45,6 +46,7 @@ class MainActivity : Activity() {
     private lateinit var navigationButtons: List<MaterialButton>
     private var selectedTabIndex = 0
     private var keyboardVisible = false
+    private val navigationInterpolator = DecelerateInterpolator(1.8f)
 
     private val keyboardLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
         val visibleFrame = Rect()
@@ -242,8 +244,22 @@ class MainActivity : Activity() {
 
     private fun updateNavigationSelection() {
         navigationButtons.forEachIndexed { index, button ->
-            button.isActivated = index == selectedTabIndex
+            val isSelected = index == selectedTabIndex
+            button.isActivated = isSelected
+            button.animate().cancel()
+            button.animate()
+                .alpha(if (isSelected) 1f else 0.76f)
+                .scaleX(if (isSelected) 1f else 0.96f)
+                .scaleY(if (isSelected) 1f else 0.96f)
+                .translationY(if (isSelected) -dpToPixels(2f) else 0f)
+                .setDuration(NAVIGATION_MOTION_DURATION)
+                .setInterpolator(navigationInterpolator)
+                .start()
         }
+    }
+
+    private fun dpToPixels(value: Float): Float {
+        return value * resources.displayMetrics.density
     }
 
     private fun updateNavigationVisibility() {
@@ -651,5 +667,6 @@ class MainActivity : Activity() {
         private const val REQUEST_EXPORT_LOG_TAB = 2003
         private const val CONSOLE_TAB = 3
         private const val KEYBOARD_HEIGHT_THRESHOLD = 0.22
+        private const val NAVIGATION_MOTION_DURATION = 180L
     }
 }

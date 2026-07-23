@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.view.animation.OvershootInterpolator
 import com.smsagent.state.LaunchStateStore
 
 class SplashActivity : Activity() {
@@ -25,18 +26,25 @@ class SplashActivity : Activity() {
         logo.alpha = 0f
         logo.scaleX = 0.84f
         logo.scaleY = 0.84f
+        logo.translationY = 16f
+        logo.rotation = -8f
         wordmark.alpha = 0f
         wordmark.translationY = 12f
         tagline.alpha = 0f
         tagline.translationY = 10f
-        progress.pivotX = 0f
-        progress.scaleX = 0f
+        progress.alpha = 0f
+        progress.scaleX = 0.35f
+        progress.scaleY = 0.35f
+        progress.rotation = -90f
 
         logo.animate()
             .alpha(1f)
             .scaleX(1f)
             .scaleY(1f)
+            .translationY(0f)
+            .rotation(0f)
             .setDuration(LOGO_ANIMATION_DURATION)
+            .setInterpolator(OvershootInterpolator(0.8f))
             .start()
         wordmark.animate()
             .alpha(1f)
@@ -51,9 +59,13 @@ class SplashActivity : Activity() {
             .setDuration(COPY_ANIMATION_DURATION)
             .start()
         progress.animate()
+            .alpha(1f)
             .scaleX(1f)
+            .scaleY(1f)
+            .rotation(0f)
             .setStartDelay(100L)
             .setDuration(PROGRESS_ANIMATION_DURATION)
+            .setInterpolator(OvershootInterpolator(0.7f))
             .start()
 
         handler.postDelayed(navigateRunnable, SPLASH_DURATION)

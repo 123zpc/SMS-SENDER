@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottomNavigationDock"
+        android:layout_marginBottom="8dp"
         android:clipToPadding="false">
 
         <ScrollView
@@ -278,7 +279,7 @@
                             android:text="@string/replay_onboarding"
                             android:textAllCaps="false"
                             android:textColor="@color/brand_text_secondary"
-                            app:icon="@drawable/ic_send_24"
+                            app:icon="@drawable/ic_spark_24"
                             app:iconGravity="textStart"
                             app:iconTint="@color/seed" />
                     </LinearLayout>
@@ -290,8 +291,9 @@
             android:id="@+id/tabStatusContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
+            android:clipToPadding="true"
             android:fillViewport="true"
+            android:paddingBottom="104dp"
             android:scrollbars="none"
             android:visibility="gone">
 
@@ -699,7 +701,7 @@
                             android:textAllCaps="false"
                             android:textColor="@color/seed"
                             app:cornerRadius="15dp"
-                            app:icon="@drawable/ic_send_24"
+                            app:icon="@drawable/ic_spark_24"
                             app:iconGravity="textStart"
                             app:iconTint="@color/seed"
                             app:strokeColor="@color/seed_outline" />
@@ -1178,7 +1180,7 @@
             android:textSize="11sp"
             app:backgroundTint="@color/nav_item_background_color"
             app:cornerRadius="18dp"
-            app:icon="@drawable/ic_home_24"
+            app:icon="@drawable/ic_dashboard_24"
             app:iconGravity="textTop"
             app:iconPadding="3dp"
             app:iconSize="22dp"

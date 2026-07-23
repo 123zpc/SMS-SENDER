@@ -58,6 +58,7 @@
     <string name="terminal_icon_description">实时日志</string>
     <string name="splash_tagline">关键短信，可靠抵达</string>
     <string name="splash_loading">正在准备安全转发环境</string>
+    <string name="splash_loading_label">正在点亮链路</string>
     <string name="onboarding_skip">暂不设置</string>
     <string name="onboarding_next">继续</string>
     <string name="onboarding_finish">进入连接中心</string>
