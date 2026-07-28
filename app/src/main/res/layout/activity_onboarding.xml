@@ -19,15 +19,15 @@
         android:orientation="horizontal">
 
         <FrameLayout
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:background="@drawable/hero_logo_background">
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/app_name"
-                android:padding="7dp"
+                android:padding="8dp"
                 android:src="@drawable/ic_send_24"
                 android:tint="@color/brand_on_primary" />
         </FrameLayout>
@@ -38,11 +38,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_weight="1"
-            android:fontFamily="monospace"
-            android:letterSpacing="0.14"
+            android:fontFamily="sans-serif-medium"
+            android:letterSpacing="0.08"
             android:text="@string/app_name"
             android:textColor="@color/brand_text_primary"
-            android:textSize="12sp"
+            android:textSize="13sp"
             android:textStyle="bold" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -52,13 +52,14 @@
             android:layout_height="44dp"
             android:clickable="true"
             android:focusable="true"
+            android:fontFamily="sans-serif-medium"
             android:foreground="?attr/selectableItemBackgroundBorderless"
             android:gravity="center"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:text="@string/onboarding_skip"
             android:textColor="@color/brand_text_secondary"
-            android:textSize="12sp" />
+            android:textSize="13sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -76,28 +77,30 @@
             android:id="@+id/onboardingBackButton"
             style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="wrap_content"
+            android:layout_height="52dp"
             android:minWidth="96dp"
-            android:layout_height="50dp"
             android:enabled="false"
+            android:fontFamily="sans-serif-medium"
             android:text="@string/onboarding_back"
             android:textAllCaps="false"
             android:textColor="@color/brand_text_primary"
-            app:cornerRadius="10dp"
+            app:cornerRadius="14dp"
             app:strokeColor="@color/brand_outline" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/onboardingNextButton"
             style="@style/Widget.Material3.Button"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="52dp"
             android:layout_marginStart="10dp"
             android:layout_weight="1"
+            android:fontFamily="sans-serif-medium"
             android:text="@string/onboarding_next"
             android:textAllCaps="false"
             android:textColor="@color/brand_on_primary"
             android:textSize="15sp"
             app:backgroundTint="@color/seed"
-            app:cornerRadius="10dp" />
+            app:cornerRadius="14dp" />
     </LinearLayout>
 
     <ScrollView
@@ -167,8 +170,8 @@
                     android:orientation="horizontal">
 
                     <View
-                        android:layout_width="6dp"
-                        android:layout_height="6dp"
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
                         android:layout_gravity="center_vertical"
                         android:background="@drawable/hero_status_dot" />
 
@@ -178,8 +181,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:fontFamily="monospace"
-                        android:letterSpacing="0.14"
+                        android:fontFamily="sans-serif-medium"
+                        android:letterSpacing="0.08"
                         android:textColor="@color/hero_text"
                         android:textSize="11sp"
                         android:textStyle="bold" />
@@ -214,7 +217,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:fontFamily="monospace"
+                    android:fontFamily="sans-serif-medium"
                     android:textColor="@color/seed"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -225,6 +228,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
+                    android:fontFamily="sans-serif-medium"
                     android:textColor="@color/brand_text_secondary"
                     android:textStyle="bold" />
 
@@ -234,6 +238,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
+                    android:fontFamily="sans-serif-medium"
                     android:textColor="@color/brand_text_primary"
                     android:textStyle="bold" />
 
@@ -243,6 +248,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:fontFamily="sans-serif"
                     android:textColor="@color/brand_text_secondary"
                     app:lineHeight="22dp" />
 
@@ -256,8 +262,8 @@
                     android:padding="14dp">
 
                     <View
-                        android:layout_width="6dp"
-                        android:layout_height="6dp"
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
                         android:background="@drawable/unread_dot" />
 
                     <com.google.android.material.textview.MaterialTextView
@@ -267,6 +273,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
+                        android:fontFamily="sans-serif"
                         android:textColor="@color/brand_text_primary"
                         app:lineHeight="19dp" />
                 </LinearLayout>

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 图标瓦（中性）：灰底 + 发丝线，仅保留给兼容页面 -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
-    <corners android:radius="10dp" />
-    <solid android:color="@color/brand_surface_container_high" />
-    <stroke android:width="1dp" android:color="@color/brand_outline" />
+    <corners android:radius="14dp" />
+    <solid android:color="@color/seed_container" />
+    <stroke android:width="1dp" android:color="@color/seed_outline" />
 </shape>

@@ -1,52 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- 点阵工业 · 日间：浅灰工作台 / 白面板 / 发丝线 / 单点信号红 -->
+    <!-- SMS SENDER 视觉设计系统：深靛蓝 (Indigo) + 灵动翡翠 (Emerald) + 柔光玻璃卡片 -->
 
-    <!-- 唯一强调色：信号红 -->
-    <color name="seed">#D7232E</color>
-    <color name="seed_dark">#A8151F</color>
-    <color name="seed_container">#FBE9EA</color>
-    <color name="seed_outline">#F0C8CB</color>
+    <!-- 主品牌色：Electric Indigo 极客靛蓝 -->
+    <color name="seed">#4F46E5</color>
+    <color name="seed_dark">#3730A3</color>
+    <color name="seed_container">#EEF2FF</color>
+    <color name="seed_outline">#C7D2FE</color>
     <color name="brand_on_primary">#FFFFFF</color>
 
-    <!-- 语义 LED：琥珀 / 绿 / 钢灰（仅用于状态指示，不做装饰） -->
-    <color name="accent_orange">#B26A00</color>
-    <color name="accent_orange_container">#F5E7CD</color>
-    <color name="brand_emerald">#0E7A5A</color>
-    <color name="brand_emerald_dark">#0A5C44</color>
-    <color name="brand_emerald_container">#DDEDE5</color>
-    <color name="brand_cyan">#55606B</color>
-    <color name="brand_cyan_container">#E3E7EB</color>
+    <!-- 状态指示色：Mint Emerald 灵动翡翠 / Amber 琥珀暖黄 / Slate 钢灰 -->
+    <color name="accent_orange">#D97706</color>
+    <color name="accent_orange_container">#FEF3C7</color>
+    <color name="brand_emerald">#10B981</color>
+    <color name="brand_emerald_dark">#047857</color>
+    <color name="brand_emerald_container">#ECFDF5</color>
+    <color name="brand_cyan">#0284C7</color>
+    <color name="brand_cyan_container">#E0F2FE</color>
 
-    <!-- 工作台表面 -->
-    <color name="brand_surface">#F0F0ED</color>
+    <!-- 主工作台与卡片表面 (Slate 调色板) -->
+    <color name="brand_surface">#F8FAFC</color>
     <color name="brand_surface_container">#FFFFFF</color>
-    <color name="brand_surface_container_high">#EAEAE7</color>
-    <color name="brand_outline">#E1E1DC</color>
-    <color name="brand_text_primary">#101012</color>
-    <color name="brand_text_secondary">#60605C</color>
-    <color name="brand_text_tertiary">#999993</color>
+    <color name="brand_surface_container_high">#F1F5F9</color>
+    <color name="brand_outline">#E2E8F0</color>
+    <color name="brand_text_primary">#0F172A</color>
+    <color name="brand_text_secondary">#475569</color>
+    <color name="brand_text_tertiary">#94A3B8</color>
     <color name="navigation_surface">#FFFFFF</color>
-    <color name="navigation_outline">#E1E1DC</color>
+    <color name="navigation_outline">#E2E8F0</color>
 
-    <!-- 启动页与深色仪器面板（常黑） -->
-    <color name="header_panel_start">#050505</color>
-    <color name="header_panel_end">#050505</color>
-    <color name="hero_text">#F5F5F5</color>
-    <color name="hero_text_muted">#7D7D7D</color>
-    <color name="hero_chip">#14FFFFFF</color>
-    <color name="hero_chip_outline">#26FFFFFF</color>
-    <color name="hero_badge">#1D1D1D</color>
-    <color name="hero_badge_text">#F5F5F5</color>
+    <!-- Header 灵动 Header 与 Highlight 容器 -->
+    <color name="header_panel_start">#0F172A</color>
+    <color name="header_panel_end">#1E293B</color>
+    <color name="hero_text">#F8FAFC</color>
+    <color name="hero_text_muted">#94A3B8</color>
+    <color name="hero_chip">#1E293B</color>
+    <color name="hero_chip_outline">#334155</color>
+    <color name="hero_badge">#312E81</color>
+    <color name="hero_badge_text">#E0E7FF</color>
 
-    <!-- 终端：常黑，磷光白字，红点 accent -->
-    <color name="console_background">#000000</color>
-    <color name="console_toolbar">#111111</color>
-    <color name="console_surface">#0C0C0C</color>
-    <color name="console_border">#232323</color>
-    <color name="console_text">#ECECEC</color>
-    <color name="console_muted">#6C6C6C</color>
-    <color name="console_accent">#FF4545</color>
-    <color name="console_warning">#E0A04A</color>
-    <color name="console_button">#181818</color>
+    <!-- 运行终端：Glass Terminal 极客深邃蓝黑 -->
+    <color name="console_background">#0B0F19</color>
+    <color name="console_toolbar">#111827</color>
+    <color name="console_surface">#1F2937</color>
+    <color name="console_border">#374151</color>
+    <color name="console_text">#F3F4F6</color>
+    <color name="console_muted">#9CA3AF</color>
+    <color name="console_accent">#34D399</color>
+    <color name="console_warning">#FBBF24</color>
+    <color name="console_button">#1F2937</color>
 </resources>

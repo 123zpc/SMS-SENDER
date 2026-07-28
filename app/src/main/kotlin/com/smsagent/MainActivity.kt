@@ -571,7 +571,7 @@ class MainActivity : Activity() {
             return
         }
 
-        if (text.equals("SEAL", ignoreCase = true)) {
+        if (text.equals("SEAL", ignoreCase = true) || text.equals("PULSE", ignoreCase = true)) {
             consoleInput.text?.clear()
             BureauSealController.showSeal(this)
             renderConsole()

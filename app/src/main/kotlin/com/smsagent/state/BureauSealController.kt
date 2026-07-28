@@ -10,13 +10,13 @@ import com.smsagent.R
 import java.util.Random
 
 /**
- * 信号局印 · 彩蛋控制器
+ * Pulse Hub 灵动脉冲 · 彩蛋控制器
  *
  * 召出方式：
  * 1. 长按"关于"卡片中的版本号 5 次
- * 2. 在电报台输入 SEAL 指令
+ * 2. 在控制台输入 PULSE 或 SEAL 指令
  *
- * 盖印时随机展示一条格言，并将封缄记录写入本地电报流。
+ * 展示 Pulse Hub 连通中枢弹窗，并写入本地日志。
  */
 object BureauSealController {
 
@@ -36,8 +36,7 @@ object BureauSealController {
     private const val TAP_RESET_INTERVAL_MS = 1800L
 
     /**
-     * 记录一次版本号长按；连续 5 次即召出局印。
-     * 应在版本号的 OnLongClickListener 中调用。
+     * 记录一次版本号长按；连续 5 次即召出 Pulse Hub。
      */
     fun recordVersionLongPress(activity: Activity) {
         val now = System.currentTimeMillis()
@@ -54,19 +53,18 @@ object BureauSealController {
             val remaining = REQUIRED_TAPS - versionTapCount
             Toast.makeText(
                 activity,
-                "再按 $remaining 次召出局印",
+                "再长按 $remaining 次触发 Pulse Hub",
                 Toast.LENGTH_SHORT,
             ).show()
         }
     }
 
     /**
-     * 直接召出局印（供控制台 SEAL 指令调用）。
+     * 直接召出 Pulse Hub（供控制台 PULSE / SEAL 指令调用）。
      */
     fun showSeal(activity: Activity) {
         if (activity.isFinishing || activity.isDestroyed) return
 
-        // 若已有浮层在显示，先移除
         dismiss(activity)
 
         val rootView = activity.window.decorView as? ViewGroup ?: return
@@ -81,7 +79,6 @@ object BureauSealController {
         val stampAnim = AnimationUtils.loadAnimation(activity, R.anim.seal_stamp)
         val fadeAnim = AnimationUtils.loadAnimation(activity, R.anim.seal_fade_in)
 
-        // 标题与格言先淡入，方印以盖章动效落下
         overlay.setOnClickListener { dismiss(activity) }
 
         rootView.addView(overlay)
@@ -93,9 +90,8 @@ object BureauSealController {
         overlay.findViewById<View>(R.id.sealDismissHint).startAnimation(fadeAnim)
         container.startAnimation(stampAnim)
 
-        // 写入电报流
         val motto = activity.getString(mottoRes)
-        EventLogStore.append(activity, "SEAL", activity.getString(R.string.easter_seal_log, motto))
+        EventLogStore.append(activity, "PULSE", activity.getString(R.string.easter_seal_log, motto))
 
         Toast.makeText(
             activity,
@@ -104,9 +100,6 @@ object BureauSealController {
         ).show()
     }
 
-    /**
-     * 消散浮层。带淡出效果。
-     */
     private fun dismiss(activity: Activity) {
         val current = overlay ?: return
         overlay = null

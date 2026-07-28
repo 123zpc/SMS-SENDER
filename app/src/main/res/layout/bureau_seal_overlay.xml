@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 信号局印 · 彩蛋浮层：长按版本号 5 次或控制台 SEAL 召出 -->
+<!-- PULSE HUB 灵动脉冲 · 极客彩蛋浮层 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/sealOverlayRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#B3000000"
+    android:background="#CC0F172A"
     android:clickable="true"
     android:focusable="true"
     android:visibility="gone">
@@ -16,108 +16,78 @@
         android:layout_gravity="center"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:paddingStart="40dp"
-        android:paddingEnd="40dp">
+        android:paddingStart="36dp"
+        android:paddingEnd="36dp">
 
-        <!-- 朱砂方印 -->
+        <!-- 灵动脉冲 Glass Badge Card -->
         <FrameLayout
-            android:layout_width="168dp"
-            android:layout_height="168dp"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
             android:background="@drawable/bureau_seal_background">
 
-            <GridLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:columnCount="2"
-                android:rowCount="2"
-                android:useDefaultMargins="false">
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_spark_24"
+                    android:tint="#818CF8" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    style="@style/TextAppearance.Material3.HeadlineMedium"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:layout_gravity="center"
-                    android:fontFamily="serif"
-                    android:gravity="center"
-                    android:text="信"
-                    android:textColor="@color/brand_on_primary"
-                    android:textSize="40sp"
+                    style="@style/TextAppearance.Material3.TitleMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:letterSpacing="0.08"
+                    android:text="PULSE HUB"
+                    android:textColor="#F8FAFC"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    style="@style/TextAppearance.Material3.HeadlineMedium"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:layout_gravity="center"
-                    android:fontFamily="serif"
-                    android:gravity="center"
-                    android:text="号"
-                    android:textColor="@color/brand_on_primary"
-                    android:textSize="40sp"
-                    android:textStyle="bold" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    style="@style/TextAppearance.Material3.HeadlineMedium"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:layout_gravity="center"
-                    android:fontFamily="serif"
-                    android:gravity="center"
-                    android:text="局"
-                    android:textColor="@color/brand_on_primary"
-                    android:textSize="40sp"
-                    android:textStyle="bold" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    style="@style/TextAppearance.Material3.HeadlineMedium"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:layout_gravity="center"
-                    android:fontFamily="serif"
-                    android:gravity="center"
-                    android:text="印"
-                    android:textColor="@color/brand_on_primary"
-                    android:textSize="40sp"
-                    android:textStyle="bold" />
-            </GridLayout>
+                    style="@style/TextAppearance.Material3.LabelSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="monospace"
+                    android:text="NODE 01 · ACTIVE"
+                    android:textColor="#34D399"
+                    android:textSize="11sp" />
+            </LinearLayout>
         </FrameLayout>
 
-        <!-- 印下款识 -->
+        <!-- 标识款识 -->
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/sealTitleText"
             style="@style/TextAppearance.Material3.LabelSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="monospace"
-            android:letterSpacing="0.22"
+            android:layout_marginTop="24dp"
+            android:fontFamily="sans-serif-medium"
+            android:letterSpacing="0.18"
             android:text="@string/easter_seal_title"
-            android:textColor="#F2EDE3"
-            android:textSize="11sp"
+            android:textColor="#E2E8F0"
+            android:textSize="13sp"
             android:textStyle="bold" />
 
-        <!-- 随机格言 -->
+        <!-- 随机语录 -->
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/sealMottoText"
-            style="@style/TextAppearance.Material3.BodyLarge"
+            style="@style/TextAppearance.Material3.BodyMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:fontFamily="serif"
+            android:layout_marginTop="12dp"
+            android:fontFamily="sans-serif"
             android:gravity="center"
-            android:letterSpacing="0.06"
-            android:textColor="#FBF7EF"
-            android:textSize="17sp"
-            android:textStyle="italic" />
+            android:letterSpacing="0.04"
+            android:textColor="#94A3B8"
+            android:textSize="15sp" />
 
         <!-- 消散提示 -->
         <com.google.android.material.textview.MaterialTextView
@@ -125,11 +95,11 @@
             style="@style/TextAppearance.Material3.LabelSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="24dp"
             android:fontFamily="monospace"
-            android:letterSpacing="0.16"
-            android:text="TAP TO SEAL AWAY"
-            android:textColor="#807A6E"
+            android:letterSpacing="0.14"
+            android:text="TAP ANYWHERE TO CLOSE"
+            android:textColor="#64748B"
             android:textSize="10sp" />
     </LinearLayout>
 </FrameLayout>

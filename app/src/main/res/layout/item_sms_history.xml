@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 历史条目：电报式行项，左红条 + monospace 时间，去卡片化 -->
+<!-- 历史短信条目：现代化圆角 Squircle 卡片，带左侧灵动 Indigo 亮条与清晰层级排版 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/smsCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="3dp"
-    android:layout_marginBottom="3dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
     android:background="@drawable/history_item_background"
     android:foreground="?attr/selectableItemBackground"
     android:gravity="center_vertical"
-    android:minHeight="64dp"
+    android:minHeight="68dp"
     android:orientation="horizontal"
     android:paddingStart="0dp"
     android:paddingTop="12dp"
     android:paddingEnd="12dp"
     android:paddingBottom="12dp">
 
-    <!-- 左侧信号条 -->
+    <!-- 左侧灵动 Signal Accent -->
     <View
         android:id="@+id/signalBar"
-        android:layout_width="3dp"
-        android:layout_height="40dp"
+        android:layout_width="4dp"
+        android:layout_height="44dp"
         android:layout_marginEnd="12dp"
         android:background="@color/seed" />
 
@@ -44,11 +44,11 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                android:fontFamily="monospace"
-                android:letterSpacing="0.02"
+                android:fontFamily="sans-serif-medium"
+                android:letterSpacing="0.01"
                 android:maxLines="1"
                 android:textColor="@color/brand_text_primary"
-                android:textSize="13sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -57,10 +57,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:fontFamily="monospace"
-                android:letterSpacing="0.04"
+                android:fontFamily="sans-serif"
+                android:letterSpacing="0.02"
                 android:textColor="@color/brand_text_tertiary"
-                android:textSize="10sp" />
+                android:textSize="11sp" />
         </LinearLayout>
 
         <com.google.android.material.textview.MaterialTextView
@@ -70,10 +70,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:ellipsize="end"
+            android:fontFamily="sans-serif"
             android:maxLines="2"
             android:textColor="@color/brand_text_secondary"
-            android:textSize="12sp"
-            app:lineHeight="18dp" />
+            android:textSize="13sp"
+            app:lineHeight="19dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -92,8 +93,8 @@
 
         <View
             android:id="@+id/unreadDot"
-            android:layout_width="6dp"
-            android:layout_height="6dp"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
             android:layout_marginTop="2dp"
             android:background="@drawable/unread_dot"
             android:visibility="gone" />
