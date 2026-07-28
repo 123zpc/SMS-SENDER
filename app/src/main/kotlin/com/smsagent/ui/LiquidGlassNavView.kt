@@ -47,7 +47,7 @@ class LiquidGlassNavView @JvmOverloads constructor(
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         textSize = 12f * resources.displayMetrics.scaledDensity
         textAlign = Paint.Align.CENTER
-        fontFamily = android.graphics.Typeface.create("sans-serif-medium", android.graphics.Typeface.NORMAL)
+        typeface = android.graphics.Typeface.create("sans-serif-medium", android.graphics.Typeface.NORMAL)
     }
 
     private val dotPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
