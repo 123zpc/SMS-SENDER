@@ -12,6 +12,7 @@
         android:id="@+id/tabContentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
         android:layout_above="@id/bottomNavigationDock"
         android:layout_marginBottom="8dp"
         android:clipToPadding="false">
@@ -293,7 +294,7 @@
             android:layout_height="match_parent"
             android:clipToPadding="true"
             android:fillViewport="true"
-            android:paddingBottom="104dp"
+            android:paddingBottom="24dp"
             android:scrollbars="none"
             android:visibility="gone">
 
