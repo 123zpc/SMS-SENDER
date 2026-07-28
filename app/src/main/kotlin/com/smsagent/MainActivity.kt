@@ -233,10 +233,11 @@ class MainActivity : Activity() {
         exportButton.setOnClickListener { exportConsole() }
         clearLogButtonConsole.setOnClickListener { clearConsole() }
 
-        // 导航坞始终以居中的图标和文字呈现，不再使用会横移的系统底部导航。
+        // 导航坞：支持点击与水珠拖拽切换
         navigationButtons.forEachIndexed { index, button ->
             button.setOnClickListener { switchTab(index) }
         }
+        setupDockDragGesture()
 
         requestRequiredPermissionsIfNeeded()
         KeepAliveService.start(this)
@@ -320,6 +321,73 @@ class MainActivity : Activity() {
                 .setDuration(NAVIGATION_MOTION_DURATION)
                 .setInterpolator(navigationInterpolator)
                 .start()
+        }
+    }
+
+    private var isDraggingDock = false
+
+    @android.annotation.SuppressLint("ClickableViewAccessibility")
+    private fun setupDockDragGesture() {
+        bottomNavigationDock.setOnTouchListener { _, event ->
+            val count = navigationButtons.size
+            if (count == 0) return@setOnTouchListener false
+
+            val totalWidth = bottomNavigationDock.width - bottomNavigationDock.paddingLeft - bottomNavigationDock.paddingRight
+            val itemWidth = totalWidth.toFloat() / count
+
+            when (event.actionMasked) {
+                android.view.MotionEvent.ACTION_DOWN -> {
+                    isDraggingDock = true
+                    navSlidingGlassCapsule.animate().cancel()
+                    navSlidingGlassCapsule.animate()
+                        .scaleY(1.15f)
+                        .scaleX(1.05f)
+                        .setDuration(120L)
+                        .start()
+                    updateDragPosition(event.x, itemWidth, count)
+                    true
+                }
+                android.view.MotionEvent.ACTION_MOVE -> {
+                    if (isDraggingDock) {
+                        updateDragPosition(event.x, itemWidth, count)
+                    }
+                    true
+                }
+                android.view.MotionEvent.ACTION_UP, android.view.MotionEvent.ACTION_CANCEL -> {
+                    if (isDraggingDock) {
+                        isDraggingDock = false
+                        navSlidingGlassCapsule.animate().cancel()
+                        navSlidingGlassCapsule.animate()
+                            .scaleY(1f)
+                            .scaleX(1f)
+                            .setDuration(160L)
+                            .start()
+
+                        val relativeX = event.x - bottomNavigationDock.paddingLeft
+                        val targetIndex = (relativeX / itemWidth).toInt().coerceIn(0, count - 1)
+                        switchTab(targetIndex)
+                    }
+                    true
+                }
+                else -> false
+            }
+        }
+    }
+
+    private fun updateDragPosition(touchX: Float, itemWidth: Float, count: Int) {
+        val relativeX = touchX - bottomNavigationDock.paddingLeft
+        val centerX = relativeX - itemWidth / 2f
+        val maxTranslation = (count - 1) * itemWidth
+        val clampedX = centerX.coerceIn(0f, maxTranslation)
+
+        navSlidingGlassCapsule.translationX = clampedX
+
+        val hoveredIndex = (relativeX / itemWidth).toInt().coerceIn(0, count - 1)
+        navigationButtons.forEachIndexed { index, button ->
+            val isHovered = index == hoveredIndex
+            button.alpha = if (isHovered) 1f else 0.55f
+            button.scaleX = if (isHovered) 1.05f else 0.96f
+            button.scaleY = if (isHovered) 1.05f else 0.96f
         }
     }
 
