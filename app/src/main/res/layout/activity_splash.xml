@@ -6,10 +6,9 @@
     android:fitsSystemWindows="true">
 
     <!-- 点阵底纹 -->
-    <View
+    <com.smsagent.ui.DotGridView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/dot_grid_dark" />
+        android:layout_height="match_parent" />
 
     <!-- 中央：品牌标 + 字标 + LED 点阵 -->
     <LinearLayout
