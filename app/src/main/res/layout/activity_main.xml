@@ -1129,9 +1129,9 @@
         </RelativeLayout>
     </FrameLayout>
 
-    <!-- ========== 底部导航：iOS 26.6 空间 液态玻璃滑动 Floating Capsule Dock ========== -->
-    <FrameLayout
-        android:id="@+id/bottomNavigationDock"
+    <!-- ========== 底部导航：iOS 26.6 拖拽水滴 Liquid Glass Dock ========== -->
+    <com.smsagent.ui.LiquidGlassNavView
+        android:id="@+id/liquidGlassNav"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:layout_alignParentBottom="true"
@@ -1139,135 +1139,6 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="12dp"
         android:background="@drawable/bottom_nav_background"
-        android:elevation="8dp"
-        android:padding="4dp">
-
-        <!-- iOS 26.6 液态玻璃滑动指示胶囊 -->
-        <View
-            android:id="@+id/navSlidingGlassCapsule"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/liquid_nav_indicator_bg" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:baselineAligned="false"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:id="@+id/navConfigButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <View
-                    android:layout_width="6dp"
-                    android:layout_height="6dp"
-                    android:background="@drawable/nav_dot"
-                    android:duplicateParentState="true" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:duplicateParentState="true"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="@string/nav_connection"
-                    android:textColor="@color/nav_item_color"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/navHistoryButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <View
-                    android:layout_width="6dp"
-                    android:layout_height="6dp"
-                    android:background="@drawable/nav_dot"
-                    android:duplicateParentState="true" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:duplicateParentState="true"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="@string/nav_history"
-                    android:textColor="@color/nav_item_color"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/navStatusButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <View
-                    android:layout_width="6dp"
-                    android:layout_height="6dp"
-                    android:background="@drawable/nav_dot"
-                    android:duplicateParentState="true" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:duplicateParentState="true"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="@string/nav_overview"
-                    android:textColor="@color/nav_item_color"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/navConsoleButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <View
-                    android:layout_width="6dp"
-                    android:layout_height="6dp"
-                    android:background="@drawable/nav_dot"
-                    android:duplicateParentState="true" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:duplicateParentState="true"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="@string/nav_logs"
-                    android:textColor="@color/nav_item_color"
-                    android:textSize="12sp" />
-            </LinearLayout>
-        </LinearLayout>
-    </FrameLayout>
+        android:elevation="10dp" />
 
 </RelativeLayout>

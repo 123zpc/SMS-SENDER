@@ -44,7 +44,7 @@ class MainActivity : Activity() {
     private lateinit var tabHistoryContainer: View
     private lateinit var tabConsoleContainer: View
     private lateinit var bottomNavigationDock: View
-    private lateinit var navigationButtons: List<View>
+    private lateinit var liquidGlassNav: com.smsagent.ui.LiquidGlassNavView
     private var selectedTabIndex = 0
     private var keyboardVisible = false
     private val navigationInterpolator = DecelerateInterpolator(1.8f)
@@ -97,19 +97,19 @@ class MainActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 1. 初始化内容容器与导航坞
+        // 1. 初始化内容容器与 iOS 26 拖拽水滴 Liquid Glass 导航
         mainRoot = findViewById(R.id.mainRoot)
         tabStatusContainer = findViewById(R.id.tabStatusContainer)
         tabConfigContainer = findViewById(R.id.tabConfigContainer)
         tabHistoryContainer = findViewById(R.id.tabHistoryContainer)
         tabConsoleContainer = findViewById(R.id.tabConsoleContainer)
-        bottomNavigationDock = findViewById(R.id.bottomNavigationDock)
-        navigationButtons = listOf(
-            findViewById(R.id.navConfigButton),
-            findViewById(R.id.navHistoryButton),
-            findViewById(R.id.navStatusButton),
-            findViewById(R.id.navConsoleButton),
-        )
+        bottomNavigationDock = findViewById(R.id.liquidGlassNav)
+        liquidGlassNav = findViewById(R.id.liquidGlassNav)
+        liquidGlassNav.onTabSelectedListener = { index ->
+            if (selectedTabIndex != index) {
+                switchTab(index)
+            }
+        }
         mainRoot.viewTreeObserver.addOnGlobalLayoutListener(keyboardLayoutListener)
 
         // 2. 绑定 TAB 3 (状态/信息页) 组件
@@ -233,11 +233,10 @@ class MainActivity : Activity() {
         exportButton.setOnClickListener { exportConsole() }
         clearLogButtonConsole.setOnClickListener { clearConsole() }
 
-        // 导航坞：支持点击与水珠拖拽切换
+        // 导航坞始终以居中的图标和文字呈现，不再使用会横移的系统底部导航。
         navigationButtons.forEachIndexed { index, button ->
             button.setOnClickListener { switchTab(index) }
         }
-        setupDockDragGesture()
 
         requestRequiredPermissionsIfNeeded()
         KeepAliveService.start(this)
@@ -265,129 +264,15 @@ class MainActivity : Activity() {
     private fun switchTab(index: Int) {
         showSelectedTab(index)
         selectedTabIndex = index
-        updateNavigationSelection()
+        if (::liquidGlassNav.isInitialized && liquidGlassNav.selectedIndex != index) {
+            liquidGlassNav.selectTab(index, animate = true)
+        }
         updateNavigationVisibility()
 
         when (index) {
             1 -> checkPermissionAndLoadSms()
             2 -> renderState()
             3 -> renderConsole()
-        }
-    }
-
-    private lateinit var navSlidingGlassCapsule: View
-
-    private fun updateNavigationSelection() {
-        if (!::navSlidingGlassCapsule.isInitialized) {
-            navSlidingGlassCapsule = findViewById(R.id.navSlidingGlassCapsule)
-        }
-
-        val targetButton = navigationButtons.getOrNull(selectedTabIndex)
-        if (targetButton != null) {
-            targetButton.post {
-                val targetX = targetButton.x
-                val targetWidth = targetButton.width
-
-                if (navSlidingGlassCapsule.width == 0) {
-                    val params = navSlidingGlassCapsule.layoutParams
-                    params.width = targetWidth
-                    navSlidingGlassCapsule.layoutParams = params
-                    navSlidingGlassCapsule.translationX = targetX
-                } else {
-                    navSlidingGlassCapsule.animate().cancel()
-                    navSlidingGlassCapsule.animate()
-                        .translationX(targetX)
-                        .setDuration(260L)
-                        .setInterpolator(android.view.animation.OvershootInterpolator(1.1f))
-                        .start()
-
-                    val params = navSlidingGlassCapsule.layoutParams
-                    if (params.width != targetWidth) {
-                        params.width = targetWidth
-                        navSlidingGlassCapsule.layoutParams = params
-                    }
-                }
-            }
-        }
-
-        navigationButtons.forEachIndexed { index, button ->
-            val isSelected = index == selectedTabIndex
-            button.isActivated = isSelected
-            button.animate().cancel()
-            button.animate()
-                .alpha(if (isSelected) 1f else 0.55f)
-                .scaleX(if (isSelected) 1.02f else 0.96f)
-                .scaleY(if (isSelected) 1.02f else 0.96f)
-                .setDuration(NAVIGATION_MOTION_DURATION)
-                .setInterpolator(navigationInterpolator)
-                .start()
-        }
-    }
-
-    private var isDraggingDock = false
-
-    @android.annotation.SuppressLint("ClickableViewAccessibility")
-    private fun setupDockDragGesture() {
-        bottomNavigationDock.setOnTouchListener { _, event ->
-            val count = navigationButtons.size
-            if (count == 0) return@setOnTouchListener false
-
-            val totalWidth = bottomNavigationDock.width - bottomNavigationDock.paddingLeft - bottomNavigationDock.paddingRight
-            val itemWidth = totalWidth.toFloat() / count
-
-            when (event.actionMasked) {
-                android.view.MotionEvent.ACTION_DOWN -> {
-                    isDraggingDock = true
-                    navSlidingGlassCapsule.animate().cancel()
-                    navSlidingGlassCapsule.animate()
-                        .scaleY(1.15f)
-                        .scaleX(1.05f)
-                        .setDuration(120L)
-                        .start()
-                    updateDragPosition(event.x, itemWidth, count)
-                    true
-                }
-                android.view.MotionEvent.ACTION_MOVE -> {
-                    if (isDraggingDock) {
-                        updateDragPosition(event.x, itemWidth, count)
-                    }
-                    true
-                }
-                android.view.MotionEvent.ACTION_UP, android.view.MotionEvent.ACTION_CANCEL -> {
-                    if (isDraggingDock) {
-                        isDraggingDock = false
-                        navSlidingGlassCapsule.animate().cancel()
-                        navSlidingGlassCapsule.animate()
-                            .scaleY(1f)
-                            .scaleX(1f)
-                            .setDuration(160L)
-                            .start()
-
-                        val relativeX = event.x - bottomNavigationDock.paddingLeft
-                        val targetIndex = (relativeX / itemWidth).toInt().coerceIn(0, count - 1)
-                        switchTab(targetIndex)
-                    }
-                    true
-                }
-                else -> false
-            }
-        }
-    }
-
-    private fun updateDragPosition(touchX: Float, itemWidth: Float, count: Int) {
-        val relativeX = touchX - bottomNavigationDock.paddingLeft
-        val centerX = relativeX - itemWidth / 2f
-        val maxTranslation = (count - 1) * itemWidth
-        val clampedX = centerX.coerceIn(0f, maxTranslation)
-
-        navSlidingGlassCapsule.translationX = clampedX
-
-        val hoveredIndex = (relativeX / itemWidth).toInt().coerceIn(0, count - 1)
-        navigationButtons.forEachIndexed { index, button ->
-            val isHovered = index == hoveredIndex
-            button.alpha = if (isHovered) 1f else 0.55f
-            button.scaleX = if (isHovered) 1.05f else 0.96f
-            button.scaleY = if (isHovered) 1.05f else 0.96f
         }
     }
 
