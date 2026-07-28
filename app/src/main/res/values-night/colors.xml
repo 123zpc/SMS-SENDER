@@ -44,4 +44,9 @@
     <color name="console_accent">#FF4545</color>
     <color name="console_warning">#E0A04A</color>
     <color name="console_button">#181818</color>
+
+    <!-- 验证码高亮 Badge (夜间) -->
+    <color name="code_badge_bg">#1E1B4B</color>
+    <color name="code_badge_text">#C7D2FE</color>
+    <color name="code_badge_border">#3730A3</color>
 </resources>

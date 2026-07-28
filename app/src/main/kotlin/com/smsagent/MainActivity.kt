@@ -14,7 +14,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import android.view.ViewTreeObserver
-import android.view.animation.DecelerateInterpolator
+
 import android.widget.CheckBox
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -47,7 +47,7 @@ class MainActivity : Activity() {
     private lateinit var liquidGlassNav: com.smsagent.ui.LiquidGlassNavView
     private var selectedTabIndex = 0
     private var keyboardVisible = false
-    private val navigationInterpolator = DecelerateInterpolator(1.8f)
+
 
     private val keyboardLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
         val visibleFrame = Rect()
@@ -233,10 +233,7 @@ class MainActivity : Activity() {
         exportButton.setOnClickListener { exportConsole() }
         clearLogButtonConsole.setOnClickListener { clearConsole() }
 
-        // 导航坞始终以居中的图标和文字呈现，不再使用会横移的系统底部导航。
-        navigationButtons.forEachIndexed { index, button ->
-            button.setOnClickListener { switchTab(index) }
-        }
+
 
         requestRequiredPermissionsIfNeeded()
         KeepAliveService.start(this)
