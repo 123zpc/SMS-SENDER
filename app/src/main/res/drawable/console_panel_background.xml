@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 控制台面板 + 顶部朱砂细线 -->
+<!-- 终端控制条：常黑面板 + 顶部红色细线 -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">
-            <corners android:radius="14dp" />
+            <corners android:radius="10dp" />
             <solid android:color="@color/console_toolbar" />
             <stroke android:width="1dp" android:color="@color/console_border" />
         </shape>
     </item>
     <item android:gravity="top" android:height="2dp">
         <shape android:shape="rectangle">
-            <corners android:topLeftRadius="14dp" android:topRightRadius="14dp" />
+            <corners android:topLeftRadius="10dp" android:topRightRadius="10dp" />
             <solid android:color="@color/console_accent" />
         </shape>
     </item>

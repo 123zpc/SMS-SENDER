@@ -44,7 +44,7 @@ class MainActivity : Activity() {
     private lateinit var tabHistoryContainer: View
     private lateinit var tabConsoleContainer: View
     private lateinit var bottomNavigationDock: View
-    private lateinit var navigationButtons: List<MaterialButton>
+    private lateinit var navigationButtons: List<View>
     private var selectedTabIndex = 0
     private var keyboardVisible = false
     private val navigationInterpolator = DecelerateInterpolator(1.8f)
@@ -252,11 +252,15 @@ class MainActivity : Activity() {
             val isSelected = index == selectedTabIndex
             button.isActivated = isSelected
             button.animate().cancel()
+            if (isSelected) {
+                // 选中时 LED 点轻微点亮回弹，克制不弹跳
+                button.scaleX = 0.92f
+                button.scaleY = 0.92f
+            }
             button.animate()
-                .alpha(if (isSelected) 1f else 0.76f)
+                .alpha(if (isSelected) 1f else 0.6f)
                 .scaleX(if (isSelected) 1f else 0.96f)
                 .scaleY(if (isSelected) 1f else 0.96f)
-                .translationY(if (isSelected) -dpToPixels(2f) else 0f)
                 .setDuration(NAVIGATION_MOTION_DURATION)
                 .setInterpolator(navigationInterpolator)
                 .start()

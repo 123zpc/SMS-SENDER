@@ -17,12 +17,12 @@ class OnboardingActivity : Activity() {
     private lateinit var artwork: View
     private lateinit var artworkIcon: ImageView
     private lateinit var artworkBadge: TextView
+
     private lateinit var copyGroup: View
     private lateinit var stepText: TextView
     private lateinit var eyebrow: TextView
     private lateinit var title: TextView
     private lateinit var description: TextView
-    private lateinit var featureIcon: ImageView
     private lateinit var featureText: TextView
     private lateinit var indicators: List<View>
 
@@ -107,7 +107,6 @@ class OnboardingActivity : Activity() {
         eyebrow = findViewById(R.id.onboardingEyebrow)
         title = findViewById(R.id.onboardingTitle)
         description = findViewById(R.id.onboardingDescription)
-        featureIcon = findViewById(R.id.onboardingFeatureIcon)
         featureText = findViewById(R.id.onboardingFeatureText)
         indicators = listOf(
             findViewById(R.id.onboardingIndicatorOne),
@@ -191,8 +190,6 @@ class OnboardingActivity : Activity() {
         artwork.setBackgroundResource(page.artworkBackgroundRes)
         artworkIcon.setImageResource(page.iconRes)
         artworkIcon.setColorFilter(getColor(page.iconTintRes))
-        featureIcon.setImageResource(page.iconRes)
-        featureIcon.setColorFilter(getColor(page.iconTintRes))
 
         indicators.forEachIndexed { index, indicator ->
             indicator.setBackgroundResource(

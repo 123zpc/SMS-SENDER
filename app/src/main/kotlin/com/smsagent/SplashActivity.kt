@@ -6,7 +6,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
-import android.view.animation.OvershootInterpolator
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import com.smsagent.state.LaunchStateStore
 
 class SplashActivity : Activity() {
@@ -18,101 +19,114 @@ class SplashActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        val flightScene = findViewById<View>(R.id.splashFlightScene)
-        val plane = findViewById<View>(R.id.splashPlane)
-        val signalOrigin = findViewById<View>(R.id.splashSignalOrigin)
-        val messageCard = findViewById<View>(R.id.splashMessageCard)
+        val logo = findViewById<View>(R.id.splashLogo)
         val wordmark = findViewById<View>(R.id.splashWordmark)
         val tagline = findViewById<View>(R.id.splashTagline)
-        val progress = findViewById<View>(R.id.splashProgress)
+        val ledRow = findViewById<View>(R.id.splashLedRow)
+        val leds = listOf(
+            findViewById<View>(R.id.splashLedOne),
+            findViewById<View>(R.id.splashLedTwo),
+            findViewById<View>(R.id.splashLedThree),
+            findViewById<View>(R.id.splashLedFour),
+            findViewById<View>(R.id.splashLedFive),
+        )
+        val bootLabel = findViewById<View>(R.id.splashBootLabel)
+        val cursor = findViewById<View>(R.id.splashCursor)
 
-        flightScene.alpha = 0f
-        plane.alpha = 0f
-        plane.scaleX = 0.84f
-        plane.scaleY = 0.84f
-        plane.translationX = -68f
-        plane.translationY = 20f
-        plane.rotation = -10f
-        signalOrigin.alpha = 0f
-        signalOrigin.scaleX = 0.55f
-        signalOrigin.scaleY = 0.55f
-        messageCard.alpha = 0f
-        messageCard.scaleX = 0.86f
-        messageCard.scaleY = 0.86f
-        messageCard.translationX = 12f
+        // 初始：全部隐身
+        logo.alpha = 0f
+        logo.scaleX = 0.7f
+        logo.scaleY = 0.7f
         wordmark.alpha = 0f
-        wordmark.translationY = 12f
+        wordmark.translationY = 10f
         tagline.alpha = 0f
-        tagline.translationY = 10f
-        progress.alpha = 0f
-        progress.scaleX = 0.35f
-        progress.scaleY = 0.35f
-        progress.rotation = -90f
+        tagline.translationY = 8f
+        leds.forEach { it.alpha = 0f; it.scaleX = 0.4f; it.scaleY = 0.4f }
+        ledRow.alpha = 0f
+        bootLabel.alpha = 0f
+        bootLabel.translationX = -8f
+        cursor.alpha = 0f
 
-        flightScene.animate()
-            .alpha(1f)
-            .setDuration(SCENE_FADE_DURATION)
-            .start()
-        signalOrigin.animate()
+        val interp = DecelerateInterpolator(1.6f)
+
+        // 1. 品牌标淡入并轻微回弹
+        logo.animate()
             .alpha(1f)
             .scaleX(1f)
             .scaleY(1f)
-            .setDuration(SIGNAL_ANIMATION_DURATION)
-            .setInterpolator(OvershootInterpolator(0.8f))
+            .setDuration(LOGO_DURATION)
+            .setInterpolator(AccelerateDecelerateInterpolator())
             .start()
-        plane.post {
-            val arrivalX = messageCard.x - plane.width * 0.42f
-            plane.animate()
-                .alpha(1f)
-                .scaleX(1f)
-                .scaleY(1f)
-                .translationX(arrivalX)
-                .translationY(-4f)
-                .rotation(0f)
-                .setStartDelay(FLIGHT_START_DELAY)
-                .setDuration(FLIGHT_DURATION)
-                .setInterpolator(OvershootInterpolator(0.72f))
-                .withEndAction {
-                    messageCard.animate()
-                        .alpha(1f)
-                        .scaleX(1f)
-                        .scaleY(1f)
-                        .translationX(0f)
-                        .setDuration(MESSAGE_ARRIVAL_DURATION)
-                        .setInterpolator(OvershootInterpolator(0.9f))
-                        .start()
-                    signalOrigin.animate()
-                        .alpha(0.5f)
-                        .scaleX(0.78f)
-                        .scaleY(0.78f)
-                        .setDuration(MESSAGE_ARRIVAL_DURATION)
-                        .start()
-                }
-                .start()
-        }
+
+        // 2. 字标淡入上浮
         wordmark.animate()
             .alpha(1f)
             .translationY(0f)
-            .setStartDelay(120L)
-            .setDuration(COPY_ANIMATION_DURATION)
+            .setStartDelay(WORDMARK_DELAY)
+            .setDuration(COPY_DURATION)
+            .setInterpolator(interp)
             .start()
+
+        // 3. 副标淡入上浮
         tagline.animate()
             .alpha(1f)
             .translationY(0f)
-            .setStartDelay(180L)
-            .setDuration(COPY_ANIMATION_DURATION)
+            .setStartDelay(TAGLINE_DELAY)
+            .setDuration(COPY_DURATION)
+            .setInterpolator(interp)
             .start()
-        progress.animate()
+
+        // 4. LED 点阵依次点亮（苹果式节奏：先缓慢淡入容器，再逐颗点亮）
+        ledRow.alpha = 1f
+        ledRow.animate()
             .alpha(1f)
-            .scaleX(1f)
-            .scaleY(1f)
-            .rotation(0f)
-            .setStartDelay(100L)
-            .setDuration(PROGRESS_ANIMATION_DURATION)
-            .setInterpolator(OvershootInterpolator(0.7f))
+            .setStartDelay(LED_ROW_DELAY)
+            .setDuration(120L)
+            .start()
+
+        leds.forEachIndexed { index, led ->
+            led.animate()
+                .alpha(1f)
+                .scaleX(1f)
+                .scaleY(1f)
+                .setStartDelay(LED_ROW_DELAY + index * LED_STAGGER)
+                .setDuration(LED_DURATION)
+                .setInterpolator(AccelerateDecelerateInterpolator())
+                .start()
+        }
+
+        // 5. 左下 BOOT 行滑入
+        bootLabel.animate()
+            .alpha(1f)
+            .translationX(0f)
+            .setStartDelay(BOOT_DELAY)
+            .setDuration(COPY_DURATION)
+            .setInterpolator(interp)
+            .start()
+
+        // 6. 光标淡入，然后开始闪烁
+        cursor.animate()
+            .alpha(1f)
+            .setStartDelay(CURSOR_DELAY)
+            .setDuration(200L)
+            .withEndAction { startCursorBlink(cursor) }
             .start()
 
         handler.postDelayed(navigateRunnable, SPLASH_DURATION)
+    }
+
+    private fun startCursorBlink(cursor: View) {
+        cursor.animate()
+            .alpha(0f)
+            .setDuration(CURSOR_BLINK_DURATION)
+            .withEndAction {
+                cursor.animate()
+                    .alpha(1f)
+                    .setDuration(CURSOR_BLINK_DURATION)
+                    .withEndAction { startCursorBlink(cursor) }
+                    .start()
+            }
+            .start()
     }
 
     override fun onDestroy() {
@@ -136,13 +150,16 @@ class SplashActivity : Activity() {
     }
 
     private companion object {
-        private const val SPLASH_DURATION = 950L
-        private const val SCENE_FADE_DURATION = 180L
-        private const val SIGNAL_ANIMATION_DURATION = 260L
-        private const val FLIGHT_START_DELAY = 40L
-        private const val FLIGHT_DURATION = 460L
-        private const val MESSAGE_ARRIVAL_DURATION = 200L
-        private const val COPY_ANIMATION_DURATION = 360L
-        private const val PROGRESS_ANIMATION_DURATION = 760L
+        private const val SPLASH_DURATION = 1100L
+        private const val LOGO_DURATION = 420L
+        private const val WORDMARK_DELAY = 180L
+        private const val TAGLINE_DELAY = 260L
+        private const val COPY_DURATION = 360L
+        private const val LED_ROW_DELAY = 340L
+        private const val LED_STAGGER = 90L
+        private const val LED_DURATION = 240L
+        private const val BOOT_DELAY = 520L
+        private const val CURSOR_DELAY = 640L
+        private const val CURSOR_BLINK_DURATION = 420L
     }
 }

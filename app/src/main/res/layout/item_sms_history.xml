@@ -1,57 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- 历史条目：电报式行项，左红条 + monospace 时间，去卡片化 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/smsCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
+    android:layout_marginTop="3dp"
+    android:layout_marginBottom="3dp"
+    android:background="@drawable/history_item_background"
     android:foreground="?attr/selectableItemBackground"
-    app:cardBackgroundColor="@color/brand_surface_container"
-    app:cardCornerRadius="14dp"
-    app:cardElevation="0dp"
-    app:strokeColor="@color/brand_outline"
-    app:strokeWidth="1dp">
+    android:gravity="center_vertical"
+    android:minHeight="64dp"
+    android:orientation="horizontal"
+    android:paddingStart="0dp"
+    android:paddingTop="12dp"
+    android:paddingEnd="12dp"
+    android:paddingBottom="12dp">
+
+    <!-- 左侧信号条 -->
+    <View
+        android:id="@+id/signalBar"
+        android:layout_width="3dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="12dp"
+        android:background="@color/seed" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingStart="14dp"
-        android:paddingTop="14dp"
-        android:paddingEnd="10dp"
-        android:paddingBottom="14dp">
-
-        <FrameLayout
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:background="@drawable/icon_tile_primary">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/history_icon_description"
-                android:padding="9dp"
-                android:src="@drawable/ic_sms_24"
-                android:tint="@color/seed" />
-        </FrameLayout>
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/smsSenderText"
-                style="@style/TextAppearance.Material3.TitleSmall"
-                android:layout_width="match_parent"
+                style="@style/TextAppearance.Material3.LabelLarge"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:ellipsize="end"
+                android:fontFamily="monospace"
+                android:letterSpacing="0.02"
                 android:maxLines="1"
                 android:textColor="@color/brand_text_primary"
+                android:textSize="13sp"
                 android:textStyle="bold" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -59,46 +56,46 @@
                 style="@style/TextAppearance.Material3.LabelSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginStart="8dp"
                 android:fontFamily="monospace"
-                android:letterSpacing="0.06"
+                android:letterSpacing="0.04"
                 android:textColor="@color/brand_text_tertiary"
                 android:textSize="10sp" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/smsBodyText"
-                style="@style/TextAppearance.Material3.BodyMedium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:ellipsize="end"
-                android:maxLines="3"
-                android:textColor="@color/brand_text_secondary"
-                app:lineHeight="20dp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="6dp"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/smsCheckbox"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:minHeight="0dp"
-                android:minWidth="0dp" />
-
-            <View
-                android:id="@+id/unreadDot"
-                android:layout_width="7dp"
-                android:layout_height="7dp"
-                android:layout_marginTop="3dp"
-                android:background="@drawable/unread_dot"
-                android:visibility="gone" />
-        </LinearLayout>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/smsBodyText"
+            style="@style/TextAppearance.Material3.BodySmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/brand_text_secondary"
+            android:textSize="12sp"
+            app:lineHeight="18dp" />
     </LinearLayout>
 
-</com.google.android.material.card.MaterialCardView>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="8dp"
+        android:gravity="end|center_vertical"
+        android:orientation="vertical">
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/smsCheckbox"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:minHeight="0dp"
+            android:minWidth="0dp" />
+
+        <View
+            android:id="@+id/unreadDot"
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/unread_dot"
+            android:visibility="gone" />
+    </LinearLayout>
+</LinearLayout>

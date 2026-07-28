@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 面板：白底 + 发丝线，10dp 小圆角 -->
+<!-- 历史条目背景：白色面板 + 细发丝线边框 + 左侧无圆角（信号条贴边） -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <solid android:color="@color/brand_surface_container" />

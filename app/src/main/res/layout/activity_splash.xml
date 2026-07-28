@@ -5,22 +5,13 @@
     android:background="@drawable/splash_background"
     android:fitsSystemWindows="true">
 
+    <!-- 点阵底纹 -->
     <View
-        android:layout_width="220dp"
-        android:layout_height="220dp"
-        android:layout_gravity="top|end"
-        android:layout_marginTop="-84dp"
-        android:layout_marginEnd="-68dp"
-        android:background="@drawable/splash_orb" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/dot_grid_dark" />
 
-    <View
-        android:layout_width="144dp"
-        android:layout_height="144dp"
-        android:layout_gravity="bottom|start"
-        android:layout_marginStart="-54dp"
-        android:layout_marginBottom="80dp"
-        android:background="@drawable/splash_orb" />
-
+    <!-- 中央：品牌标 + 字标 + LED 点阵 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,150 +22,111 @@
         android:paddingEnd="32dp">
 
         <FrameLayout
-            android:id="@+id/splashFlightScene"
-            android:layout_width="match_parent"
-            android:layout_height="168dp">
+            android:id="@+id/splashLogo"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:background="@drawable/hero_logo_background">
 
-            <View
-                android:id="@+id/splashFlightTrail"
+            <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="18dp"
-                android:layout_marginEnd="26dp"
-                android:background="@drawable/splash_flight_trail" />
-
-            <View
-                android:id="@+id/splashSignalOrigin"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_gravity="start|center_vertical"
-                android:background="@drawable/splash_progress_bar" />
-
-            <LinearLayout
-                android:id="@+id/splashMessageCard"
-                android:layout_width="150dp"
-                android:layout_height="90dp"
-                android:layout_gravity="end|center_vertical"
-                android:background="@drawable/splash_message_card"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <View
-                    android:layout_width="36dp"
-                    android:layout_height="7dp"
-                    android:background="@drawable/splash_message_line_primary" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="5dp"
-                    android:layout_marginTop="12dp"
-                    android:background="@drawable/splash_message_line_secondary" />
-
-                <View
-                    android:layout_width="82dp"
-                    android:layout_height="5dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/splash_message_line_secondary" />
-            </LinearLayout>
-
-            <FrameLayout
-                android:id="@+id/splashPlane"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="start|center_vertical"
-                android:background="@drawable/hero_logo_background">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:contentDescription="@string/send_icon_description"
-                    android:padding="15dp"
-                    android:src="@drawable/ic_send_24"
-                    android:tint="@color/hero_text" />
-            </FrameLayout>
+                android:layout_height="match_parent"
+                android:contentDescription="@string/send_icon_description"
+                android:padding="17dp"
+                android:src="@drawable/ic_send_24"
+                android:tint="@color/brand_on_primary" />
         </FrameLayout>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/splashWordmark"
-            style="@style/TextAppearance.Material3.HeadlineMedium"
+            style="@style/TextAppearance.Material3.TitleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:fontFamily="serif"
-            android:letterSpacing="0.08"
+            android:layout_marginTop="24dp"
+            android:fontFamily="monospace"
+            android:letterSpacing="0.2"
             android:text="@string/app_name"
             android:textColor="@color/hero_text"
             android:textStyle="bold" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/splashTagline"
-            style="@style/TextAppearance.Material3.BodyMedium"
+            style="@style/TextAppearance.Material3.BodySmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:fontFamily="monospace"
-            android:letterSpacing="0.1"
+            android:layout_marginTop="10dp"
             android:text="@string/splash_tagline"
             android:textColor="@color/hero_text_muted"
             android:textSize="12sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="36dp"
-        android:background="@drawable/splash_loading_panel"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="10dp">
-
-        <FrameLayout
-            android:layout_width="46dp"
-            android:layout_height="46dp"
-            android:background="@drawable/splash_progress_track">
-
-            <View
-                android:id="@+id/splashProgress"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:layout_gravity="center"
-                android:background="@drawable/splash_progress_bar" />
-        </FrameLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:id="@+id/splashLedRow"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_marginTop="26dp"
+            android:orientation="horizontal">
 
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/TextAppearance.Material3.LabelSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
-                android:letterSpacing="0.18"
-                android:text="@string/splash_loading_label"
-                android:textColor="@color/hero_text"
-                android:textSize="11sp"
-                android:textStyle="bold" />
+            <View
+                android:id="@+id/splashLedOne"
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:background="@drawable/hero_status_dot" />
 
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/TextAppearance.Material3.BodySmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="@string/splash_loading"
-                android:textColor="@color/hero_text_muted" />
+            <View
+                android:id="@+id/splashLedTwo"
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/hero_status_dot" />
+
+            <View
+                android:id="@+id/splashLedThree"
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/hero_status_dot" />
+
+            <View
+                android:id="@+id/splashLedFour"
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/hero_status_dot" />
+
+            <View
+                android:id="@+id/splashLedFive"
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/hero_status_dot" />
         </LinearLayout>
+    </LinearLayout>
+
+    <!-- 左下：BOOT 行 + 闪烁光标 -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="28dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/splashBootLabel"
+            style="@style/TextAppearance.Material3.LabelSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:letterSpacing="0.14"
+            android:text="@string/splash_loading_label"
+            android:textColor="@color/hero_text_muted"
+            android:textSize="10sp" />
 
         <View
-            android:layout_width="8dp"
-            android:layout_height="8dp"
-            android:background="@drawable/hero_status_dot" />
+            android:id="@+id/splashCursor"
+            android:layout_width="7dp"
+            android:layout_height="12dp"
+            android:layout_marginStart="6dp"
+            android:background="@color/console_accent" />
     </LinearLayout>
 </FrameLayout>

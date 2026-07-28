@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 调度条：墨色面板 + 朱砂左封边 -->
+<!-- 深色面板：常黑 + 左侧红色细线 -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">
-            <corners android:radius="18dp" />
+            <corners android:radius="14dp" />
             <solid android:color="@color/header_panel_start" />
         </shape>
     </item>
-    <item android:gravity="left" android:width="4dp">
+    <item android:gravity="start" android:width="3dp">
         <shape android:shape="rectangle">
-            <corners android:topLeftRadius="18dp" android:bottomLeftRadius="18dp" />
+            <corners android:topLeftRadius="14dp" android:bottomLeftRadius="14dp" />
             <solid android:color="@color/seed" />
         </shape>
     </item>

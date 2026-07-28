@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.card.MaterialCardView
 import com.smsagent.util.TimeFormatter
 
 data class SmsHistoryItem(
@@ -24,12 +24,13 @@ class SmsHistoryAdapter(
 ) : RecyclerView.Adapter<SmsHistoryAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val cardView: MaterialCardView = view.findViewById(R.id.smsCardView)
+        val cardView: LinearLayout = view.findViewById(R.id.smsCardView)
         val checkbox: CheckBox = view.findViewById(R.id.smsCheckbox)
         val senderText: TextView = view.findViewById(R.id.smsSenderText)
         val timeText: TextView = view.findViewById(R.id.smsTimeText)
         val bodyText: TextView = view.findViewById(R.id.smsBodyText)
         val unreadDot: View = view.findViewById(R.id.unreadDot)
+        val signalBar: View = view.findViewById(R.id.signalBar)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -46,30 +47,12 @@ class SmsHistoryAdapter(
         holder.checkbox.isChecked = item.isSelected
         holder.unreadDot.visibility = if (item.isRead) View.GONE else View.VISIBLE
 
-        val context = holder.itemView.context
-        val seedColor = context.getColor(R.color.seed)
-        val outlineColor = context.getColor(R.color.brand_outline)
-        val containerColor = context.getColor(R.color.brand_surface_container)
-        val selectedCardBg = context.getColor(R.color.seed_container)
-
-        if (item.isSelected) {
-            holder.cardView.strokeColor = seedColor
-            holder.cardView.setCardBackgroundColor(selectedCardBg)
-        } else {
-            holder.cardView.strokeColor = outlineColor
-            holder.cardView.setCardBackgroundColor(containerColor)
-        }
+        applySelectionVisual(holder, item.isSelected)
 
         val toggleSelection = {
             item.isSelected = !item.isSelected
             holder.checkbox.isChecked = item.isSelected
-            if (item.isSelected) {
-                holder.cardView.strokeColor = seedColor
-                holder.cardView.setCardBackgroundColor(selectedCardBg)
-            } else {
-                holder.cardView.strokeColor = outlineColor
-                holder.cardView.setCardBackgroundColor(containerColor)
-            }
+            applySelectionVisual(holder, item.isSelected)
             onSelectionChanged(getSelectedItems().size)
         }
 
@@ -78,6 +61,16 @@ class SmsHistoryAdapter(
     }
 
     override fun getItemCount(): Int = items.size
+
+    private fun applySelectionVisual(holder: ViewHolder, selected: Boolean) {
+        if (selected) {
+            holder.cardView.setBackgroundResource(R.drawable.history_item_background_selected)
+            holder.signalBar.layoutParams.width = (3 * holder.itemView.resources.displayMetrics.density).toInt()
+        } else {
+            holder.cardView.setBackgroundResource(R.drawable.history_item_background)
+            holder.signalBar.layoutParams.width = (3 * holder.itemView.resources.displayMetrics.density).toInt()
+        }
+    }
 
     fun getSelectedItems(): List<SmsHistoryItem> {
         return items.filter { it.isSelected }
