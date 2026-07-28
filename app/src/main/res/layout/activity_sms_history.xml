@@ -10,7 +10,8 @@
     <LinearLayout
         android:id="@+id/toolbarPanel"
         android:layout_width="match_parent"
-        android:layout_height="84dp"
+        android:layout_height="wrap_content"
+        android:minHeight="84dp"
         android:layout_alignParentTop="true"
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"

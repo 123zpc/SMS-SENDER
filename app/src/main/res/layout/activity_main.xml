@@ -732,13 +732,16 @@
             <LinearLayout
                 android:id="@+id/historyActionPanel"
                 android:layout_width="match_parent"
-                android:layout_height="68dp"
+                android:layout_height="wrap_content"
+                android:minHeight="68dp"
                 android:layout_alignParentTop="true"
                 android:background="@drawable/selection_panel_background"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingStart="12dp"
-                android:paddingEnd="10dp">
+                android:paddingTop="8dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="8dp">
 
                 <FrameLayout
                     android:layout_width="42dp"
@@ -924,11 +927,16 @@
                         android:layout_height="40dp"
                         android:layout_weight="1"
                         android:insetBottom="0dp"
+                        android:insetLeft="0dp"
+                        android:insetRight="0dp"
                         android:insetTop="0dp"
                         android:minWidth="0dp"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
                         android:text="@string/console_refresh"
                         android:textAllCaps="false"
                         android:textColor="@color/console_text"
+                        android:textSize="12sp"
                         app:backgroundTint="@color/console_button"
                         app:cornerRadius="12dp" />
 
@@ -940,11 +948,16 @@
                         android:layout_marginStart="6dp"
                         android:layout_weight="1"
                         android:insetBottom="0dp"
+                        android:insetLeft="0dp"
+                        android:insetRight="0dp"
                         android:insetTop="0dp"
                         android:minWidth="0dp"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
                         android:text="@string/console_copy"
                         android:textAllCaps="false"
                         android:textColor="@color/console_text"
+                        android:textSize="12sp"
                         app:backgroundTint="@color/console_button"
                         app:cornerRadius="12dp" />
 
@@ -956,11 +969,16 @@
                         android:layout_marginStart="6dp"
                         android:layout_weight="1"
                         android:insetBottom="0dp"
+                        android:insetLeft="0dp"
+                        android:insetRight="0dp"
                         android:insetTop="0dp"
                         android:minWidth="0dp"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
                         android:text="@string/console_export"
                         android:textAllCaps="false"
                         android:textColor="@color/console_text"
+                        android:textSize="12sp"
                         app:backgroundTint="@color/console_button"
                         app:cornerRadius="12dp" />
 
@@ -972,11 +990,16 @@
                         android:layout_marginStart="6dp"
                         android:layout_weight="1"
                         android:insetBottom="0dp"
+                        android:insetLeft="0dp"
+                        android:insetRight="0dp"
                         android:insetTop="0dp"
                         android:minWidth="0dp"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
                         android:text="@string/clear_log"
                         android:textAllCaps="false"
                         android:textColor="@color/console_warning"
+                        android:textSize="12sp"
                         app:backgroundTint="@color/console_button"
                         app:cornerRadius="12dp" />
                 </LinearLayout>
