@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Header 深色卡片：深邃靛蓝与黑灰渐变 + 柔润 18dp 圆角 + 左侧灵动 Indigo 亮柱 -->
+<!-- iOS 26.6 空间晶体 Header：24dp Squircle + 柔和双重梯度 Edge Stroke -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">
-            <corners android:radius="18dp" />
+            <corners android:radius="24dp" />
             <gradient
                 android:angle="135"
                 android:startColor="@color/header_panel_start"
@@ -11,12 +11,12 @@
                 android:type="linear" />
             <stroke
                 android:width="1dp"
-                android:color="#1E293B" />
+                android:color="#334155" />
         </shape>
     </item>
     <item android:gravity="start" android:width="4dp">
         <shape android:shape="rectangle">
-            <corners android:topLeftRadius="18dp" android:bottomLeftRadius="18dp" />
+            <corners android:topLeftRadius="24dp" android:bottomLeftRadius="24dp" />
             <solid android:color="@color/seed" />
         </shape>
     </item>
