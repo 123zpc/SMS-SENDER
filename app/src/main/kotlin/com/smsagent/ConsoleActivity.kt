@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
+import com.smsagent.state.BureauSealController
 import com.smsagent.state.EventLogStore
 import com.smsagent.util.TimeFormatter
 
@@ -53,6 +54,13 @@ class ConsoleActivity : Activity() {
     private fun appendManualInput() {
         val text = consoleInput.text?.toString()?.trim().orEmpty()
         if (text.isBlank()) {
+            return
+        }
+
+        if (text.equals("SEAL", ignoreCase = true)) {
+            consoleInput.text?.clear()
+            BureauSealController.showSeal(this)
+            renderConsole()
             return
         }
 

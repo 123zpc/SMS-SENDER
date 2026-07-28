@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-    <corners android:radius="28dp" />
-    <gradient
-        android:angle="0"
-        android:endColor="@color/header_panel_end"
-        android:startColor="@color/header_panel_start"
-        android:type="linear" />
-</shape>
+<!-- 调度条：墨色面板 + 朱砂左封边 -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="18dp" />
+            <solid android:color="@color/header_panel_start" />
+        </shape>
+    </item>
+    <item android:gravity="left" android:width="4dp">
+        <shape android:shape="rectangle">
+            <corners android:topLeftRadius="18dp" android:bottomLeftRadius="18dp" />
+            <solid android:color="@color/seed" />
+        </shape>
+    </item>
+</layer-list>

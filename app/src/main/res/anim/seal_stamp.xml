@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 局印盖印：先小后大，再回弹定印 -->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:interpolator/overshoot"
+    android:shareInterpolator="false">
+
+    <scale
+        android:duration="120"
+        android:fromXScale="0.2"
+        android:fromYScale="0.2"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:toXScale="1.25"
+        android:toYScale="1.25" />
+
+    <scale
+        android:startOffset="120"
+        android:duration="180"
+        android:fromXScale="1.25"
+        android:fromYScale="1.25"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:toXScale="1.0"
+        android:toYScale="1.0" />
+
+    <alpha
+        android:duration="120"
+        android:fromAlpha="0.0"
+        android:toAlpha="1.0" />
+
+    <rotate
+        android:duration="300"
+        android:fromDegrees="-18"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:toDegrees="0" />
+</set>

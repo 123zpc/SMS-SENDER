@@ -8,7 +8,7 @@
     android:layout_marginBottom="5dp"
     android:foreground="?attr/selectableItemBackground"
     app:cardBackgroundColor="@color/brand_surface_container"
-    app:cardCornerRadius="20dp"
+    app:cardCornerRadius="14dp"
     app:cardElevation="0dp"
     app:strokeColor="@color/brand_outline"
     app:strokeWidth="1dp">
@@ -60,14 +60,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:textColor="@color/brand_text_tertiary" />
+                android:fontFamily="monospace"
+                android:letterSpacing="0.06"
+                android:textColor="@color/brand_text_tertiary"
+                android:textSize="10sp" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/smsBodyText"
                 style="@style/TextAppearance.Material3.BodyMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="9dp"
+                android:layout_marginTop="8dp"
                 android:ellipsize="end"
                 android:maxLines="3"
                 android:textColor="@color/brand_text_secondary"

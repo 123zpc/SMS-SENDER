@@ -19,18 +19,18 @@
         android:background="@drawable/header_panel_background"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="18dp">
+        android:padding="16dp">
 
         <FrameLayout
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
             android:background="@drawable/hero_logo_background">
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/terminal_icon_description"
-                android:padding="12dp"
+                android:padding="10dp"
                 android:src="@drawable/ic_terminal_24"
                 android:tint="@color/hero_text" />
         </FrameLayout>
@@ -38,7 +38,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
+            android:layout_marginStart="12dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -46,9 +46,11 @@
                 style="@style/TextAppearance.Material3.LabelSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:letterSpacing="0.1"
-                android:text="@string/header_product_line"
-                android:textColor="@color/hero_text_muted"
+                android:fontFamily="monospace"
+                android:letterSpacing="0.18"
+                android:text="@string/console_overline"
+                android:textColor="@color/console_accent"
+                android:textSize="11sp"
                 android:textStyle="bold" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -56,6 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
+                android:fontFamily="serif"
                 android:text="@string/console_title"
                 android:textColor="@color/hero_text"
                 android:textStyle="bold" />
@@ -87,14 +90,37 @@
         android:orientation="vertical"
         android:padding="14dp">
 
-        <com.google.android.material.textview.MaterialTextView
-            style="@style/TextAppearance.Material3.LabelMedium"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:letterSpacing="0.12"
-            android:text="@string/console_overline"
-            android:textColor="@color/console_accent"
-            android:textStyle="bold" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="7dp"
+                android:layout_height="7dp"
+                android:background="@drawable/hero_status_dot" />
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.Material3.LabelMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:layout_weight="1"
+                android:fontFamily="monospace"
+                android:letterSpacing="0.18"
+                android:text="@string/console_overline"
+                android:textColor="@color/console_accent"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:contentDescription="@string/terminal_icon_description"
+                android:src="@drawable/ic_terminal_24"
+                android:tint="@color/console_accent" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -121,7 +147,7 @@
                 android:textColor="@color/console_text"
                 android:textSize="12sp"
                 app:backgroundTint="@color/console_button"
-                app:cornerRadius="12dp" />
+                app:cornerRadius="10dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/copyButton"
@@ -142,7 +168,7 @@
                 android:textColor="@color/console_text"
                 android:textSize="12sp"
                 app:backgroundTint="@color/console_button"
-                app:cornerRadius="12dp" />
+                app:cornerRadius="10dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/exportButton"
@@ -163,7 +189,7 @@
                 android:textColor="@color/console_text"
                 android:textSize="12sp"
                 app:backgroundTint="@color/console_button"
-                app:cornerRadius="12dp" />
+                app:cornerRadius="10dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/clearConsoleButton"
@@ -184,7 +210,7 @@
                 android:textColor="@color/console_warning"
                 android:textSize="12sp"
                 app:backgroundTint="@color/console_button"
-                app:cornerRadius="12dp" />
+                app:cornerRadius="10dp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -215,14 +241,20 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="monospace"
                 android:text="@string/console_stream_title"
                 android:textColor="@color/console_text"
                 android:textStyle="bold" />
 
-            <View
-                android:layout_width="7dp"
-                android:layout_height="7dp"
-                android:background="@drawable/hero_status_dot" />
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.Material3.LabelSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:letterSpacing="0.1"
+                android:text="@string/console_stream_description"
+                android:textColor="@color/console_muted"
+                android:textSize="10sp" />
         </LinearLayout>
 
         <View
@@ -251,6 +283,7 @@
                 android:fontFamily="monospace"
                 android:textColor="@color/console_text"
                 android:textIsSelectable="true"
+                android:textSize="12sp"
                 app:lineHeight="19dp" />
         </ScrollView>
     </LinearLayout>
@@ -258,11 +291,11 @@
     <LinearLayout
         android:id="@+id/consoleInputPanel"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="52dp"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/console_input_background"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -282,7 +315,7 @@
             android:padding="0dp"
             android:textColor="@color/console_text"
             android:textColorHint="@color/console_muted"
-            android:textSize="14sp" />
+            android:textSize="13sp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/appendInputButton"
@@ -298,7 +331,7 @@
             android:minWidth="0dp"
             android:padding="0dp"
             app:backgroundTint="@color/seed"
-            app:cornerRadius="14dp"
+            app:cornerRadius="10dp"
             app:icon="@drawable/ic_send_24"
             app:iconGravity="textStart"
             app:iconPadding="0dp"

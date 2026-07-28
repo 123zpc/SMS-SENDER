@@ -29,6 +29,7 @@ import com.smsagent.dispatcher.SmsSource
 import com.smsagent.keepalive.KeepAliveService
 import com.smsagent.sms.IncomingSms
 import com.smsagent.state.AgentStateStore
+import com.smsagent.state.BureauSealController
 import com.smsagent.state.EventLogStore
 import com.smsagent.util.MiuiPermissionHelper
 import com.smsagent.util.TimeFormatter
@@ -127,6 +128,10 @@ class MainActivity : Activity() {
             "1.2.4"
         }
         appVersionText.text = "${getString(R.string.about_version)} · v$versionName"
+        appVersionText.setOnLongClickListener {
+            BureauSealController.recordVersionLongPress(this)
+            true
+        }
 
         // 3. 绑定 TAB 1 (配置页) 组件
         barkApiInputLayout = findViewById(R.id.barkApiInputLayout)
@@ -559,6 +564,13 @@ class MainActivity : Activity() {
     private fun appendManualInput() {
         val text = consoleInput.text?.toString()?.trim().orEmpty()
         if (text.isBlank()) {
+            return
+        }
+
+        if (text.equals("SEAL", ignoreCase = true)) {
+            consoleInput.text?.clear()
+            BureauSealController.showSeal(this)
+            renderConsole()
             return
         }
 

@@ -12,11 +12,12 @@
         android:id="@+id/tabContentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
         android:layout_above="@id/bottomNavigationDock"
+        android:layout_alignParentTop="true"
         android:layout_marginBottom="8dp"
         android:clipToPadding="false">
 
+        <!-- ========== TAB 路由：配置 ========== -->
         <ScrollView
             android:id="@+id/tabConfigContainer"
             android:layout_width="match_parent"
@@ -39,9 +40,11 @@
                     style="@style/TextAppearance.Material3.LabelMedium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:letterSpacing="0.12"
+                    android:fontFamily="monospace"
+                    android:letterSpacing="0.18"
                     android:text="@string/config_overline"
                     android:textColor="@color/seed"
+                    android:textSize="11sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.textview.MaterialTextView
@@ -49,6 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
+                    android:fontFamily="serif"
                     android:text="@string/config_title"
                     android:textColor="@color/brand_text_primary"
                     android:textStyle="bold" />
@@ -67,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
                     app:cardBackgroundColor="@color/brand_surface_container"
-                    app:cardCornerRadius="24dp"
+                    app:cardCornerRadius="14dp"
                     app:cardElevation="0dp"
                     app:strokeColor="@color/brand_outline"
                     app:strokeWidth="1dp">
@@ -129,13 +133,15 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
                             android:background="@drawable/subtle_banner_background"
-                            android:letterSpacing="0.04"
+                            android:fontFamily="monospace"
+                            android:letterSpacing="0.08"
                             android:paddingStart="10dp"
                             android:paddingTop="6dp"
                             android:paddingEnd="10dp"
                             android:paddingBottom="6dp"
                             android:text="@string/bark_config_badge"
                             android:textColor="@color/seed_dark"
+                            android:textSize="11sp"
                             android:textStyle="bold" />
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -146,10 +152,10 @@
                             android:layout_marginTop="18dp"
                             android:hint="@string/remote_api_label"
                             app:boxBackgroundColor="@color/brand_surface_container_high"
-                            app:boxCornerRadiusBottomEnd="16dp"
-                            app:boxCornerRadiusBottomStart="16dp"
-                            app:boxCornerRadiusTopEnd="16dp"
-                            app:boxCornerRadiusTopStart="16dp"
+                            app:boxCornerRadiusBottomEnd="12dp"
+                            app:boxCornerRadiusBottomStart="12dp"
+                            app:boxCornerRadiusTopEnd="12dp"
+                            app:boxCornerRadiusTopStart="12dp"
                             app:boxStrokeColor="@color/seed"
                             app:boxStrokeWidthFocused="2dp"
                             app:helperText="@string/remote_api_helper"
@@ -176,7 +182,7 @@
                             android:textAllCaps="false"
                             android:textColor="@color/brand_on_primary"
                             app:backgroundTint="@color/seed"
-                            app:cornerRadius="18dp"
+                            app:cornerRadius="12dp"
                             app:icon="@drawable/ic_save_24"
                             app:iconGravity="textStart"
                             app:iconTint="@color/brand_on_primary" />
@@ -197,7 +203,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
                     app:cardBackgroundColor="@color/brand_surface_container"
-                    app:cardCornerRadius="22dp"
+                    app:cardCornerRadius="14dp"
                     app:cardElevation="0dp"
                     app:strokeColor="@color/brand_outline"
                     app:strokeWidth="1dp">
@@ -258,12 +264,12 @@
                             android:id="@+id/openAppSettingsButton"
                             style="@style/Widget.Material3.Button.OutlinedButton"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="48dp"
                             android:layout_marginTop="16dp"
                             android:text="@string/open_app_settings"
                             android:textAllCaps="false"
                             android:textColor="@color/seed"
-                            app:cornerRadius="16dp"
+                            app:cornerRadius="12dp"
                             app:icon="@drawable/ic_settings_24"
                             app:iconGravity="textStart"
                             app:iconTint="@color/seed"
@@ -273,7 +279,7 @@
                             android:id="@+id/replayOnboardingFromConfigButton"
                             style="@style/Widget.Material3.Button.TextButton"
                             android:layout_width="wrap_content"
-                            android:layout_height="48dp"
+                            android:layout_height="44dp"
                             android:layout_marginTop="8dp"
                             android:insetBottom="0dp"
                             android:insetTop="0dp"
@@ -288,6 +294,7 @@
             </LinearLayout>
         </ScrollView>
 
+        <!-- ========== TAB 台站：状态 ========== -->
         <ScrollView
             android:id="@+id/tabStatusContainer"
             android:layout_width="match_parent"
@@ -311,9 +318,11 @@
                     style="@style/TextAppearance.Material3.LabelMedium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:letterSpacing="0.12"
+                    android:fontFamily="monospace"
+                    android:letterSpacing="0.18"
                     android:text="@string/status_overline"
                     android:textColor="@color/brand_emerald_dark"
+                    android:textSize="11sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.textview.MaterialTextView
@@ -321,6 +330,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
+                    android:fontFamily="serif"
                     android:text="@string/status_title"
                     android:textColor="@color/brand_text_primary"
                     android:textStyle="bold" />
@@ -339,7 +349,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
                     app:cardBackgroundColor="@color/brand_surface_container"
-                    app:cardCornerRadius="24dp"
+                    app:cardCornerRadius="14dp"
                     app:cardElevation="0dp"
                     app:strokeColor="@color/brand_outline"
                     app:strokeWidth="1dp">
@@ -405,6 +415,7 @@
                             android:fontFamily="monospace"
                             android:padding="14dp"
                             android:textColor="@color/brand_text_primary"
+                            android:textSize="13sp"
                             app:lineHeight="22dp" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -416,7 +427,7 @@
                     android:layout_marginTop="14dp"
                     android:visibility="gone"
                     app:cardBackgroundColor="@color/brand_surface_container"
-                    app:cardCornerRadius="22dp"
+                    app:cardCornerRadius="14dp"
                     app:cardElevation="0dp"
                     app:strokeColor="@color/brand_outline"
                     app:strokeWidth="1dp">
@@ -469,6 +480,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="3dp"
+                                    android:fontFamily="monospace"
                                     android:textColor="@color/accent_orange"
                                     android:textStyle="bold" />
                             </LinearLayout>
@@ -478,13 +490,13 @@
                             android:id="@+id/openMiuiNotificationSmsButton"
                             style="@style/Widget.Material3.Button.TonalButton"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="48dp"
                             android:layout_marginTop="16dp"
                             android:text="@string/open_miui_notification_sms_settings"
                             android:textAllCaps="false"
                             android:textColor="@color/seed_dark"
                             app:backgroundTint="@color/seed_container"
-                            app:cornerRadius="16dp"
+                            app:cornerRadius="12dp"
                             app:icon="@drawable/ic_settings_24"
                             app:iconGravity="textStart"
                             app:iconTint="@color/seed_dark" />
@@ -503,7 +515,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         app:cardBackgroundColor="@color/brand_surface_container"
-                        app:cardCornerRadius="20dp"
+                        app:cardCornerRadius="14dp"
                         app:cardElevation="0dp"
                         app:strokeColor="@color/brand_outline"
                         app:strokeWidth="1dp">
@@ -534,8 +546,10 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="14dp"
+                                android:fontFamily="monospace"
                                 android:text="@string/activity_card_title"
                                 android:textColor="@color/brand_text_secondary"
+                                android:textSize="11sp"
                                 android:textStyle="bold" />
 
                             <com.google.android.material.textview.MaterialTextView
@@ -544,6 +558,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="7dp"
+                                android:fontFamily="monospace"
                                 android:maxLines="3"
                                 android:textColor="@color/brand_text_primary"
                                 android:textStyle="bold" />
@@ -556,7 +571,7 @@
                         android:layout_marginStart="12dp"
                         android:layout_weight="1"
                         app:cardBackgroundColor="@color/brand_surface_container"
-                        app:cardCornerRadius="20dp"
+                        app:cardCornerRadius="14dp"
                         app:cardElevation="0dp"
                         app:strokeColor="@color/brand_outline"
                         app:strokeWidth="1dp">
@@ -587,8 +602,10 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="14dp"
+                                android:fontFamily="monospace"
                                 android:text="@string/feedback_card_title"
                                 android:textColor="@color/brand_text_secondary"
+                                android:textSize="11sp"
                                 android:textStyle="bold" />
 
                             <com.google.android.material.textview.MaterialTextView
@@ -598,6 +615,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="7dp"
                                 android:ellipsize="end"
+                                android:fontFamily="monospace"
                                 android:maxLines="3"
                                 android:textColor="@color/brand_text_primary"
                                 app:lineHeight="17dp" />
@@ -610,7 +628,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
                     app:cardBackgroundColor="@color/brand_surface_container"
-                    app:cardCornerRadius="22dp"
+                    app:cardCornerRadius="14dp"
                     app:cardElevation="0dp"
                     app:strokeColor="@color/brand_outline"
                     app:strokeWidth="1dp">
@@ -683,6 +701,7 @@
                             android:background="@drawable/subtle_banner_background"
                             android:clickable="true"
                             android:focusable="true"
+                            android:fontFamily="monospace"
                             android:foreground="?attr/selectableItemBackground"
                             android:paddingStart="12dp"
                             android:paddingTop="9dp"
@@ -696,12 +715,12 @@
                             android:id="@+id/replayOnboardingFromStatusButton"
                             style="@style/Widget.Material3.Button.OutlinedButton"
                             android:layout_width="match_parent"
-                            android:layout_height="48dp"
+                            android:layout_height="46dp"
                             android:layout_marginTop="10dp"
                             android:text="@string/replay_onboarding"
                             android:textAllCaps="false"
                             android:textColor="@color/seed"
-                            app:cornerRadius="15dp"
+                            app:cornerRadius="12dp"
                             app:icon="@drawable/ic_spark_24"
                             app:iconGravity="textStart"
                             app:iconTint="@color/seed"
@@ -710,16 +729,18 @@
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/appVersionText"
                             style="@style/TextAppearance.Material3.BodySmall"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="14dp"
+                            android:fontFamily="monospace"
                             android:text="@string/about_version"
-                            android:textColor="@color/brand_text_secondary" />
+                            android:textColor="@color/brand_text_tertiary" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
         </ScrollView>
 
+        <!-- ========== TAB 归档：历史短信 ========== -->
         <RelativeLayout
             android:id="@+id/tabHistoryContainer"
             android:layout_width="match_parent"
@@ -784,14 +805,14 @@
                 <LinearLayout
                     android:id="@+id/selectAllPanel"
                     android:layout_width="wrap_content"
-                    android:layout_height="42dp"
+                    android:layout_height="40dp"
                     android:background="@drawable/subtle_banner_background"
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingStart="6dp"
+                    android:paddingStart="8dp"
                     android:paddingEnd="10dp">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
@@ -806,8 +827,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="2dp"
+                        android:fontFamily="monospace"
                         android:text="@string/sms_history_select_all"
                         android:textColor="@color/seed_dark"
+                        android:textSize="11sp"
                         android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
@@ -850,7 +873,7 @@
                 android:id="@+id/forwardSelectedButton"
                 style="@style/Widget.Material3.Button"
                 android:layout_width="match_parent"
-                android:layout_height="54dp"
+                android:layout_height="52dp"
                 android:layout_alignParentBottom="true"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="12dp"
@@ -859,12 +882,13 @@
                 android:textAllCaps="false"
                 android:textColor="@color/brand_on_primary"
                 app:backgroundTint="@color/seed"
-                app:cornerRadius="18dp"
+                app:cornerRadius="12dp"
                 app:icon="@drawable/ic_send_24"
                 app:iconGravity="textStart"
                 app:iconTint="@color/brand_on_primary" />
         </RelativeLayout>
 
+        <!-- ========== TAB 电报：日志终端 ========== -->
         <RelativeLayout
             android:id="@+id/tabConsoleContainer"
             android:layout_width="match_parent"
@@ -900,14 +924,16 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
                         android:layout_weight="1"
-                        android:letterSpacing="0.12"
+                        android:fontFamily="monospace"
+                        android:letterSpacing="0.18"
                         android:text="@string/console_overline"
                         android:textColor="@color/console_accent"
+                        android:textSize="11sp"
                         android:textStyle="bold" />
 
                     <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
                         android:contentDescription="@string/terminal_icon_description"
                         android:src="@drawable/ic_terminal_24"
                         android:tint="@color/console_accent" />
@@ -938,7 +964,7 @@
                         android:textColor="@color/console_text"
                         android:textSize="12sp"
                         app:backgroundTint="@color/console_button"
-                        app:cornerRadius="12dp" />
+                        app:cornerRadius="10dp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/copyButton"
@@ -959,7 +985,7 @@
                         android:textColor="@color/console_text"
                         android:textSize="12sp"
                         app:backgroundTint="@color/console_button"
-                        app:cornerRadius="12dp" />
+                        app:cornerRadius="10dp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/exportButton"
@@ -980,7 +1006,7 @@
                         android:textColor="@color/console_text"
                         android:textSize="12sp"
                         app:backgroundTint="@color/console_button"
-                        app:cornerRadius="12dp" />
+                        app:cornerRadius="10dp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/clearLogButtonConsole"
@@ -1001,7 +1027,7 @@
                         android:textColor="@color/console_warning"
                         android:textSize="12sp"
                         app:backgroundTint="@color/console_button"
-                        app:cornerRadius="12dp" />
+                        app:cornerRadius="10dp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -1030,6 +1056,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="monospace"
                         android:text="@string/console_stream_title"
                         android:textColor="@color/console_text"
                         android:textStyle="bold" />
@@ -1038,9 +1065,11 @@
                         style="@style/TextAppearance.Material3.LabelSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:letterSpacing="0.08"
+                        android:fontFamily="monospace"
+                        android:letterSpacing="0.1"
                         android:text="@string/console_stream_description"
-                        android:textColor="@color/console_muted" />
+                        android:textColor="@color/console_muted"
+                        android:textSize="10sp" />
                 </LinearLayout>
 
                 <View
@@ -1069,6 +1098,7 @@
                         android:fontFamily="monospace"
                         android:textColor="@color/console_text"
                         android:textIsSelectable="true"
+                        android:textSize="12sp"
                         app:lineHeight="19dp" />
                 </ScrollView>
             </LinearLayout>
@@ -1076,7 +1106,7 @@
             <LinearLayout
                 android:id="@+id/consoleInputLayout"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
+                android:layout_height="52dp"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="12dp"
                 android:background="@drawable/console_input_background"
@@ -1098,7 +1128,7 @@
                     android:padding="0dp"
                     android:textColor="@color/console_text"
                     android:textColorHint="@color/console_muted"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/appendInputButton"
@@ -1114,7 +1144,7 @@
                     android:minWidth="0dp"
                     android:padding="0dp"
                     app:backgroundTint="@color/seed"
-                    app:cornerRadius="14dp"
+                    app:cornerRadius="10dp"
                     app:icon="@drawable/ic_send_24"
                     app:iconGravity="textStart"
                     app:iconPadding="0dp"
@@ -1124,16 +1154,17 @@
         </RelativeLayout>
     </FrameLayout>
 
+    <!-- ========== 底部导航坞 ========== -->
     <LinearLayout
         android:id="@+id/bottomNavigationDock"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="12dp"
         android:background="@drawable/bottom_nav_background"
-        android:elevation="10dp"
+        android:elevation="8dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingStart="6dp"
@@ -1147,6 +1178,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:fontFamily="monospace"
             android:gravity="center"
             android:insetBottom="0dp"
             android:insetTop="0dp"
@@ -1155,13 +1187,13 @@
             android:text="@string/nav_connection"
             android:textAllCaps="false"
             android:textColor="@color/nav_item_color"
-            android:textSize="11sp"
+            android:textSize="10sp"
             app:backgroundTint="@color/nav_item_background_color"
-            app:cornerRadius="18dp"
+            app:cornerRadius="14dp"
             app:icon="@drawable/ic_link_24"
             app:iconGravity="textTop"
             app:iconPadding="3dp"
-            app:iconSize="22dp"
+            app:iconSize="20dp"
             app:iconTint="@color/nav_item_color" />
 
         <com.google.android.material.button.MaterialButton
@@ -1170,6 +1202,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:fontFamily="monospace"
             android:gravity="center"
             android:insetBottom="0dp"
             android:insetTop="0dp"
@@ -1178,13 +1211,13 @@
             android:text="@string/nav_history"
             android:textAllCaps="false"
             android:textColor="@color/nav_item_color"
-            android:textSize="11sp"
+            android:textSize="10sp"
             app:backgroundTint="@color/nav_item_background_color"
-            app:cornerRadius="18dp"
+            app:cornerRadius="14dp"
             app:icon="@drawable/ic_history_24"
             app:iconGravity="textTop"
             app:iconPadding="3dp"
-            app:iconSize="22dp"
+            app:iconSize="20dp"
             app:iconTint="@color/nav_item_color" />
 
         <com.google.android.material.button.MaterialButton
@@ -1193,6 +1226,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:fontFamily="monospace"
             android:gravity="center"
             android:insetBottom="0dp"
             android:insetTop="0dp"
@@ -1201,13 +1235,13 @@
             android:text="@string/nav_overview"
             android:textAllCaps="false"
             android:textColor="@color/nav_item_color"
-            android:textSize="11sp"
+            android:textSize="10sp"
             app:backgroundTint="@color/nav_item_background_color"
-            app:cornerRadius="18dp"
+            app:cornerRadius="14dp"
             app:icon="@drawable/ic_dashboard_24"
             app:iconGravity="textTop"
             app:iconPadding="3dp"
-            app:iconSize="22dp"
+            app:iconSize="20dp"
             app:iconTint="@color/nav_item_color" />
 
         <com.google.android.material.button.MaterialButton
@@ -1216,6 +1250,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:fontFamily="monospace"
             android:gravity="center"
             android:insetBottom="0dp"
             android:insetTop="0dp"
@@ -1224,13 +1259,13 @@
             android:text="@string/nav_logs"
             android:textAllCaps="false"
             android:textColor="@color/nav_item_color"
-            android:textSize="11sp"
+            android:textSize="10sp"
             app:backgroundTint="@color/nav_item_background_color"
-            app:cornerRadius="18dp"
+            app:cornerRadius="14dp"
             app:icon="@drawable/ic_terminal_24"
             app:iconGravity="textTop"
             app:iconPadding="3dp"
-            app:iconSize="22dp"
+            app:iconSize="20dp"
             app:iconTint="@color/nav_item_color" />
     </LinearLayout>
 

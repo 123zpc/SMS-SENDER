@@ -15,7 +15,7 @@
         <item name="colorOnSurfaceVariant">@color/brand_text_secondary</item>
         <item name="colorSurfaceContainer">@color/brand_surface_container</item>
         <item name="colorOutline">@color/brand_outline</item>
-        <item name="android:fontFamily">sans</item>
+        <item name="android:fontFamily">sans-serif</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>
         <item name="android:navigationBarColor">@color/brand_surface</item>
