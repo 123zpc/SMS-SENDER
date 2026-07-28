@@ -180,6 +180,33 @@ class MainActivity : Activity() {
         openAppSettingsButton.setOnClickListener { openAppSettings() }
         openMiuiNotificationSmsButton.setOnClickListener { openMiuiNotificationSmsSettings() }
 
+        // 变量芯片组点击追加逻辑
+        val insertVariable: (String) -> Unit = { variable ->
+            val editable = barkApiInput.text
+            if (editable != null) {
+                val start = barkApiInput.selectionStart.coerceAtLeast(0)
+                val end = barkApiInput.selectionEnd.coerceAtLeast(0)
+                editable.replace(start.coerceAtMost(end), start.coerceAtLeast(end), variable)
+            }
+        }
+
+        findViewById<TextView>(R.id.chipPasteUrl)?.setOnClickListener {
+            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
+            val clipText = clipboard?.primaryClip?.getItemAt(0)?.text?.toString()?.trim()
+            if (!clipText.isNullOrBlank()) {
+                barkApiInput.setText(clipText)
+                barkApiInput.setSelection(clipText.length)
+                Toast.makeText(this, "已粘贴剪贴板内容", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "剪贴板无文本内容", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        findViewById<TextView>(R.id.chipVarCode)?.setOnClickListener { insertVariable("{code}") }
+        findViewById<TextView>(R.id.chipVarSender)?.setOnClickListener { insertVariable("{sender}") }
+        findViewById<TextView>(R.id.chipVarBody)?.setOnClickListener { insertVariable("{body}") }
+        findViewById<TextView>(R.id.chipVarTime)?.setOnClickListener { insertVariable("{time}") }
+
         // 历史页事件初始化
         smsRecyclerView.layoutManager = LinearLayoutManager(this)
         historyAdapter = SmsHistoryAdapter(emptyList()) { selectedCount ->

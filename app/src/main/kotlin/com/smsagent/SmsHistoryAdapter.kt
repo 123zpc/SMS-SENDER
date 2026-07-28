@@ -23,10 +23,13 @@ class SmsHistoryAdapter(
     private val onSelectionChanged: (selectedCount: Int) -> Unit
 ) : RecyclerView.Adapter<SmsHistoryAdapter.ViewHolder>() {
 
+    private val codeRegex = Regex("""(?<!\d)\d{4,6}(?!\d)""")
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val cardView: LinearLayout = view.findViewById(R.id.smsCardView)
         val checkbox: CheckBox = view.findViewById(R.id.smsCheckbox)
         val senderText: TextView = view.findViewById(R.id.smsSenderText)
+        val codeBadgeText: TextView? = view.findViewById(R.id.codeBadgeText)
         val timeText: TextView = view.findViewById(R.id.smsTimeText)
         val bodyText: TextView = view.findViewById(R.id.smsBodyText)
         val unreadDot: View = view.findViewById(R.id.unreadDot)
@@ -47,6 +50,15 @@ class SmsHistoryAdapter(
         holder.checkbox.isChecked = item.isSelected
         holder.unreadDot.visibility = if (item.isRead) View.GONE else View.VISIBLE
 
+        // 智能提取 4-6 位数字验证码并高亮显示 Badge
+        val codeMatch = codeRegex.find(item.body)?.value
+        if (!codeMatch.isNullOrBlank() && holder.codeBadgeText != null) {
+            holder.codeBadgeText.text = "验证码 $codeMatch"
+            holder.codeBadgeText.visibility = View.VISIBLE
+        } else {
+            holder.codeBadgeText?.visibility = View.GONE
+        }
+
         applySelectionVisual(holder, item.isSelected)
 
         val toggleSelection = {
@@ -65,10 +77,8 @@ class SmsHistoryAdapter(
     private fun applySelectionVisual(holder: ViewHolder, selected: Boolean) {
         if (selected) {
             holder.cardView.setBackgroundResource(R.drawable.history_item_background_selected)
-            holder.signalBar.layoutParams.width = (3 * holder.itemView.resources.displayMetrics.density).toInt()
         } else {
             holder.cardView.setBackgroundResource(R.drawable.history_item_background)
-            holder.signalBar.layoutParams.width = (3 * holder.itemView.resources.displayMetrics.density).toInt()
         }
     }
 

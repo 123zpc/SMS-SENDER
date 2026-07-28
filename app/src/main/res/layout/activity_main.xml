@@ -158,6 +158,103 @@
                                 android:textSize="13sp" />
                         </com.google.android.material.textfield.TextInputLayout>
 
+                        <HorizontalScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:scrollbars="none">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    android:id="@+id/chipPasteUrl"
+                                    style="@style/TextAppearance.Material3.LabelSmall"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="32dp"
+                                    android:background="@drawable/chip_variable_background"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:gravity="center"
+                                    android:paddingStart="12dp"
+                                    android:paddingEnd="12dp"
+                                    android:text="📋 粘贴剪贴板"
+                                    android:textColor="@color/seed"
+                                    android:textSize="12sp" />
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    android:id="@+id/chipVarCode"
+                                    style="@style/TextAppearance.Material3.LabelSmall"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="32dp"
+                                    android:layout_marginStart="8dp"
+                                    android:background="@drawable/chip_variable_background"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:gravity="center"
+                                    android:paddingStart="12dp"
+                                    android:paddingEnd="12dp"
+                                    android:text="+ {code} 验证码"
+                                    android:textColor="@color/seed"
+                                    android:textSize="12sp" />
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    android:id="@+id/chipVarSender"
+                                    style="@style/TextAppearance.Material3.LabelSmall"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="32dp"
+                                    android:layout_marginStart="8dp"
+                                    android:background="@drawable/chip_variable_background"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:gravity="center"
+                                    android:paddingStart="12dp"
+                                    android:paddingEnd="12dp"
+                                    android:text="+ {sender} 发件人"
+                                    android:textColor="@color/seed"
+                                    android:textSize="12sp" />
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    android:id="@+id/chipVarBody"
+                                    style="@style/TextAppearance.Material3.LabelSmall"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="32dp"
+                                    android:layout_marginStart="8dp"
+                                    android:background="@drawable/chip_variable_background"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:gravity="center"
+                                    android:paddingStart="12dp"
+                                    android:paddingEnd="12dp"
+                                    android:text="+ {body} 正文"
+                                    android:textColor="@color/seed"
+                                    android:textSize="12sp" />
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    android:id="@+id/chipVarTime"
+                                    style="@style/TextAppearance.Material3.LabelSmall"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="32dp"
+                                    android:layout_marginStart="8dp"
+                                    android:background="@drawable/chip_variable_background"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:gravity="center"
+                                    android:paddingStart="12dp"
+                                    android:paddingEnd="12dp"
+                                    android:text="+ {time} 时间"
+                                    android:textColor="@color/seed"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+                        </HorizontalScrollView>
+
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/saveBarkApiButton"
                             style="@style/Widget.Material3.Button"

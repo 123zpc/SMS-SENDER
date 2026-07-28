@@ -1,29 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 历史短信条目：现代化圆角 Squircle 卡片，带左侧灵动 Indigo 亮条与清晰层级排版 -->
+<!-- 历史短信条目：Linear / Things 3 风格纯粹卡片，带验证码高亮 Badge -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/smsCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="4dp"
-    android:layout_marginBottom="4dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
     android:background="@drawable/history_item_background"
     android:foreground="?attr/selectableItemBackground"
     android:gravity="center_vertical"
-    android:minHeight="68dp"
+    android:minHeight="72dp"
     android:orientation="horizontal"
-    android:paddingStart="0dp"
+    android:paddingStart="14dp"
     android:paddingTop="12dp"
     android:paddingEnd="12dp"
     android:paddingBottom="12dp">
 
-    <!-- 左侧灵动 Signal Accent -->
+    <!-- 隐藏式 accent bar（兼容接口） -->
     <View
         android:id="@+id/signalBar"
-        android:layout_width="4dp"
-        android:layout_height="44dp"
-        android:layout_marginEnd="12dp"
-        android:background="@color/seed" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -52,6 +51,23 @@
                 android:textStyle="bold" />
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/codeBadgeText"
+                style="@style/TextAppearance.Material3.LabelSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/code_badge_background"
+                android:fontFamily="monospace"
+                android:paddingStart="6dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="6dp"
+                android:paddingBottom="2dp"
+                android:textColor="@color/code_badge_text"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/smsTimeText"
                 style="@style/TextAppearance.Material3.LabelSmall"
                 android:layout_width="wrap_content"
@@ -68,7 +84,7 @@
             style="@style/TextAppearance.Material3.BodySmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="5dp"
             android:ellipsize="end"
             android:fontFamily="sans-serif"
             android:maxLines="2"

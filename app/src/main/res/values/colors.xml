@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- SMS SENDER 视觉设计系统：深靛蓝 (Indigo) + 灵动翡翠 (Emerald) + 柔光玻璃卡片 -->
+    <!-- SMS SENDER 美学设计系统：灵感源自 Things 3 / Linear / Apple iOS 18 -->
 
-    <!-- 主品牌色：Electric Indigo 极客靛蓝 -->
+    <!-- 主品牌色：Electric Indigo (靛蓝) -->
     <color name="seed">#4F46E5</color>
     <color name="seed_dark">#3730A3</color>
     <color name="seed_container">#EEF2FF</color>
     <color name="seed_outline">#C7D2FE</color>
     <color name="brand_on_primary">#FFFFFF</color>
 
-    <!-- 状态指示色：Mint Emerald 灵动翡翠 / Amber 琥珀暖黄 / Slate 钢灰 -->
+    <!-- 语义指示色：Mint Emerald (灵动翡翠) / Amber (暖黄) / Slate (钢灰) -->
     <color name="accent_orange">#D97706</color>
     <color name="accent_orange_container">#FEF3C7</color>
     <color name="brand_emerald">#10B981</color>
@@ -18,7 +18,7 @@
     <color name="brand_cyan">#0284C7</color>
     <color name="brand_cyan_container">#E0F2FE</color>
 
-    <!-- 主工作台与卡片表面 (Slate 调色板) -->
+    <!-- Surface / Card Surfaces (Things 3 / Linear Slate) -->
     <color name="brand_surface">#F8FAFC</color>
     <color name="brand_surface_container">#FFFFFF</color>
     <color name="brand_surface_container_high">#F1F5F9</color>
@@ -29,7 +29,12 @@
     <color name="navigation_surface">#FFFFFF</color>
     <color name="navigation_outline">#E2E8F0</color>
 
-    <!-- Header 灵动 Header 与 Highlight 容器 -->
+    <!-- 验证码高亮 Badge -->
+    <color name="code_badge_bg">#EEF2FF</color>
+    <color name="code_badge_text">#4338CA</color>
+    <color name="code_badge_border">#C7D2FE</color>
+
+    <!-- Header 灵动 Header 容器 -->
     <color name="header_panel_start">#0F172A</color>
     <color name="header_panel_end">#1E293B</color>
     <color name="hero_text">#F8FAFC</color>
@@ -39,7 +44,7 @@
     <color name="hero_badge">#312E81</color>
     <color name="hero_badge_text">#E0E7FF</color>
 
-    <!-- 运行终端：Glass Terminal 极客深邃蓝黑 -->
+    <!-- 极客终端：Linear Dark Surface -->
     <color name="console_background">#0B0F19</color>
     <color name="console_toolbar">#111827</color>
     <color name="console_surface">#1F2937</color>
