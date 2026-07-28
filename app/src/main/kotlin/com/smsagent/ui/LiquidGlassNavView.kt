@@ -21,11 +21,11 @@ import android.view.animation.OvershootInterpolator
  * 2. 拖拽水滴 (Drag Liquid Drop) 跨 Tab 流畅平移与拉伸变幻
  * 3. 释放时带 Spring Physics 弹簧回弹并自动吸附到最近 Tab
  */
-class LiquidGlassNavView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : View(context, attrs, defStyleAttr) {
+class LiquidGlassNavView : View {
+
+    constructor(context: Context) : super(context)
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     var onTabSelectedListener: ((index: Int) -> Unit)? = null
     var selectedIndex = 0
