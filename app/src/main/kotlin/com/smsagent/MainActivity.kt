@@ -274,20 +274,49 @@ class MainActivity : Activity() {
         }
     }
 
+    private lateinit var navSlidingGlassCapsule: View
+
     private fun updateNavigationSelection() {
+        if (!::navSlidingGlassCapsule.isInitialized) {
+            navSlidingGlassCapsule = findViewById(R.id.navSlidingGlassCapsule)
+        }
+
+        val targetButton = navigationButtons.getOrNull(selectedTabIndex)
+        if (targetButton != null) {
+            targetButton.post {
+                val targetX = targetButton.x
+                val targetWidth = targetButton.width
+
+                if (navSlidingGlassCapsule.width == 0) {
+                    val params = navSlidingGlassCapsule.layoutParams
+                    params.width = targetWidth
+                    navSlidingGlassCapsule.layoutParams = params
+                    navSlidingGlassCapsule.translationX = targetX
+                } else {
+                    navSlidingGlassCapsule.animate().cancel()
+                    navSlidingGlassCapsule.animate()
+                        .translationX(targetX)
+                        .setDuration(260L)
+                        .setInterpolator(android.view.animation.OvershootInterpolator(1.1f))
+                        .start()
+
+                    val params = navSlidingGlassCapsule.layoutParams
+                    if (params.width != targetWidth) {
+                        params.width = targetWidth
+                        navSlidingGlassCapsule.layoutParams = params
+                    }
+                }
+            }
+        }
+
         navigationButtons.forEachIndexed { index, button ->
             val isSelected = index == selectedTabIndex
             button.isActivated = isSelected
             button.animate().cancel()
-            if (isSelected) {
-                // 选中时 LED 点轻微点亮回弹，克制不弹跳
-                button.scaleX = 0.92f
-                button.scaleY = 0.92f
-            }
             button.animate()
-                .alpha(if (isSelected) 1f else 0.6f)
-                .scaleX(if (isSelected) 1f else 0.96f)
-                .scaleY(if (isSelected) 1f else 0.96f)
+                .alpha(if (isSelected) 1f else 0.55f)
+                .scaleX(if (isSelected) 1.02f else 0.96f)
+                .scaleY(if (isSelected) 1.02f else 0.96f)
                 .setDuration(NAVIGATION_MOTION_DURATION)
                 .setInterpolator(navigationInterpolator)
                 .start()
