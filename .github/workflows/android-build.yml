@@ -5,8 +5,10 @@ on:
     branches:
       - main
       - develop
+      - ui
     tags:
       - 'v*'
+  workflow_dispatch:
 
 permissions:
   contents: write
