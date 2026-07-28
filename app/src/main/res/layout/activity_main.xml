@@ -170,7 +170,7 @@
                             android:id="@+id/saveBarkApiButton"
                             style="@style/Widget.Material3.Button"
                             android:layout_width="match_parent"
-                            android:layout_height="54dp"
+                            android:layout_height="48dp"
                             android:layout_marginTop="16dp"
                             android:text="@string/save_remote_api"
                             android:textAllCaps="false"
@@ -511,7 +511,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:minHeight="148dp"
+                            android:minHeight="120dp"
                             android:orientation="vertical"
                             android:padding="16dp">
 
@@ -564,7 +564,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:minHeight="148dp"
+                            android:minHeight="120dp"
                             android:orientation="vertical"
                             android:padding="16dp">
 
@@ -1104,7 +1104,7 @@
     <LinearLayout
         android:id="@+id/bottomNavigationDock"
         android:layout_width="match_parent"
-        android:layout_height="76dp"
+        android:layout_height="64dp"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
