@@ -84,9 +84,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     app:cardBackgroundColor="@color/brand_surface_container"
-                    app:cardCornerRadius="18dp"
-                    app:cardElevation="0dp"
-                    app:strokeColor="@color/brand_outline"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="@color/seed_outline"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -286,9 +286,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     app:cardBackgroundColor="@color/brand_surface_container"
-                    app:cardCornerRadius="18dp"
-                    app:cardElevation="0dp"
-                    app:strokeColor="@color/brand_outline"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="@color/seed_outline"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -415,9 +415,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     app:cardBackgroundColor="@color/brand_surface_container"
-                    app:cardCornerRadius="18dp"
-                    app:cardElevation="0dp"
-                    app:strokeColor="@color/brand_outline"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="@color/seed_outline"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -481,9 +481,9 @@
                     android:layout_marginTop="16dp"
                     android:visibility="gone"
                     app:cardBackgroundColor="@color/brand_surface_container"
-                    app:cardCornerRadius="18dp"
-                    app:cardElevation="0dp"
-                    app:strokeColor="@color/brand_outline"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="@color/seed_outline"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
