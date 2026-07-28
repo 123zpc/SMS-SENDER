@@ -3,15 +3,16 @@ package com.smsagent.ui
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.LinearGradient
 import android.graphics.Paint
 import android.graphics.RectF
 import android.graphics.Shader
+import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.OvershootInterpolator
-import kotlin.math.abs
 
 /**
  * iOS 26.6 空间液态水滴滑动导航 View
@@ -41,13 +42,13 @@ class LiquidGlassNavView @JvmOverloads constructor(
     private val pillStrokePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         strokeWidth = 1.5f * density
-        color = 0x40C7D2FE
+        color = Color.parseColor("#40C7D2FE")
     }
 
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         textSize = 12f * resources.displayMetrics.scaledDensity
         textAlign = Paint.Align.CENTER
-        typeface = android.graphics.Typeface.create("sans-serif-medium", android.graphics.Typeface.NORMAL)
+        typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
     }
 
     private val dotPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -60,7 +61,6 @@ class LiquidGlassNavView @JvmOverloads constructor(
     private var pillX = 0f
     private var pillWidth = 0f
     private var isDragging = false
-    private var lastTouchX = 0f
 
     private var currentAnimator: ValueAnimator? = null
 
@@ -77,7 +77,11 @@ class LiquidGlassNavView @JvmOverloads constructor(
         if (width > 0 && height > 0) {
             pillPaint.shader = LinearGradient(
                 0f, 0f, width.toFloat(), height.toFloat(),
-                intArrayOf(0x334F46E5, 0x406366F1, 0x3310B981),
+                intArrayOf(
+                    Color.parseColor("#334F46E5"),
+                    Color.parseColor("#406366F1"),
+                    Color.parseColor("#3310B981")
+                ),
                 floatArrayOf(0f, 0.5f, 1f),
                 Shader.TileMode.CLAMP
             )
@@ -96,18 +100,15 @@ class LiquidGlassNavView @JvmOverloads constructor(
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 isDragging = true
-                lastTouchX = touchX
                 currentAnimator?.cancel()
                 return true
             }
 
             MotionEvent.ACTION_MOVE -> {
                 if (isDragging) {
-                    // 水滴跟随手指位置平移
                     val targetX = touchX - pillWidth / 2f
                     pillX = targetX.coerceIn(4f * density, width - pillWidth - 4f * density)
 
-                    // 实时计算当前悬停的 Tab 索引
                     val nearestTab = (touchX / cellWidth).toInt().coerceIn(0, tabCount - 1)
                     if (nearestTab != selectedIndex) {
                         selectedIndex = nearestTab
@@ -181,18 +182,15 @@ class LiquidGlassNavView @JvmOverloads constructor(
             val centerY = h / 2f
             val isSelected = (i == selectedIndex)
 
-            // 文字颜色与 Alpha
-            textPaint.color = if (isSelected) 0xFF4F46E5.toInt() else 0xFF64748B.toInt()
+            textPaint.color = if (isSelected) Color.parseColor("#4F46E5") else Color.parseColor("#64748B")
             textPaint.alpha = if (isSelected) 255 else 160
 
-            // 绘制 Tab 标题
             val fontMetrics = textPaint.fontMetrics
             val baseline = centerY - (fontMetrics.descent + fontMetrics.ascent) / 2f
             canvas.drawText(tabTitles[i], centerX, baseline, textPaint)
 
-            // 选中项绘制顶部 / 底部小灵动点
             if (isSelected) {
-                dotPaint.color = 0xFF10B981.toInt()
+                dotPaint.color = Color.parseColor("#10B981")
                 canvas.drawCircle(centerX, h - 8f * density, 2.5f * density, dotPaint)
             }
         }
