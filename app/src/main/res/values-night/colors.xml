@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- SMS SENDER 夜间模式：Apple iOS 26 Spatial Fluid Glass Dark -->
+    <!-- SMS SENDER 夜间模式：Apple iOS 26 Minimalist Monochromatic Palette -->
 
-    <color name="seed">#818CF8</color>
-    <color name="seed_dark">#A5B4FC</color>
-    <color name="seed_container">#1E1B4B</color>
-    <color name="seed_outline">#312E81</color>
-    <color name="brand_on_primary">#FFFFFF</color>
+    <color name="seed">#F9FAFB</color>
+    <color name="seed_dark">#E5E7EB</color>
+    <color name="seed_container">#1F2937</color>
+    <color name="seed_outline">#374151</color>
+    <color name="brand_on_primary">#111827</color>
 
     <color name="accent_orange">#FBBF24</color>
     <color name="accent_orange_container">#1C1503</color>
@@ -26,9 +26,9 @@
     <color name="navigation_surface">#111827</color>
     <color name="navigation_outline">#1F2937</color>
 
-    <color name="code_badge_bg">#1E1B4B</color>
-    <color name="code_badge_text">#C4B5FD</color>
-    <color name="code_badge_border">#312E81</color>
+    <color name="code_badge_bg">#1F2937</color>
+    <color name="code_badge_text">#F9FAFB</color>
+    <color name="code_badge_border">#374151</color>
 
     <color name="header_panel_start">#030712</color>
     <color name="header_panel_end">#030712</color>
@@ -36,14 +36,14 @@
     <color name="hero_text_muted">#6B7280</color>
     <color name="hero_chip">#1F2937</color>
     <color name="hero_chip_outline">#374151</color>
-    <color name="hero_badge">#312E81</color>
-    <color name="hero_badge_text">#E0E7FF</color>
+    <color name="hero_badge">#1F2937</color>
+    <color name="hero_badge_text">#F9FAFB</color>
 
     <color name="console_background">#030712</color>
     <color name="console_toolbar">#0B0F19</color>
     <color name="console_surface">#111827</color>
     <color name="console_border">#1F2937</color>
-    <color name="console_text">#F3F4F6</color>
+    <color name="console_text">#F8FAFC</color>
     <color name="console_muted">#6B7280</color>
     <color name="console_accent">#34D399</color>
     <color name="console_warning">#FBBF24</color>

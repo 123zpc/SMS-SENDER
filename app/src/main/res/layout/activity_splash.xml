@@ -6,7 +6,7 @@
     android:background="@drawable/splash_background"
     android:fitsSystemWindows="true">
 
-    <!-- 中央：品牌 26 晶体标 + 极致空间 Typography + 磨砂胶囊 Badge -->
+    <!-- 中央：极简 Apple 风格 Icon 与应用标 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,16 +18,15 @@
 
         <FrameLayout
             android:id="@+id/splashLogo"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:background="@drawable/hero_logo_background"
-            android:elevation="12dp">
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:background="@drawable/hero_logo_background">
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/send_icon_description"
-                android:padding="20dp"
+                android:padding="18dp"
                 android:src="@drawable/ic_send_24"
                 app:tint="@color/brand_on_primary" />
         </FrameLayout>
@@ -37,12 +36,12 @@
             style="@style/TextAppearance.Material3.HeadlineMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="sans-serif-medium"
-            android:letterSpacing="-0.02"
+            android:letterSpacing="-0.01"
             android:text="@string/app_name"
-            android:textColor="#FFFFFF"
-            android:textSize="28sp"
+            android:textColor="@color/brand_text_primary"
+            android:textSize="26sp"
             android:textStyle="bold" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -50,54 +49,19 @@
             style="@style/TextAppearance.Material3.BodyMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="6dp"
             android:fontFamily="sans-serif"
-            android:letterSpacing="0.04"
             android:text="@string/splash_tagline"
-            android:textColor="#C7D2FE"
-            android:textSize="14sp" />
-
-        <LinearLayout
-            android:id="@+id/splashBadgeCapsule"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:background="@drawable/subtle_banner_background"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingStart="14dp"
-            android:paddingTop="6dp"
-            android:paddingEnd="14dp"
-            android:paddingBottom="6dp">
-
-            <View
-                android:id="@+id/splashStatusPulse"
-                android:layout_width="8dp"
-                android:layout_height="8dp"
-                android:background="@drawable/hero_status_dot" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/splashBadgeText"
-                style="@style/TextAppearance.Material3.LabelSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:fontFamily="sans-serif-medium"
-                android:letterSpacing="0.08"
-                android:text="iOS 26.6 SPATIAL FLUID ENGINE"
-                android:textColor="#E0E7FF"
-                android:textSize="11sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+            android:textColor="@color/brand_text_secondary"
+            android:textSize="13sp" />
     </LinearLayout>
 
-    <!-- 底部：iOS 灵动平缓 Loading 指示器 -->
     <ProgressBar
         android:id="@+id/splashProgressBar"
         style="?android:attr/progressBarStyleSmall"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="48dp"
-        android:indeterminateTint="#C7D2FE" />
+        android:layout_marginBottom="40dp"
+        android:indeterminateTint="@color/brand_text_tertiary" />
 </FrameLayout>
