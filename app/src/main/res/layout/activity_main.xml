@@ -265,7 +265,7 @@
                             android:fontFamily="sans-serif-medium"
                             android:text="@string/save_remote_api"
                             android:textAllCaps="false"
-                            android:textColor="@color/brand_on_primary"
+                            android:textColor="@color/brand_text_primary"
                             android:textSize="15sp"
                             app:backgroundTint="@null"
                             app:cornerRadius="18dp" />
@@ -852,7 +852,7 @@
                 android:fontFamily="sans-serif-medium"
                 android:text="@string/sms_history_forward_none"
                 android:textAllCaps="false"
-                android:textColor="@color/brand_on_primary"
+                android:textColor="@color/brand_text_primary"
                 android:textSize="15sp"
                 app:backgroundTint="@null"
                 app:cornerRadius="18dp" />

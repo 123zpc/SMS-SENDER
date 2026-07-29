@@ -1,11 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Apple iOS System Primary Button (#007AFF Light / #0A84FF Dark) -->
+<!-- Apple iOS 26 Liquid Glass Button: 半透明磨砂玻璃 + 3D 顶部晶体折射光包络 -->
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="#30FFFFFF">
+    android:color="#20FFFFFF">
     <item>
-        <shape android:shape="rectangle">
-            <corners android:radius="16dp" />
-            <solid android:color="@color/seed" />
-        </shape>
+        <layer-list>
+            <!-- 玻璃水滴本体 (Frosted Glass Surface) -->
+            <item>
+                <shape android:shape="rectangle">
+                    <corners android:radius="18dp" />
+                    <gradient
+                        android:angle="135"
+                        android:startColor="#25111827"
+                        android:endColor="#15111827"
+                        android:type="linear" />
+                </shape>
+            </item>
+            <!-- 顶部 3D 晶体边缘折射光 (Specular Edge Refraction) -->
+            <item>
+                <shape android:shape="rectangle">
+                    <corners android:radius="18dp" />
+                    <gradient
+                        android:angle="270"
+                        android:startColor="#50FFFFFF"
+                        android:centerColor="#15FFFFFF"
+                        android:endColor="#05FFFFFF"
+                        android:type="linear" />
+                    <stroke
+                        android:width="1.2dp"
+                        android:color="#30FFFFFF" />
+                </shape>
+            </item>
+        </layer-list>
     </item>
 </ripple>
