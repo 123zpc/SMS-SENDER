@@ -18,8 +18,8 @@
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>
-        <item name="android:navigationBarColor">@color/brand_surface</item>
-        <item name="android:statusBarColor">@color/brand_surface</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowActionModeOverlay">true</item>
     </style>
 
@@ -33,8 +33,8 @@
         <item name="android:windowBackground">@drawable/splash_background</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowLightNavigationBar">false</item>
-        <item name="android:statusBarColor">@color/header_panel_start</item>
-        <item name="android:navigationBarColor">@color/header_panel_start</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
     </style>
 </resources>

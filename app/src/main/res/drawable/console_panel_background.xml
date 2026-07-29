@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 终端控制条：常黑面板 + 顶部红色细线 -->
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
-        <shape android:shape="rectangle">
-            <corners android:radius="10dp" />
-            <solid android:color="@color/console_toolbar" />
-            <stroke android:width="1dp" android:color="@color/console_border" />
-        </shape>
-    </item>
-    <item android:gravity="top" android:height="2dp">
-        <shape android:shape="rectangle">
-            <corners android:topLeftRadius="10dp" android:topRightRadius="10dp" />
-            <solid android:color="@color/console_accent" />
-        </shape>
-    </item>
-</layer-list>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/brand_surface_container" />
+    <corners android:radius="20dp" />
+    <stroke
+        android:width="1dp"
+        android:color="@color/brand_outline" />
+</shape>

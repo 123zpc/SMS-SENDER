@@ -2,6 +2,7 @@ package com.smsagent.ui
 
 import android.animation.ValueAnimator
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.LinearGradient
@@ -16,17 +17,6 @@ import android.view.animation.OvershootInterpolator
 import kotlin.math.abs
 import kotlin.math.sqrt
 
-/**
- * Apple iOS 26 Liquid Glass Tab Bar — 1:1 还原
- *
- * 核心视觉规则（来自苹果 WWDC25 Liquid Glass HIG）：
- * 1. 水滴本体 = 半透明磨砂玻璃 (frosted glass)，NOT 实色
- * 2. 顶部极薄微弧光 = 0.8dp 半透明白色，仅贴顶部内边缘
- * 3. 选中文字 = 纯白 #FFFFFF，未选中 = 中性灰
- * 4. 拖拽时水滴随速度拉伸变形 + 质量守恒高度压缩
- * 5. 释放时 Spring Overshoot 弹簧吸附最近 Tab
- * 6. 无任何底部亮灯 / 彩色圆点
- */
 class LiquidGlassNavView : View {
 
     constructor(context: Context) : super(context)
@@ -39,27 +29,21 @@ class LiquidGlassNavView : View {
 
     private val density = resources.displayMetrics.density
 
-    // 磨砂玻璃水滴本体 (Frosted Glass Fill)
     private val glassPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
-        color = Color.parseColor("#38FFFFFF")   // 22% 不透明白 = 磨砂感
     }
 
-    // 玻璃边框极细高光 (Glass Rim)
     private val rimPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         strokeWidth = 0.8f * density
-        color = Color.parseColor("#30FFFFFF")   // 19% 白 极淡边框
     }
 
-    // 顶部弧形微光 (Top Edge Specular — 仅绘制顶部 1/5 高度的薄弧)
     private val specularPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         strokeWidth = 0.8f * density
         strokeCap = Paint.Cap.ROUND
     }
 
-    // 文本
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         textSize = 12.5f * resources.displayMetrics.scaledDensity
         textAlign = Paint.Align.CENTER
@@ -73,12 +57,14 @@ class LiquidGlassNavView : View {
     private var basePillWidth = 0f
     private var isDragging = false
 
-    // 液态变形
     private var currentStretchFactor = 1.0f
     private var lastTouchX = 0f
 
     private var positionAnimator: ValueAnimator? = null
     private var stretchAnimator: ValueAnimator? = null
+
+    private val isDarkMode: Boolean
+        get() = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
@@ -185,12 +171,12 @@ class LiquidGlassNavView : View {
         val h = height.toFloat()
         if (w == 0f || h == 0f) return
 
+        val darkMode = isDarkMode
         val cellWidth = w / tabCount
         val baseTop = 6f * density
         val baseBottom = h - 6f * density
         val baseH = baseBottom - baseTop
 
-        // 水滴质量守恒形变
         val pillW = basePillWidth * currentStretchFactor
         val pillH = baseH / sqrt(currentStretchFactor)
         val pillTop = (h - pillH) / 2f
@@ -199,27 +185,25 @@ class LiquidGlassNavView : View {
 
         val pillRect = RectF(pillX, pillTop, pillX + pillW, pillBottom)
 
-        // 1. 磨砂玻璃水滴
+        glassPaint.color = if (darkMode) Color.parseColor("#25FFFFFF") else Color.parseColor("#15000000")
         canvas.drawRoundRect(pillRect, rx, rx, glassPaint)
 
-        // 2. 极细玻璃边框
+        rimPaint.color = if (darkMode) Color.parseColor("#20FFFFFF") else Color.parseColor("#12000000")
         canvas.drawRoundRect(pillRect, rx, rx, rimPaint)
 
-        // 3. 顶部薄弧微光 (仅顶部边缘内侧 — 不穿越中心)
-        val inset = 1.2f * density
-        val specTop = pillTop + inset
-        val specH = pillH * 0.15f  // 仅顶部 15% 高度
+        val specTop = pillTop + 0.8f * density
         val specRect = RectF(
             pillX + rx * 0.5f,
             specTop,
             pillX + pillW - rx * 0.5f,
-            specTop + specH
+            specTop
         )
+        
         specularPaint.shader = LinearGradient(
             specRect.left, specTop, specRect.right, specTop,
             intArrayOf(
                 Color.parseColor("#00FFFFFF"),
-                Color.parseColor("#50FFFFFF"),
+                Color.parseColor("#40FFFFFF"),
                 Color.parseColor("#00FFFFFF")
             ),
             floatArrayOf(0.15f, 0.5f, 0.85f),
@@ -227,13 +211,15 @@ class LiquidGlassNavView : View {
         )
         canvas.drawLine(specRect.left, specTop, specRect.right, specTop, specularPaint)
 
-        // 4. Tab 文字 (选中 = 纯白, 未选中 = 中灰)
+        val selectedTextColor = if (darkMode) Color.parseColor("#FFFFFF") else Color.parseColor("#111827")
+        val unselectedTextColor = if (darkMode) Color.parseColor("#6B7280") else Color.parseColor("#9CA3AF")
+
         for (i in 0 until tabCount) {
             val centerX = cellWidth * i + cellWidth / 2f
             val centerY = h / 2f
             val isSelected = (i == selectedIndex)
 
-            textPaint.color = if (isSelected) Color.WHITE else Color.parseColor("#94A3B8")
+            textPaint.color = if (isSelected) selectedTextColor else unselectedTextColor
             textPaint.typeface = if (isSelected) {
                 Typeface.create("sans-serif-medium", Typeface.BOLD)
             } else {
