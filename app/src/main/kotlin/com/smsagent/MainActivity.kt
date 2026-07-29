@@ -202,6 +202,19 @@ class MainActivity : Activity() {
             }
         }
 
+        findViewById<View>(R.id.btnThemeLight)?.setOnClickListener {
+            androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO)
+            Toast.makeText(this, "已切换为浅色外观", Toast.LENGTH_SHORT).show()
+        }
+        findViewById<View>(R.id.btnThemeDark)?.setOnClickListener {
+            androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES)
+            Toast.makeText(this, "已切换为深色外观", Toast.LENGTH_SHORT).show()
+        }
+        findViewById<View>(R.id.btnThemeSystem)?.setOnClickListener {
+            androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            Toast.makeText(this, "已设置为跟随系统外观", Toast.LENGTH_SHORT).show()
+        }
+
         findViewById<TextView>(R.id.chipVarCode)?.setOnClickListener { insertVariable("{code}") }
         findViewById<TextView>(R.id.chipVarSender)?.setOnClickListener { insertVariable("{sender}") }
         findViewById<TextView>(R.id.chipVarBody)?.setOnClickListener { insertVariable("{body}") }

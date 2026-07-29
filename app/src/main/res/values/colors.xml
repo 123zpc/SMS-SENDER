@@ -44,14 +44,14 @@
     <color name="hero_badge">#007AFF</color>
     <color name="hero_badge_text">#FFFFFF</color>
 
-    <!-- 终端 (iOS 暗色工作台) -->
-    <color name="console_background">#000000</color>
-    <color name="console_toolbar">#1C1C1E</color>
-    <color name="console_surface">#2C2C2E</color>
-    <color name="console_border">#3A3A3C</color>
-    <color name="console_text">#F2F2F7</color>
-    <color name="console_muted">#8E8E93</color>
-    <color name="console_accent">#34C759</color>
-    <color name="console_warning">#FF9500</color>
-    <color name="console_button">#2C2C2E</color>
+    <!-- 终端：白天白底黑字 / 晚上黑底白字 -->
+    <color name="console_background">#FFFFFF</color>
+    <color name="console_toolbar">#F9FAFB</color>
+    <color name="console_surface">#F3F4F6</color>
+    <color name="console_border">#E5E7EB</color>
+    <color name="console_text">#111827</color>
+    <color name="console_muted">#6B7280</color>
+    <color name="console_accent">#059669</color>
+    <color name="console_warning">#D97706</color>
+    <color name="console_button">#F3F4F6</color>
 </resources>

@@ -182,7 +182,7 @@
                         android:layout_marginStart="8dp"
                         android:fontFamily="sans-serif-medium"
                         android:letterSpacing="0.08"
-                        android:textColor="@color/hero_text"
+                        android:textColor="@color/brand_text_primary"
                         android:textSize="11sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -217,7 +217,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:fontFamily="sans-serif-medium"
-                    android:textColor="@color/seed"
+                    android:textColor="@color/brand_text_secondary"
                     android:textSize="12sp"
                     android:textStyle="bold" />
 

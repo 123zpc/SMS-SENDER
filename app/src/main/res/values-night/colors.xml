@@ -40,13 +40,14 @@
     <color name="hero_badge">#0A84FF</color>
     <color name="hero_badge_text">#FFFFFF</color>
 
-    <color name="console_background">#000000</color>
-    <color name="console_toolbar">#1C1C1E</color>
-    <color name="console_surface">#2C2C2E</color>
-    <color name="console_border">#38383A</color>
-    <color name="console_text">#F2F2F7</color>
+    <!-- 终端：夜间黑底白字 -->
+    <color name="console_background">#030712</color>
+    <color name="console_toolbar">#0B0F19</color>
+    <color name="console_surface">#111827</color>
+    <color name="console_border">#1F2937</color>
+    <color name="console_text">#F8FAFC</color>
     <color name="console_muted">#8E8E93</color>
     <color name="console_accent">#30D158</color>
     <color name="console_warning">#FF9F0A</color>
-    <color name="console_button">#2C2C2E</color>
+    <color name="console_button">#1F2937</color>
 </resources>
