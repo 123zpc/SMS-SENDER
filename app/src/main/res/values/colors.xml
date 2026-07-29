@@ -1,50 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- SMS SENDER 美学设计系统：灵感源自 Things 3 / Linear / Apple iOS 18 -->
+    <!-- SMS SENDER 美学设计系统：Apple iOS 26 Spatial Fluid Glass -->
 
-    <!-- 主品牌色：Electric Indigo (靛蓝) -->
-    <color name="seed">#4F46E5</color>
-    <color name="seed_dark">#3730A3</color>
-    <color name="seed_container">#EEF2FF</color>
-    <color name="seed_outline">#C7D2FE</color>
+    <!-- 主品牌色：iOS 26 System Tint (柔和蓝紫 → 替代激进 Indigo) -->
+    <color name="seed">#6366F1</color>
+    <color name="seed_dark">#4F46E5</color>
+    <color name="seed_container">#F0F0FF</color>
+    <color name="seed_outline">#E2E4F0</color>
     <color name="brand_on_primary">#FFFFFF</color>
 
-    <!-- 语义指示色：Mint Emerald (灵动翡翠) / Amber (暖黄) / Slate (钢灰) -->
-    <color name="accent_orange">#D97706</color>
-    <color name="accent_orange_container">#FEF3C7</color>
-    <color name="brand_emerald">#10B981</color>
-    <color name="brand_emerald_dark">#047857</color>
+    <!-- 语义指示色 -->
+    <color name="accent_orange">#F59E0B</color>
+    <color name="accent_orange_container">#FFF7ED</color>
+    <color name="brand_emerald">#34D399</color>
+    <color name="brand_emerald_dark">#10B981</color>
     <color name="brand_emerald_container">#ECFDF5</color>
-    <color name="brand_cyan">#0284C7</color>
-    <color name="brand_cyan_container">#E0F2FE</color>
+    <color name="brand_cyan">#06B6D4</color>
+    <color name="brand_cyan_container">#ECFEFF</color>
 
-    <!-- Surface / Card Surfaces (Things 3 / Linear Slate) -->
-    <color name="brand_surface">#F8FAFC</color>
+    <!-- Surface / Card / Container (iOS 26 极淡雾白) -->
+    <color name="brand_surface">#F9FAFB</color>
     <color name="brand_surface_container">#FFFFFF</color>
-    <color name="brand_surface_container_high">#F1F5F9</color>
-    <color name="brand_outline">#E2E8F0</color>
-    <color name="brand_text_primary">#0F172A</color>
-    <color name="brand_text_secondary">#475569</color>
-    <color name="brand_text_tertiary">#94A3B8</color>
+    <color name="brand_surface_container_high">#F3F4F6</color>
+    <color name="brand_outline">#E5E7EB</color>
+    <color name="brand_text_primary">#111827</color>
+    <color name="brand_text_secondary">#6B7280</color>
+    <color name="brand_text_tertiary">#9CA3AF</color>
     <color name="navigation_surface">#FFFFFF</color>
-    <color name="navigation_outline">#E2E8F0</color>
+    <color name="navigation_outline">#E5E7EB</color>
 
     <!-- 验证码高亮 Badge -->
-    <color name="code_badge_bg">#EEF2FF</color>
-    <color name="code_badge_text">#4338CA</color>
-    <color name="code_badge_border">#C7D2FE</color>
+    <color name="code_badge_bg">#F0F0FF</color>
+    <color name="code_badge_text">#6366F1</color>
+    <color name="code_badge_border">#DDD6FE</color>
 
-    <!-- Header 灵动 Header 容器 -->
-    <color name="header_panel_start">#0F172A</color>
-    <color name="header_panel_end">#1E293B</color>
-    <color name="hero_text">#F8FAFC</color>
-    <color name="hero_text_muted">#94A3B8</color>
-    <color name="hero_chip">#1E293B</color>
-    <color name="hero_chip_outline">#334155</color>
-    <color name="hero_badge">#312E81</color>
+    <!-- Header 灵动 Header 容器 (iOS 26 暗面深蓝) -->
+    <color name="header_panel_start">#111827</color>
+    <color name="header_panel_end">#1F2937</color>
+    <color name="hero_text">#F9FAFB</color>
+    <color name="hero_text_muted">#9CA3AF</color>
+    <color name="hero_chip">#1F2937</color>
+    <color name="hero_chip_outline">#374151</color>
+    <color name="hero_badge">#4338CA</color>
     <color name="hero_badge_text">#E0E7FF</color>
 
-    <!-- 极客终端：Linear Dark Surface -->
+    <!-- 终端 (iOS 26 极暗表面) -->
     <color name="console_background">#0B0F19</color>
     <color name="console_toolbar">#111827</color>
     <color name="console_surface">#1F2937</color>

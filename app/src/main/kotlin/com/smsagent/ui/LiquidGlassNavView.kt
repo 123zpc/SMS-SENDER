@@ -6,7 +6,6 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.LinearGradient
 import android.graphics.Paint
-import android.graphics.Path
 import android.graphics.RectF
 import android.graphics.Shader
 import android.graphics.Typeface
@@ -18,12 +17,15 @@ import kotlin.math.abs
 import kotlin.math.sqrt
 
 /**
- * 苹果 iOS 26.6 极致空间液态水滴 glass 导航栏 (Spatial Liquid Glass Dock)
- * 特效要点：
- * 1. 彻底移除底部的绿色指示点（亮灯）
- * 2. 真实水滴流动拉伸 (Liquid Surface Tension & Velocity Elastic Deformation)
- * 3. 顶部高亮白光玻璃弧边折射 (3D Specular Refraction Highlight)
- * 4. 动态高斯感液态发光与高品质字标缩放
+ * Apple iOS 26 Liquid Glass Tab Bar — 1:1 还原
+ *
+ * 核心视觉规则（来自苹果 WWDC25 Liquid Glass HIG）：
+ * 1. 水滴本体 = 半透明磨砂玻璃 (frosted glass)，NOT 实色
+ * 2. 顶部极薄微弧光 = 0.8dp 半透明白色，仅贴顶部内边缘
+ * 3. 选中文字 = 纯白 #FFFFFF，未选中 = 中性灰
+ * 4. 拖拽时水滴随速度拉伸变形 + 质量守恒高度压缩
+ * 5. 释放时 Spring Overshoot 弹簧吸附最近 Tab
+ * 6. 无任何底部亮灯 / 彩色圆点
  */
 class LiquidGlassNavView : View {
 
@@ -37,25 +39,27 @@ class LiquidGlassNavView : View {
 
     private val density = resources.displayMetrics.density
 
-    // 水滴本体 gradient paint
-    private val liquidPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    // 磨砂玻璃水滴本体 (Frosted Glass Fill)
+    private val glassPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
+        color = Color.parseColor("#38FFFFFF")   // 22% 不透明白 = 磨砂感
     }
 
-    // 玻璃高光内描边 (Glass Specular Rim Light)
-    private val glassRimPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    // 玻璃边框极细高光 (Glass Rim)
+    private val rimPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
-        strokeWidth = 1.2f * density
+        strokeWidth = 0.8f * density
+        color = Color.parseColor("#30FFFFFF")   // 19% 白 极淡边框
     }
 
-    // 顶部弧形白光高光折射 (Top Arc Specular Highlight)
+    // 顶部弧形微光 (Top Edge Specular — 仅绘制顶部 1/5 高度的薄弧)
     private val specularPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
-        strokeWidth = 1.5f * density
+        strokeWidth = 0.8f * density
         strokeCap = Paint.Cap.ROUND
     }
 
-    // 文本 Paint
+    // 文本
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         textSize = 12.5f * resources.displayMetrics.scaledDensity
         textAlign = Paint.Align.CENTER
@@ -69,10 +73,9 @@ class LiquidGlassNavView : View {
     private var basePillWidth = 0f
     private var isDragging = false
 
-    // 液态变形参数
+    // 液态变形
     private var currentStretchFactor = 1.0f
     private var lastTouchX = 0f
-    private var touchVelocity = 0f
 
     private var positionAnimator: ValueAnimator? = null
     private var stretchAnimator: ValueAnimator? = null
@@ -82,35 +85,6 @@ class LiquidGlassNavView : View {
         if (w > 0 && h > 0) {
             basePillWidth = (w.toFloat() / tabCount) - (8f * density)
             pillX = getTabTargetX(selectedIndex)
-            updateShaders()
-        }
-    }
-
-    private fun updateShaders() {
-        if (width > 0 && height > 0) {
-            // 液态折射微光渐变 (Electric Indigo to Violet)
-            liquidPaint.shader = LinearGradient(
-                0f, 0f, width.toFloat(), height.toFloat(),
-                intArrayOf(
-                    Color.parseColor("#4F46E5"),
-                    Color.parseColor("#6366F1"),
-                    Color.parseColor("#4338CA")
-                ),
-                floatArrayOf(0f, 0.5f, 1f),
-                Shader.TileMode.CLAMP
-            )
-
-            // 玻璃外框高光边 Line
-            glassRimPaint.shader = LinearGradient(
-                0f, 0f, 0f, height.toFloat(),
-                intArrayOf(
-                    Color.parseColor("#A0FFFFFF"),
-                    Color.parseColor("#30FFFFFF"),
-                    Color.parseColor("#10FFFFFF")
-                ),
-                floatArrayOf(0f, 0.4f, 1f),
-                Shader.TileMode.CLAMP
-            )
         }
     }
 
@@ -129,20 +103,17 @@ class LiquidGlassNavView : View {
                 positionAnimator?.cancel()
                 stretchAnimator?.cancel()
                 lastTouchX = touchX
-                touchVelocity = 0f
                 return true
             }
 
             MotionEvent.ACTION_MOVE -> {
                 if (isDragging) {
                     val deltaX = touchX - lastTouchX
-                    touchVelocity = deltaX
                     lastTouchX = touchX
 
-                    // 计算液态拉伸比例 (根据移动速度产生水滴拉伸与高度压缩)
                     val speed = abs(deltaX)
-                    val targetStretch = (1.0f + (speed / (12f * density)).coerceAtMost(0.35f))
-                    currentStretchFactor += (targetStretch - currentStretchFactor) * 0.4f
+                    val targetStretch = 1.0f + (speed / (14f * density)).coerceAtMost(0.30f)
+                    currentStretchFactor += (targetStretch - currentStretchFactor) * 0.35f
 
                     val currentWidth = basePillWidth * currentStretchFactor
                     val targetX = touchX - currentWidth / 2f
@@ -185,7 +156,6 @@ class LiquidGlassNavView : View {
         positionAnimator?.cancel()
         stretchAnimator?.cancel()
 
-        // 1. 位置 Spring Overshoot 弹簧动画
         positionAnimator = ValueAnimator.ofFloat(pillX, targetX).apply {
             duration = 340L
             interpolator = OvershootInterpolator(1.2f)
@@ -196,7 +166,6 @@ class LiquidGlassNavView : View {
             start()
         }
 
-        // 2. 水滴拉伸恢复回弹动画
         stretchAnimator = ValueAnimator.ofFloat(currentStretchFactor, 1.0f).apply {
             duration = 380L
             interpolator = OvershootInterpolator(1.4f)
@@ -221,62 +190,58 @@ class LiquidGlassNavView : View {
         val baseBottom = h - 6f * density
         val baseH = baseBottom - baseTop
 
-        // 根据拉伸系数形变 (质量守恒：宽度变大，高度收缩)
+        // 水滴质量守恒形变
         val pillW = basePillWidth * currentStretchFactor
         val pillH = baseH / sqrt(currentStretchFactor)
         val pillTop = (h - pillH) / 2f
         val pillBottom = pillTop + pillH
-        val rx = pillH / 2f // 完美圆角水滴
+        val rx = pillH / 2f
 
-        // 1. 绘制液态折射水滴包络
         val pillRect = RectF(pillX, pillTop, pillX + pillW, pillBottom)
-        canvas.drawRoundRect(pillRect, rx, rx, liquidPaint)
 
-        // 2. 绘制 3D 玻璃边框高光
-        canvas.drawRoundRect(pillRect, rx, rx, glassRimPaint)
+        // 1. 磨砂玻璃水滴
+        canvas.drawRoundRect(pillRect, rx, rx, glassPaint)
 
-        // 3. 绘制顶部 1/3 弧形白光折射 (Top Specular Highlight Light Path)
-        val topHighlightPath = Path()
-        val highlightOffset = 2f * density
+        // 2. 极细玻璃边框
+        canvas.drawRoundRect(pillRect, rx, rx, rimPaint)
+
+        // 3. 顶部薄弧微光 (仅顶部边缘内侧 — 不穿越中心)
+        val inset = 1.2f * density
+        val specTop = pillTop + inset
+        val specH = pillH * 0.15f  // 仅顶部 15% 高度
         val specRect = RectF(
-            pillX + highlightOffset,
-            pillTop + highlightOffset,
-            pillX + pillW - highlightOffset,
-            pillTop + pillH * 0.5f
+            pillX + rx * 0.5f,
+            specTop,
+            pillX + pillW - rx * 0.5f,
+            specTop + specH
         )
         specularPaint.shader = LinearGradient(
-            pillX, pillTop, pillX + pillW, pillTop,
+            specRect.left, specTop, specRect.right, specTop,
             intArrayOf(
                 Color.parseColor("#00FFFFFF"),
-                Color.parseColor("#C0FFFFFF"),
+                Color.parseColor("#50FFFFFF"),
                 Color.parseColor("#00FFFFFF")
             ),
-            floatArrayOf(0f, 0.5f, 1f),
+            floatArrayOf(0.15f, 0.5f, 0.85f),
             Shader.TileMode.CLAMP
         )
-        topHighlightPath.addRoundRect(specRect, rx * 0.8f, rx * 0.8f, Path.Direction.CW)
-        canvas.drawPath(topHighlightPath, specularPaint)
+        canvas.drawLine(specRect.left, specTop, specRect.right, specTop, specularPaint)
 
-        // 4. 绘制 Tab 标题 (移除任何底部亮灯点，纯净高保真苹果 Typography)
+        // 4. Tab 文字 (选中 = 纯白, 未选中 = 中灰)
         for (i in 0 until tabCount) {
             val centerX = cellWidth * i + cellWidth / 2f
             val centerY = h / 2f
             val isSelected = (i == selectedIndex)
 
-            textPaint.color = if (isSelected) {
-                Color.parseColor("#FFFFFF")
-            } else {
-                Color.parseColor("#94A3B8")
-            }
-
+            textPaint.color = if (isSelected) Color.WHITE else Color.parseColor("#94A3B8")
             textPaint.typeface = if (isSelected) {
                 Typeface.create("sans-serif-medium", Typeface.BOLD)
             } else {
                 Typeface.create("sans-serif", Typeface.NORMAL)
             }
 
-            val fontMetrics = textPaint.fontMetrics
-            val baseline = centerY - (fontMetrics.descent + fontMetrics.ascent) / 2f
+            val fm = textPaint.fontMetrics
+            val baseline = centerY - (fm.descent + fm.ascent) / 2f
             canvas.drawText(tabTitles[i], centerX, baseline, textPaint)
         }
     }

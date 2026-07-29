@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 变量芯片背景：Linear 风格 Pill Tag -->
+<!-- iOS 26 Pill Tag Chip -->
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="@color/seed_outline">
+    android:color="@color/brand_outline">
     <item>
         <shape android:shape="rectangle">
             <corners android:radius="20dp" />
-            <solid android:color="@color/seed_container" />
-            <stroke android:width="1dp" android:color="@color/seed_outline" />
+            <solid android:color="@color/brand_surface_container_high" />
+            <stroke android:width="1dp" android:color="@color/brand_outline" />
         </shape>
     </item>
 </ripple>

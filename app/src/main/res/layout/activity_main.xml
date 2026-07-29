@@ -54,7 +54,7 @@
                         android:fontFamily="sans-serif-medium"
                         android:letterSpacing="0.06"
                         android:text="@string/config_overline"
-                        android:textColor="@color/seed"
+                        android:textColor="@color/brand_text_secondary"
                         android:textSize="12sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -182,7 +182,7 @@
                                     android:paddingStart="12dp"
                                     android:paddingEnd="12dp"
                                     android:text="📋 粘贴剪贴板"
-                                    android:textColor="@color/seed"
+                                    android:textColor="@color/brand_text_primary"
                                     android:textSize="12sp" />
 
                                 <com.google.android.material.textview.MaterialTextView
@@ -199,7 +199,7 @@
                                     android:paddingStart="12dp"
                                     android:paddingEnd="12dp"
                                     android:text="+ {code} 验证码"
-                                    android:textColor="@color/seed"
+                                    android:textColor="@color/brand_text_primary"
                                     android:textSize="12sp" />
 
                                 <com.google.android.material.textview.MaterialTextView
@@ -216,7 +216,7 @@
                                     android:paddingStart="12dp"
                                     android:paddingEnd="12dp"
                                     android:text="+ {sender} 发件人"
-                                    android:textColor="@color/seed"
+                                    android:textColor="@color/brand_text_primary"
                                     android:textSize="12sp" />
 
                                 <com.google.android.material.textview.MaterialTextView
@@ -233,7 +233,7 @@
                                     android:paddingStart="12dp"
                                     android:paddingEnd="12dp"
                                     android:text="+ {body} 正文"
-                                    android:textColor="@color/seed"
+                                    android:textColor="@color/brand_text_primary"
                                     android:textSize="12sp" />
 
                                 <com.google.android.material.textview.MaterialTextView
@@ -250,7 +250,7 @@
                                     android:paddingStart="12dp"
                                     android:paddingEnd="12dp"
                                     android:text="+ {time} 时间"
-                                    android:textColor="@color/seed"
+                                    android:textColor="@color/brand_text_primary"
                                     android:textSize="12sp" />
                             </LinearLayout>
                         </HorizontalScrollView>
@@ -385,7 +385,7 @@
                         android:fontFamily="sans-serif-medium"
                         android:letterSpacing="0.06"
                         android:text="@string/status_overline"
-                        android:textColor="@color/seed"
+                        android:textColor="@color/brand_text_secondary"
                         android:textSize="12sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -690,7 +690,7 @@
                             android:paddingEnd="14dp"
                             android:paddingBottom="9dp"
                             android:text="@string/about_github"
-                            android:textColor="@color/seed"
+                            android:textColor="@color/brand_text_secondary"
                             android:textSize="12sp" />
 
                         <com.google.android.material.button.MaterialButton
