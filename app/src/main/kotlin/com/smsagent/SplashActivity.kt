@@ -6,8 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
-import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.DecelerateInterpolator
+import android.view.animation.OvershootInterpolator
 import com.smsagent.state.LaunchStateStore
 
 class SplashActivity : Activity() {
@@ -22,111 +21,68 @@ class SplashActivity : Activity() {
         val logo = findViewById<View>(R.id.splashLogo)
         val wordmark = findViewById<View>(R.id.splashWordmark)
         val tagline = findViewById<View>(R.id.splashTagline)
-        val ledRow = findViewById<View>(R.id.splashLedRow)
-        val leds = listOf(
-            findViewById<View>(R.id.splashLedOne),
-            findViewById<View>(R.id.splashLedTwo),
-            findViewById<View>(R.id.splashLedThree),
-            findViewById<View>(R.id.splashLedFour),
-            findViewById<View>(R.id.splashLedFive),
-        )
-        val bootLabel = findViewById<View>(R.id.splashBootLabel)
-        val cursor = findViewById<View>(R.id.splashCursor)
+        val badgeCapsule = findViewById<View>(R.id.splashBadgeCapsule)
+        val progressBar = findViewById<View>(R.id.splashProgressBar)
 
-        // 初始：全部隐身
+        // 初始：缩小并隐藏
         logo.alpha = 0f
-        logo.scaleX = 0.7f
-        logo.scaleY = 0.7f
+        logo.scaleX = 0.5f
+        logo.scaleY = 0.5f
+
         wordmark.alpha = 0f
-        wordmark.translationY = 10f
+        wordmark.translationY = 16f
+
         tagline.alpha = 0f
-        tagline.translationY = 8f
-        leds.forEach { it.alpha = 0f; it.scaleX = 0.4f; it.scaleY = 0.4f }
-        ledRow.alpha = 0f
-        bootLabel.alpha = 0f
-        bootLabel.translationX = -8f
-        cursor.alpha = 0f
+        tagline.translationY = 12f
 
-        val interp = DecelerateInterpolator(1.6f)
+        badgeCapsule.alpha = 0f
+        badgeCapsule.translationY = 8f
 
-        // 1. 品牌标淡入并轻微回弹
+        progressBar.alpha = 0f
+
+        val springInterp = OvershootInterpolator(1.15f)
+
+        // 1. 图标带 iOS 弹簧缩放与高光淡入
         logo.animate()
             .alpha(1f)
             .scaleX(1f)
             .scaleY(1f)
-            .setDuration(LOGO_DURATION)
-            .setInterpolator(AccelerateDecelerateInterpolator())
+            .setDuration(480L)
+            .setInterpolator(springInterp)
             .start()
 
         // 2. 字标淡入上浮
         wordmark.animate()
             .alpha(1f)
             .translationY(0f)
-            .setStartDelay(WORDMARK_DELAY)
-            .setDuration(COPY_DURATION)
-            .setInterpolator(interp)
+            .setStartDelay(160L)
+            .setDuration(360L)
             .start()
 
-        // 3. 副标淡入上浮
+        // 3. 副标题淡入
         tagline.animate()
             .alpha(1f)
             .translationY(0f)
-            .setStartDelay(TAGLINE_DELAY)
-            .setDuration(COPY_DURATION)
-            .setInterpolator(interp)
+            .setStartDelay(240L)
+            .setDuration(360L)
             .start()
 
-        // 4. LED 点阵依次点亮（苹果式节奏：先缓慢淡入容器，再逐颗点亮）
-        ledRow.alpha = 1f
-        ledRow.animate()
+        // 4. 磨砂胶囊淡入
+        badgeCapsule.animate()
             .alpha(1f)
-            .setStartDelay(LED_ROW_DELAY)
-            .setDuration(120L)
+            .translationY(0f)
+            .setStartDelay(320L)
+            .setDuration(360L)
             .start()
 
-        leds.forEachIndexed { index, led ->
-            led.animate()
-                .alpha(1f)
-                .scaleX(1f)
-                .scaleY(1f)
-                .setStartDelay(LED_ROW_DELAY + index * LED_STAGGER)
-                .setDuration(LED_DURATION)
-                .setInterpolator(AccelerateDecelerateInterpolator())
-                .start()
-        }
-
-        // 5. 左下 BOOT 行滑入
-        bootLabel.animate()
+        // 5. Loading bar 淡入
+        progressBar.animate()
             .alpha(1f)
-            .translationX(0f)
-            .setStartDelay(BOOT_DELAY)
-            .setDuration(COPY_DURATION)
-            .setInterpolator(interp)
-            .start()
-
-        // 6. 光标淡入，然后开始闪烁
-        cursor.animate()
-            .alpha(1f)
-            .setStartDelay(CURSOR_DELAY)
-            .setDuration(200L)
-            .withEndAction { startCursorBlink(cursor) }
+            .setStartDelay(400L)
+            .setDuration(300L)
             .start()
 
         handler.postDelayed(navigateRunnable, SPLASH_DURATION)
-    }
-
-    private fun startCursorBlink(cursor: View) {
-        cursor.animate()
-            .alpha(0f)
-            .setDuration(CURSOR_BLINK_DURATION)
-            .withEndAction {
-                cursor.animate()
-                    .alpha(1f)
-                    .setDuration(CURSOR_BLINK_DURATION)
-                    .withEndAction { startCursorBlink(cursor) }
-                    .start()
-            }
-            .start()
     }
 
     override fun onDestroy() {
@@ -150,16 +106,6 @@ class SplashActivity : Activity() {
     }
 
     private companion object {
-        private const val SPLASH_DURATION = 1100L
-        private const val LOGO_DURATION = 420L
-        private const val WORDMARK_DELAY = 180L
-        private const val TAGLINE_DELAY = 260L
-        private const val COPY_DURATION = 360L
-        private const val LED_ROW_DELAY = 340L
-        private const val LED_STAGGER = 90L
-        private const val LED_DURATION = 240L
-        private const val BOOT_DELAY = 520L
-        private const val CURSOR_DELAY = 640L
-        private const val CURSOR_BLINK_DURATION = 420L
+        private const val SPLASH_DURATION = 1200L
     }
 }

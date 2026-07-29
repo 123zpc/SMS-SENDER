@@ -157,9 +157,7 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/onboarding_hero_primary">
 
-                <com.smsagent.ui.DotGridView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+
 
                 <LinearLayout
                     android:layout_width="wrap_content"

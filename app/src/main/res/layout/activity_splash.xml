@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/splash_background"
     android:fitsSystemWindows="true">
 
-    <!-- 点阵底纹 -->
-    <com.smsagent.ui.DotGridView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <!-- 中央：品牌标 + 字标 + LED 点阵 -->
+    <!-- 中央：品牌 26 晶体标 + 极致空间 Typography + 磨砂胶囊 Badge -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,110 +18,86 @@
 
         <FrameLayout
             android:id="@+id/splashLogo"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:background="@drawable/hero_logo_background">
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/hero_logo_background"
+            android:elevation="12dp">
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/send_icon_description"
-                android:padding="17dp"
+                android:padding="20dp"
                 android:src="@drawable/ic_send_24"
-                android:tint="@color/brand_on_primary" />
+                app:tint="@color/brand_on_primary" />
         </FrameLayout>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/splashWordmark"
-            style="@style/TextAppearance.Material3.TitleLarge"
+            style="@style/TextAppearance.Material3.HeadlineMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:fontFamily="monospace"
-            android:letterSpacing="0.2"
+            android:fontFamily="sans-serif-medium"
+            android:letterSpacing="-0.02"
             android:text="@string/app_name"
-            android:textColor="@color/hero_text"
+            android:textColor="#FFFFFF"
+            android:textSize="28sp"
             android:textStyle="bold" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/splashTagline"
-            style="@style/TextAppearance.Material3.BodySmall"
+            style="@style/TextAppearance.Material3.BodyMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif"
+            android:letterSpacing="0.04"
             android:text="@string/splash_tagline"
-            android:textColor="@color/hero_text_muted"
-            android:textSize="12sp" />
+            android:textColor="#C7D2FE"
+            android:textSize="14sp" />
 
         <LinearLayout
-            android:id="@+id/splashLedRow"
+            android:id="@+id/splashBadgeCapsule"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="26dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="28dp"
+            android:background="@drawable/subtle_banner_background"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="14dp"
+            android:paddingTop="6dp"
+            android:paddingEnd="14dp"
+            android:paddingBottom="6dp">
 
             <View
-                android:id="@+id/splashLedOne"
-                android:layout_width="6dp"
-                android:layout_height="6dp"
+                android:id="@+id/splashStatusPulse"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
                 android:background="@drawable/hero_status_dot" />
 
-            <View
-                android:id="@+id/splashLedTwo"
-                android:layout_width="6dp"
-                android:layout_height="6dp"
-                android:layout_marginStart="12dp"
-                android:background="@drawable/hero_status_dot" />
-
-            <View
-                android:id="@+id/splashLedThree"
-                android:layout_width="6dp"
-                android:layout_height="6dp"
-                android:layout_marginStart="12dp"
-                android:background="@drawable/hero_status_dot" />
-
-            <View
-                android:id="@+id/splashLedFour"
-                android:layout_width="6dp"
-                android:layout_height="6dp"
-                android:layout_marginStart="12dp"
-                android:background="@drawable/hero_status_dot" />
-
-            <View
-                android:id="@+id/splashLedFive"
-                android:layout_width="6dp"
-                android:layout_height="6dp"
-                android:layout_marginStart="12dp"
-                android:background="@drawable/hero_status_dot" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/splashBadgeText"
+                style="@style/TextAppearance.Material3.LabelSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="sans-serif-medium"
+                android:letterSpacing="0.08"
+                android:text="iOS 26.6 SPATIAL FLUID ENGINE"
+                android:textColor="#E0E7FF"
+                android:textSize="11sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 
-    <!-- 左下：BOOT 行 + 闪烁光标 -->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|start"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="28dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/splashBootLabel"
-            style="@style/TextAppearance.Material3.LabelSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:letterSpacing="0.14"
-            android:text="@string/splash_loading_label"
-            android:textColor="@color/hero_text_muted"
-            android:textSize="10sp" />
-
-        <View
-            android:id="@+id/splashCursor"
-            android:layout_width="7dp"
-            android:layout_height="12dp"
-            android:layout_marginStart="6dp"
-            android:background="@color/console_accent" />
-    </LinearLayout>
+    <!-- 底部：iOS 灵动平缓 Loading 指示器 -->
+    <ProgressBar
+        android:id="@+id/splashProgressBar"
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="48dp"
+        android:indeterminateTint="#C7D2FE" />
 </FrameLayout>
