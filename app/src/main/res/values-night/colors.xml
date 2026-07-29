@@ -1,51 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- SMS SENDER 夜间模式：Apple iOS 26 Minimalist Monochromatic Palette -->
+    <!-- SMS SENDER 夜间模式：Apple iOS Dark System Colors -->
 
-    <color name="seed">#F9FAFB</color>
-    <color name="seed_dark">#E5E7EB</color>
-    <color name="seed_container">#1F2937</color>
-    <color name="seed_outline">#374151</color>
-    <color name="brand_on_primary">#111827</color>
+    <!-- 主品牌色：Apple Dark System Blue (#0A84FF) -->
+    <color name="seed">#0A84FF</color>
+    <color name="seed_dark">#0056B3</color>
+    <color name="seed_container">#002C66</color>
+    <color name="seed_outline">#004080</color>
+    <color name="brand_on_primary">#FFFFFF</color>
 
-    <color name="accent_orange">#FBBF24</color>
-    <color name="accent_orange_container">#1C1503</color>
-    <color name="brand_emerald">#6EE7B7</color>
-    <color name="brand_emerald_dark">#34D399</color>
-    <color name="brand_emerald_container">#064E3B</color>
-    <color name="brand_cyan">#67E8F9</color>
-    <color name="brand_cyan_container">#083344</color>
+    <color name="accent_orange">#FF9F0A</color>
+    <color name="accent_orange_container">#331E00</color>
+    <color name="brand_emerald">#30D158</color>
+    <color name="brand_emerald_dark">#248A3D</color>
+    <color name="brand_emerald_container">#0A3311</color>
+    <color name="brand_cyan">#40C8E0</color>
+    <color name="brand_cyan_container">#0A2A33</color>
 
-    <color name="brand_surface">#030712</color>
-    <color name="brand_surface_container">#111827</color>
-    <color name="brand_surface_container_high">#1F2937</color>
-    <color name="brand_outline">#374151</color>
-    <color name="brand_text_primary">#F9FAFB</color>
-    <color name="brand_text_secondary">#9CA3AF</color>
-    <color name="brand_text_tertiary">#6B7280</color>
-    <color name="navigation_surface">#111827</color>
-    <color name="navigation_outline">#1F2937</color>
+    <color name="brand_surface">#000000</color>
+    <color name="brand_surface_container">#1C1C1E</color>
+    <color name="brand_surface_container_high">#2C2C2E</color>
+    <color name="brand_outline">#38383A</color>
+    <color name="brand_text_primary">#FFFFFF</color>
+    <color name="brand_text_secondary">#8E8E93</color>
+    <color name="brand_text_tertiary">#636366</color>
+    <color name="navigation_surface">#1C1C1E</color>
+    <color name="navigation_outline">#38383A</color>
 
-    <color name="code_badge_bg">#1F2937</color>
-    <color name="code_badge_text">#F9FAFB</color>
-    <color name="code_badge_border">#374151</color>
+    <color name="code_badge_bg">#002C66</color>
+    <color name="code_badge_text">#409CFF</color>
+    <color name="code_badge_border">#004080</color>
 
-    <color name="header_panel_start">#030712</color>
-    <color name="header_panel_end">#030712</color>
-    <color name="hero_text">#F9FAFB</color>
-    <color name="hero_text_muted">#6B7280</color>
-    <color name="hero_chip">#1F2937</color>
-    <color name="hero_chip_outline">#374151</color>
-    <color name="hero_badge">#1F2937</color>
-    <color name="hero_badge_text">#F9FAFB</color>
+    <color name="header_panel_start">#000000</color>
+    <color name="header_panel_end">#1C1C1E</color>
+    <color name="hero_text">#FFFFFF</color>
+    <color name="hero_text_muted">#8E8E93</color>
+    <color name="hero_chip">#2C2C2E</color>
+    <color name="hero_chip_outline">#38383A</color>
+    <color name="hero_badge">#0A84FF</color>
+    <color name="hero_badge_text">#FFFFFF</color>
 
-    <color name="console_background">#030712</color>
-    <color name="console_toolbar">#0B0F19</color>
-    <color name="console_surface">#111827</color>
-    <color name="console_border">#1F2937</color>
-    <color name="console_text">#F8FAFC</color>
-    <color name="console_muted">#6B7280</color>
-    <color name="console_accent">#34D399</color>
-    <color name="console_warning">#FBBF24</color>
-    <color name="console_button">#1F2937</color>
+    <color name="console_background">#000000</color>
+    <color name="console_toolbar">#1C1C1E</color>
+    <color name="console_surface">#2C2C2E</color>
+    <color name="console_border">#38383A</color>
+    <color name="console_text">#F2F2F7</color>
+    <color name="console_muted">#8E8E93</color>
+    <color name="console_accent">#30D158</color>
+    <color name="console_warning">#FF9F0A</color>
+    <color name="console_button">#2C2C2E</color>
 </resources>

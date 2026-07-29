@@ -1,57 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- SMS SENDER 美学设计系统：Apple iOS 26 Minimalist Monochromatic Palette -->
+    <!-- SMS SENDER 设计系统：Apple iOS Standard System Colors -->
 
-    <!-- 主品牌色：Apple Sleek Monochromatic Tint (黑灰/白黑) -->
-    <color name="seed">#111827</color>
-    <color name="seed_dark">#030712</color>
-    <color name="seed_container">#F3F4F6</color>
-    <color name="seed_outline">#E5E7EB</color>
+    <!-- 主品牌色：Apple System Blue (#007AFF) -->
+    <color name="seed">#007AFF</color>
+    <color name="seed_dark">#0056B3</color>
+    <color name="seed_container">#E5F1FF</color>
+    <color name="seed_outline">#B3D7FF</color>
     <color name="brand_on_primary">#FFFFFF</color>
 
     <!-- 语义指示色 -->
-    <color name="accent_orange">#F59E0B</color>
-    <color name="accent_orange_container">#FFF7ED</color>
-    <color name="brand_emerald">#10B981</color>
-    <color name="brand_emerald_dark">#047857</color>
-    <color name="brand_emerald_container">#ECFDF5</color>
-    <color name="brand_cyan">#06B6D4</color>
-    <color name="brand_cyan_container">#ECFEFF</color>
+    <color name="accent_orange">#FF9500</color>
+    <color name="accent_orange_container">#FFF4E5</color>
+    <color name="brand_emerald">#34C759</color>
+    <color name="brand_emerald_dark">#248A3D</color>
+    <color name="brand_emerald_container">#EAFCEB</color>
+    <color name="brand_cyan">#30B0C7</color>
+    <color name="brand_cyan_container">#EAF8FA</color>
 
-    <!-- Surface / Card / Container (iOS 26 极淡雾白) -->
-    <color name="brand_surface">#F9FAFB</color>
+    <!-- Surface / Card / Container (Apple iOS 雾白) -->
+    <color name="brand_surface">#F2F2F7</color>
     <color name="brand_surface_container">#FFFFFF</color>
-    <color name="brand_surface_container_high">#F3F4F6</color>
-    <color name="brand_outline">#E5E7EB</color>
-    <color name="brand_text_primary">#111827</color>
-    <color name="brand_text_secondary">#6B7280</color>
-    <color name="brand_text_tertiary">#9CA3AF</color>
+    <color name="brand_surface_container_high">#E5E5EA</color>
+    <color name="brand_outline">#E5E5EA</color>
+    <color name="brand_text_primary">#000000</color>
+    <color name="brand_text_secondary">#6C6C70</color>
+    <color name="brand_text_tertiary">#8E8E93</color>
     <color name="navigation_surface">#FFFFFF</color>
-    <color name="navigation_outline">#E5E7EB</color>
+    <color name="navigation_outline">#E5E5EA</color>
 
     <!-- 验证码高亮 Badge -->
-    <color name="code_badge_bg">#F3F4F6</color>
-    <color name="code_badge_text">#111827</color>
-    <color name="code_badge_border">#E5E7EB</color>
+    <color name="code_badge_bg">#E5F1FF</color>
+    <color name="code_badge_text">#007AFF</color>
+    <color name="code_badge_border">#B3D7FF</color>
 
-    <!-- Header 灵动 Header 容器 -->
-    <color name="header_panel_start">#111827</color>
-    <color name="header_panel_end">#1F2937</color>
-    <color name="hero_text">#F9FAFB</color>
-    <color name="hero_text_muted">#9CA3AF</color>
-    <color name="hero_chip">#1F2937</color>
-    <color name="hero_chip_outline">#374151</color>
-    <color name="hero_badge">#111827</color>
-    <color name="hero_badge_text">#F9FAFB</color>
+    <!-- Header 容器 -->
+    <color name="header_panel_start">#1C1C1E</color>
+    <color name="header_panel_end">#2C2C2E</color>
+    <color name="hero_text">#FFFFFF</color>
+    <color name="hero_text_muted">#8E8E93</color>
+    <color name="hero_chip">#2C2C2E</color>
+    <color name="hero_chip_outline">#3A3A3C</color>
+    <color name="hero_badge">#007AFF</color>
+    <color name="hero_badge_text">#FFFFFF</color>
 
-    <!-- 终端 (iOS 26 暗色工作台) -->
-    <color name="console_background">#0B0F19</color>
-    <color name="console_toolbar">#111827</color>
-    <color name="console_surface">#1F2937</color>
-    <color name="console_border">#374151</color>
-    <color name="console_text">#F8FAFC</color>
-    <color name="console_muted">#9CA3AF</color>
-    <color name="console_accent">#34D399</color>
-    <color name="console_warning">#FBBF24</color>
-    <color name="console_button">#1F2937</color>
+    <!-- 终端 (iOS 暗色工作台) -->
+    <color name="console_background">#000000</color>
+    <color name="console_toolbar">#1C1C1E</color>
+    <color name="console_surface">#2C2C2E</color>
+    <color name="console_border">#3A3A3C</color>
+    <color name="console_text">#F2F2F7</color>
+    <color name="console_muted">#8E8E93</color>
+    <color name="console_accent">#34C759</color>
+    <color name="console_warning">#FF9500</color>
+    <color name="console_button">#2C2C2E</color>
 </resources>
